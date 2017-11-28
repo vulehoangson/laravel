@@ -23,11 +23,11 @@ class SignupModel extends Model
                                ])->get();
         if(empty($data['items']))
         {
-            DB::table('user')->insert([
+            $iId=DB::table('user')->insertGetId([
                 'username' => $this->username,
                 'password' => $this->password
             ]);
-            return true;
+            return $iId;
         }
         return false;
     }

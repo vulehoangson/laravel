@@ -28,10 +28,11 @@ class SignupController extends Controller
         if(!empty($username) && !empty($password))
         {
             $oModel=new SignupModel($username,$password);
-            $bSignup=$oModel->Signup();
-            if($bSignup)
+            $iId=$oModel->Signup();
+            if($iId)
             {
-                CookieController::setCookie('login','success',0);
+                CookieController::setCookie('login','success',time() + (10 * 365 * 24 * 60 * 60));
+                CookieController::setCookie('user_id',$iId,time() + (10 * 365 * 24 * 60 * 60));
                 return redirect(url(''));
             }
         }
