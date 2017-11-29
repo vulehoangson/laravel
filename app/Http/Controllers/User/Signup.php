@@ -6,19 +6,20 @@ use App\Http\Controllers\Cookie\CookieController;
 use App\User\SignupModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\Session\SessionController;
+use App\Http\Controllers\User\LoginController;
 class SignupController extends Controller
 {
+    private $CookiesId='user_id';
+
     public function __construct()
     {
 
     }
     public function openFormSignup()
     {
-        if(!isset($_COOKIE['login']))
-        {
-            return view('Signup');
-        }
+        $oLogin=new LoginController();
+        return ( $oLogin->checkAutoLogin() ? redirect(url('')) : view('Signup') );
     }
     public function validateSignup(Request $request)
     {
@@ -27,13 +28,20 @@ class SignupController extends Controller
         $password=$all['password'];
         if(!empty($username) && !empty($password))
         {
-            $oModel=new SignupModel($username,$password);
-            $iId=$oModel->Signup();
+            $aInsert=array(
+                'username' => $username,
+                'password' => $password
+            );
+            $oModel=new SignupModel($aInsert);
+            $iId = $oModel->Signup();
             if($iId)
             {
-                CookieController::setCookie('login','success',time() + (10 * 365 * 24 * 60 * 60));
-                CookieController::setCookie('user_id',$iId,time() + (10 * 365 * 24 * 60 * 60));
+                SessionController::createSession($this->CookiesId,$iId);
                 return redirect(url(''));
+            }
+            else
+            {
+                return view('Signup',['error' => 'Sign Up Failed. Username existed !!!']);
             }
         }
     }

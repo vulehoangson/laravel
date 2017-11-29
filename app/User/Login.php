@@ -1,7 +1,10 @@
 <?php
+
 namespace App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
 class LoginModel extends Model
 {
     private $username;
@@ -15,8 +18,7 @@ class LoginModel extends Model
     public function Login()
     {
         $aData=DB::table('user')->select('*')->where([
-            ['username','=',$this->username],
-            ['password','=',$this->password]
+            ['username','=',$this->username]
         ])->get();
         if(!$aData->isEmpty())
         {
@@ -28,7 +30,12 @@ class LoginModel extends Model
                     $aResult[$iKey]=$value;
                 }
             }
-            return $aResult;
+
+            if(Hash::check($this->password,$aResult['password']))
+            {
+                return array($aResult['user_id'],$aResult['password']);
+            }
+
         }
         return false ;
     }

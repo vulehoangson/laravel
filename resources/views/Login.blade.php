@@ -22,7 +22,12 @@
                 <b>Password</b>:
                 <input type="password" name="password" id="password" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;" >
             </div>
-
+            <div>
+                <label style="padding-left: 20px;font-weight: normal;color: #888888;">
+                    <input type="checkbox" name="remember" value="remember" style="position: absolute; margin-left: -20px;">
+                    Remember me
+                </label>
+            </div>
             <div>
                 <button class="btn btn-danger" id="submit" value="login">Đăng nhập</button>
             </div>

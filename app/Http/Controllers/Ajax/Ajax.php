@@ -5,6 +5,7 @@ use App\Http\Controllers\Cookie\CookieController;
 use App\User\LoginModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Session\SessionController;
 class AjaxController extends Controller
 {
     public function __construct()
@@ -14,7 +15,7 @@ class AjaxController extends Controller
 
     public function Logout()
     {
-        echo ( !empty(CookieController::removeCookie('login') ) && !empty(CookieController::removeCookie('user_id') ) ? url('') : ''   );
+        echo ( !empty(CookieController::removeCookie('user_hash') ) && !empty(CookieController::removeCookie('user_id') &&  SessionController::deleteAll() ) ? url('') : ''   );
     }
     public function Signup()
     {

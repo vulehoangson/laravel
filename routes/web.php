@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('','IndexController@process');
 Route::get('/test/{str}/{s}','Test@showNotify')->name('vl')->where(['str' => '[0-9]+']);
 Route::get('/goiten/{a}/{b}',function($a,$b){
    return redirect()->route('vl',['str' =>$a, 's' => $b ]);

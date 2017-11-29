@@ -1,6 +1,6 @@
 
 <div class="header-info" style="height: 40px;background-color: #354c5c;padding: 3px 30px;">
-    @if( empty($_COOKIE['login']) )
+    @if( empty($bLogin) )
         <div class="login" style="float: right;color: white">
             <button id="signup" type="button" class="btn btn-warning">Đăng ký</button>
         </div>

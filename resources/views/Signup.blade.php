@@ -3,9 +3,15 @@
 
 @section('content')
 @section('title','Đăng ký')
+
 <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
     <h2>Đăng ký</h2>
 </div>
+@if(!empty($error))
+    <div class="error" style="padding: 20px;color: white;background-color: #ee5454;margin-bottom: 20px;">
+        {{$error}}
+    </div>
+@endif
 <div class="content" style="padding-left: 15px;">
     <form method="POST" action="{{ action('User\SignupController@validateSignup') }}">
         {!! csrf_field() !!}
