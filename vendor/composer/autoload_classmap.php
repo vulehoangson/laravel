@@ -17,6 +17,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\Cookie\\CookieController' => $baseDir . '/app/Http/Controllers/Cookie/Cookie.php',
     'App\\Http\\Controllers\\IndexController' => $baseDir . '/app/Http/Controllers/Index.php',
+    'App\\Http\\Controllers\\Profile\\ProfileController' => $baseDir . '/app/Http/Controllers/Profile/Profile.php',
     'App\\Http\\Controllers\\Session\\SessionController' => $baseDir . '/app/Http/Controllers/Session/Session.php',
     'App\\Http\\Controllers\\Test' => $baseDir . '/app/Http/Controllers/Test.php',
     'App\\Http\\Controllers\\User\\LoginController' => $baseDir . '/app/Http/Controllers/User/Login.php',

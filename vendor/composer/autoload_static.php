@@ -284,6 +284,7 @@ class ComposerStaticInit65739a29dfa87fa65cc3292291d59954
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\Cookie\\CookieController' => __DIR__ . '/../..' . '/app/Http/Controllers/Cookie/Cookie.php',
         'App\\Http\\Controllers\\IndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/Index.php',
+        'App\\Http\\Controllers\\Profile\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Profile/Profile.php',
         'App\\Http\\Controllers\\Session\\SessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Session/Session.php',
         'App\\Http\\Controllers\\Test' => __DIR__ . '/../..' . '/app/Http/Controllers/Test.php',
         'App\\Http\\Controllers\\User\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/Login.php',

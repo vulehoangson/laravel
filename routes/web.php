@@ -27,3 +27,4 @@ Route::post('/validatesignup','User\SignupController@validateSignup');
 Route::get('/logout','Ajax\AjaxController@Logout');
 Route::get('/redirectlogin','Ajax\AjaxController@Login');
 Route::get('/redirectsignup','Ajax\AjaxController@Signup');
+Route::get('/profile/{user_id}','Profile\ProfileController@process');
