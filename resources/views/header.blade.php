@@ -18,6 +18,7 @@
         position: absolute;
         z-index: 1;
         border-radius: 5px;
+        border: 1px solid #dddddd;
     }
     .header-info .setting ul.setting-option li
     {
@@ -38,7 +39,7 @@
         </div>
     @else
         <div class="avatar" style="background-color: white;float: right">
-            <a href="{{ (!empty($_SESSION['user_id']) ? url('profile/'.$_SESSION['user_id'] ) : (!empty($_COOKIE['user_id']) ? url('profile/'.$_COOKIE['user_id'] ) : '') )}}">
+            <a href="{{ (!empty($_SESSION['user_id']) ? url('profile/'.$_SESSION['user_id'] ) : (!empty($_COOKIE['user_id']) ? url('profile/'.$_COOKIE['user_id'] ) : 'javascript:void(0)') )}}">
                 <img src="{{ asset('images/header_logo.jpg') }}" style="height: 34px;width: 40px" title="Trang cá nhân">
             </a>
 
@@ -79,34 +80,26 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+   var login = "{{ asset('login') }}";
+    var logout = "{{ asset('logout') }}";
+    var signup= "{{ asset('signup') }}";
+</script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#logout').click(function(){
-            $.get('logout',function(response){
-               console.log(response);
-                if(response)
-                {
-                    window.location.href=response;
-                }
+            console.log(logout);
 
-            });
+            window.location.href=logout;
         });
         $('#login').click(function(){
-            $.get('redirectlogin',function(response){
-                    if(response)
-                    {
-                        window.location.href=response;
-                    }
-            });
+
+            window.location.href=login;
         });
         $('#signup').click(function(){
-            $.get('redirectsignup',function(response){
-                if(response)
-                {
-                    window.location.href=response;
-                }
-            });
+
+            window.location.href=signup;
+
         });
         $('.setting-button').click(function(){
             $('.setting-option').toggleClass('hide');

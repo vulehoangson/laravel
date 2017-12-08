@@ -5,11 +5,11 @@
 @section('content')
 <div class="profile col-md-12">
     <div class="cover-photo" style="position: relative;height: 450px;overflow: hidden;text-decoration: none;">
-        <img src="{{asset('images/sexy.jpg')}}" style="min-height: 100%;min-width: 100%;position: absolute;left: 0;top: -50px;width: 100%;image-rendering: auto;">
+        <img src="{{asset('images/cover.jpeg')}}" style="min-height: 100%;min-width: 100%;position: absolute;left: 0;top: -50px;width: 100%;image-rendering: auto;">
     </div>
 
     <div class="avatar" style="position: absolute; width: 160px; height: 160px;border: 2px #e6e6e6 solid;background: #ffffff;z-index: 4;bottom: -50px;left: 50px;">
-        <img src="{{asset('images/family_resize.jpg')}}" style="width:100%;height:100%;"> {{--image with 200x200--}}
+        <img src="{{asset('images/family_resize.jpg')}}" style="width:100%;height:100%;">
     </div>
 
     <div class="user-info" style="position: absolute;z-index: 4;left: 240px;bottom: 40px;">

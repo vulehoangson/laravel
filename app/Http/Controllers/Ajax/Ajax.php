@@ -15,7 +15,7 @@ class AjaxController extends Controller
 
     public function Logout()
     {
-        echo ( !empty(CookieController::removeCookie('user_hash') ) && !empty(CookieController::removeCookie('user_id') &&  SessionController::deleteAll() ) ? url('') : ''   );
+      
     }
     public function Signup()
     {
@@ -24,6 +24,7 @@ class AjaxController extends Controller
 
     public function Login()
     {
+        $a=1;
         echo ( !isset($_COOKIE['login']) ? url('login') : '');
     }
 }

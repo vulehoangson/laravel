@@ -1,8 +1,9 @@
 @extends('layout')
 
+@section('title','Đăng nhập')
 
 @section('content')
-    @section('title','Đăng nhập')
+
     <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
         <h2>Đăng nhập</h2>
     </div>
