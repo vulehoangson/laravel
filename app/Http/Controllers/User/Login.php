@@ -30,7 +30,7 @@ class LoginController extends Controller
     
     public function validateLogin(Request $request)
     {
-        $all = $request->all();
+        
         $username = $request->username;
         $password = $request->password;
         $remember = $request->remember;

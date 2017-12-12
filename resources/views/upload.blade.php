@@ -7,13 +7,19 @@
     <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
         <h2>Tạo bài đăng</h2>
     </div>
-    @if(!empty($error))
-        <div class="error" style="padding: 20px;color: white;background-color: #ee5454;margin-bottom: 20px;">
-            {{$error}}
+    @if(!empty($aFrontend['error']))
+        <div class="error" style="padding: 20px;color: white;background-color: #ee5454;margin-bottom: 20px;display: none">
+            {{$aFrontend['error']}}
+        </div>
+    @endif
+
+    @if(!empty($aFrontend['success']))
+        <div class="success" style="padding: 20px;color: white;background-color: #67b168;margin-bottom: 20px;display: none">
+            {{$aFrontend['success']}}
         </div>
     @endif
     <div class="upload" style="padding-left: 15px;">
-        <form method="POST" action="{{ action('User\LoginController@validateLogin') }}">
+        <form method="POST" action="{{ action('Topic\UploadController@process') }}">
             {!! csrf_field() !!}
             <div style="margin-bottom: 15px;">
                 <div><b>Tiêu đề </b>:</div>
@@ -22,9 +28,12 @@
 
             <div>
                 <div><b>Chọn tiền tệ</b> :</div>
-                <select id="currency" class="form-control">
-                    <option value="vnd">VNĐ</option>
-                    <option value="dollar">Dollar</option>
+                <select id="currency" class="form-control" name="currency">
+                    @if(!empty($aFrontend['aCurrencies']))
+                        @foreach($aFrontend['aCurrencies'] as $aCurrency)
+                        <option value="{{ $aCurrency['currency_id'] }}">{{ $aCurrency['title'] }}</option>
+                        @endforeach
+                    @endif
                 </select>
             </div>
 
@@ -55,5 +64,22 @@
             </div>
         </form>
     </div>
+    <script type="text/javascript">
+        var bError="{{ !empty($aFrontend['error']) ? $aFrontend['error'] : ''}}";
+        var bSuccess="{{ !empty($aFrontend['success']) ? $aFrontend['success'] : ''}}";
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if(bError)
+            {
+                $( "div.error" ).fadeIn( 500 ).delay( 1500 ).fadeOut( 500 );
+            }
+
+            if(bSuccess)
+            {
+                $( "div.success" ).fadeIn( 500 ).delay( 1500 ).fadeOut( 500 );
+            }
+        });
+    </script>
 @endsection

@@ -28,6 +28,11 @@
         cursor: pointer;
 
     }
+
+    .header-info .setting ul.setting-option li a
+    {
+        text-decoration: none;
+    }
 </style>
 <div class="header-info" style="height: 40px;background-color: #354c5c;padding: 3px 30px;">
     @if( empty($bLogin) )
@@ -50,16 +55,32 @@
             </a>
             <ul class="setting-option hide" >
                 <li>
-                    <i class="fa fa-diamond" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
-                    AdminCP
+                    <a href="{{ asset('admincp') }}">
+                        <i class="fa fa-diamond" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
+                        AdminCP
+                    </a>
+
                 </li>
                 <li>
-                    <i class="fa fa-user" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
-                    Vào trang cá nhân
+                    <a href="{{ (!empty($_SESSION['user_id']) ? url('profile/'.$_SESSION['user_id'] ) : (!empty($_COOKIE['user_id']) ? url('profile/'.$_COOKIE['user_id'] ) : 'javascript:void(0)') )}}">
+                        <i class="fa fa-user" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
+                        Vào trang cá nhân
+                    </a>
+
                 </li>
-                <li id="logout" style="border-bottom: none !important;">
-                    <i class="fa fa-sign-out" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 6px"></i>
-                    Đăng xuất
+                <li>
+                    <a href="{{ asset('upload') }}" >
+                        <i class="fa fa-plus" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
+                        Thêm Topic
+                    </a>
+
+                </li>
+                <li style="border-bottom: none !important;">
+                    <a href="{{ asset('logout') }}">
+                        <i class="fa fa-sign-out" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 6px"></i>
+                        Đăng xuất
+                    </a>
+
                 </li>
             </ul>
         </div>
@@ -82,16 +103,10 @@
 </div>
 <script type="text/javascript">
    var login = "{{ asset('login') }}";
-    var logout = "{{ asset('logout') }}";
     var signup= "{{ asset('signup') }}";
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $('#logout').click(function(){
-            console.log(logout);
-
-            window.location.href=logout;
-        });
         $('#login').click(function(){
 
             window.location.href=login;
