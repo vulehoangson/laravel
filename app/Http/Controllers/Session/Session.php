@@ -37,7 +37,7 @@ class SessionController extends Controller
     }
     public static function deleteAll()
     {
-        session_unset();
+        session_destroy();
         return true;
     }
 }

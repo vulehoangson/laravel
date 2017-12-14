@@ -18,9 +18,13 @@ class IndexController extends Controller
     {
         $oUser=new LoginController();
         list($bLogin,$iUserGroup)=$oUser->checkAutoLogin(true);
-        if( ($iUserGroup != 1 &&  $iUserGroup != 2) )
+        if( ($iUserGroup != 1 &&  $iUserGroup != 2) && (url()->current() != url()->previous()) )
         {
             return back();
+        }
+        else
+        {
+            return redirect(url(''));
         }
 
         $aApprovedWatingTopics=$this->oTopicModel->getApprovedWaitingTopics();

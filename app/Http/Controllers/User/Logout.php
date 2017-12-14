@@ -7,7 +7,7 @@ class LogoutController extends Controller
 {
     public function process()
     {
-        $bLogout = ( !empty(CookieController::removeCookie('user_hash') ) && !empty(CookieController::removeCookie('user_id')) &&  SessionController::deleteAll()  ? true : false);
+        $bLogout =(!empty(CookieController::getCookie('user_id')) && CookieController::getCookie('user_hash')) ? ( !empty(CookieController::removeCookie('user_hash') ) && !empty(CookieController::removeCookie('user_id')) &&  SessionController::deleteAll()  ? true : false) : SessionController::deleteAll();
         return ($bLogout ? redirect(url('')) : back() );
     }
 }
