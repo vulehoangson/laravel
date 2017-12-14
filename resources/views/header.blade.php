@@ -54,6 +54,7 @@
                 <i class="fa fa-cog" aria-hidden="true" style="color: #ce1126; font-size: 20px;"></i>
             </a>
             <ul class="setting-option hide" >
+                @if((int)$iUserGroup === 1 || (int)$iUserGroup === 2 )
                 <li>
                     <a href="{{ asset('admincp') }}">
                         <i class="fa fa-diamond" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
@@ -61,6 +62,7 @@
                     </a>
 
                 </li>
+                @endif
                 <li>
                     <a href="{{ (!empty($_SESSION['user_id']) ? url('profile/'.$_SESSION['user_id'] ) : (!empty($_COOKIE['user_id']) ? url('profile/'.$_COOKIE['user_id'] ) : 'javascript:void(0)') )}}">
                         <i class="fa fa-user" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
@@ -86,10 +88,10 @@
         </div>
     @endif
 </div>
-<div class="header-introduction" style="height: 150px;padding: 15px 0;background-color: #B2CFEA">
+<div class="header-introduction" style="height: 110px;padding: 15px 0;background-color: #B2CFEA">
     <div class="col-md-4 col-md-offset-1" style="float: left">
-        <div class="introduction" style="text-align: center;line-height: 8">
-            <marquee></marquee>
+        <div class="introduction" style="text-align: center;line-height: 4;">
+            <marquee>Trang rao vặt</marquee>
 
 
         </div>
@@ -97,7 +99,10 @@
     </div>
     <div class="col-md-3 col-md-offset-3"   >
         <div class="logo">
-            {{--<img src="{{ asset('images/header_logo.jpg') }}" style="height: 120px;width: 100%">--}}
+            <a href="{{ asset('') }}">
+                <img src="{{ asset('images/header_logo.jpg') }}" style="height: 80px;width: 100%">
+            </a>
+
         </div>
     </div>
 </div>

@@ -39,7 +39,7 @@ class TopicModel extends Model
         $bDelete=DB::table('topic')->where('topic_id',$iTopicId)->delete();
         return $bDelete;
     }
-    public function _get($iTopic)
+    public function getQuickTopic($iTopic)
     {
         
     }
@@ -47,6 +47,62 @@ class TopicModel extends Model
     public function _update($iTopicId)
     {
 
+    }
+
+    public function getApprovedWaitingTopics()
+    {
+        $aTopics=DB::table('topic')
+                    ->where([
+                        ['user_id','<>',0],
+                        ['status','=',1]
+                    ])->get();
+        if(!$aTopics->isEmpty())
+        {
+            return $this->convertDataFromObjectToArray($aTopics);
+        }
+
+        return array();
+    }
+    public function convertDataFromObjectToArray($oData)
+    {
+        $aConvert=array();
+
+        foreach ($oData as $iKey => $aData)
+        {
+            foreach ($aData as $sIndex => $value)
+            {
+                $aConvert[$iKey][$sIndex] = $value;
+            }
+        }
+        return $aConvert;
+    }
+
+    public function approveTopic($iTopicId)
+    {
+        if(!empty($iTopicId))
+        {
+            DB::table('topic')
+                ->where('topic_id',$iTopicId)
+                ->update([
+                    'status' => 2
+                ]);
+            return true;
+        }
+        return false;
+    }
+
+    public function removeTopic($iTopicId)
+    {
+        if(!empty($iTopicId))
+        {
+            DB::table('topic')
+                ->where('topic_id',$iTopicId)
+                ->update([
+                    'status' => 3
+                ]);
+            return true;
+        }
+        return false;
     }
 }
 

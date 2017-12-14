@@ -54,7 +54,7 @@ class LoginController extends Controller
             return view('Login',['error' => 'Login Failed']);
         }
     }
-    public function checkAutoLogin()
+    public function checkAutoLogin($bGetUserGroup = false)
     {
         $user_id= 0;
         $user_hash = '';
@@ -67,9 +67,9 @@ class LoginController extends Controller
         $aUser=$this->oUserModel->getUserInfo($user_id);
         if(!empty($aUser))
         {
-            return (!empty($user_hash) ? ($user_hash === $aUser['password'] ? true : false) : true );
+            return ( $bGetUserGroup ? array((!empty($user_hash) ? ($user_hash === $aUser['password'] ? true : false) : true ),$aUser['group_id']) : (!empty($user_hash) ? ($user_hash === $aUser['password'] ? true : false) : false ) );
         }
-        return false;
+        return ($bGetUserGroup ? array(false, false) : false);
 
     }
 }

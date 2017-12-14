@@ -27,4 +27,9 @@ class UserModel extends Model
         }
         return false;
     }
+
+    public function getUserGroup($iUserId)
+    {
+        return DB::table('user')->where('user_id',$iUserId)->value('group_id');
+    }
 }

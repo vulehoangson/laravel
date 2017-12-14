@@ -10,7 +10,7 @@ class UploadController extends Controller
     public function process(Request $request )
     {
         $oUser=new LoginController();
-        $bLogin=$oUser->checkAutoLogin();
+        list($bLogin,$iUserGroup)=$oUser->checkAutoLogin(true);
         if(!$bLogin)
         {
             return back();
@@ -35,8 +35,7 @@ class UploadController extends Controller
         {
             $aFrontend['aCurrencies'] = $aCurrencies;
         }
-        $oUser=new LoginController();
-        $bLogin=$oUser->checkAutoLogin();
-        return view('upload',['aFrontend' => $aFrontend, 'bLogin' => $bLogin]);
+
+        return view('upload',['aFrontend' => $aFrontend, 'bLogin' => $bLogin,'iUserGroup' => $iUserGroup]);
     }
 }

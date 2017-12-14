@@ -12,7 +12,7 @@ class IndexController extends Controller
     public function process()
     {
         $oUser=new LoginController();
-        $bLogin=$oUser->checkAutoLogin();
-        return view('index',['bLogin' => $bLogin]);
+        list($bLogin,$iUserGroup)=$oUser->checkAutoLogin(true);
+        return view('index',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup]);
     }
 }

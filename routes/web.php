@@ -31,3 +31,5 @@ Route::get('/profile/{user_id}','Profile\ProfileController@process');
 Route::get('/upload','Topic\UploadController@process');
 Route::post('/upload','Topic\UploadController@process');
 Route::get('/admincp','AdminCP\IndexController@process');
+Route::post('/topic/approve','Ajax\AjaxController@approveTopic');
+Route::post('/topic/remove','Ajax\AjaxController@removeTopic');

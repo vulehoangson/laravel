@@ -12,9 +12,10 @@ class ProfileController extends Controller
     public function process($iUserId)
     {
         $oUser=new LoginController();
-        $bLogin=$oUser->checkAutoLogin();
+        list($bLogin,$iUserGroup)=$oUser->checkAutoLogin(true);
         return view('profile',[
-            'bLogin' => $bLogin
+            'bLogin' => $bLogin,
+            'iUserGroup' => $iUserGroup
         ]);
     }
 }

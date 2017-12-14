@@ -25,7 +25,8 @@ class SignupModel extends Model
             $password_hash=Hash::make($this->password);
             $iId=DB::table('user')->insertGetId([
                 'username' => $this->username,
-                'password' => $password_hash
+                'password' => $password_hash,
+                'group_id' => 3
             ]);
             return $iId;
         }
