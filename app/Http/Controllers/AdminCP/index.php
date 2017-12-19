@@ -2,34 +2,40 @@
 namespace App\Http\Controllers\AdminCP;
 
 use App\Http\Controllers\Controller;
+use App\Topic\CategoryModel;
 use App\Topic\TopicModel;
 use App\Http\Controllers\User\LoginController;
 use App\User\UserModel;
 class IndexController extends Controller
 {
     private $oTopicModel;
-
+    private $oCategoryModel;
     public function __construct()
     {
         $this->oTopicModel=new TopicModel();
+        $this->oCategoryModel = new CategoryModel();
     }
 
     public function process()
     {
         $oUser=new LoginController();
         list($bLogin,$iUserGroup)=$oUser->checkAutoLogin(true);
-        if( ($iUserGroup != 1 &&  $iUserGroup != 2) && (url()->current() != url()->previous()) )
+        if( ((int)$iUserGroup != 1 &&  (int)$iUserGroup != 2))
         {
-            return back();
+            if(url()->current() != url()->previous())
+            {
+                return back();
+            }
+            else
+            {
+                return redirect(url(''));
+            }
         }
-        else
-        {
-            return redirect(url(''));
-        }
-
         $aApprovedWatingTopics=$this->oTopicModel->getApprovedWaitingTopics();
+        $aCategories = $this->oCategoryModel->getList();
         $aFrontend=array(
-            'aTopics' => $aApprovedWatingTopics
+            'aTopics' => $aApprovedWatingTopics,
+            'aCategories' => $aCategories
         );
 
 

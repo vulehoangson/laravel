@@ -18,11 +18,8 @@
         {
             margin-bottom: 5px;
             padding: 10px 0;
-        }
-        .admincp-index .option ul li a
-        {
-            color: #dddddd;
-            text-decoration: none;
+            cursor: pointer;
+            color: white;
         }
         .container
         {
@@ -65,15 +62,23 @@
             max-width: 500px;
             margin: 20px auto;
         }
+        .selected
+        {
+            background-color: #f4645f;
+            padding: 10px 15px !important;
+        }
     </style>
     <div class="admincp-index">
         <div class="option col-md-2" style="background: #0c0c0c;text-align: left;">
             <ul>
-                <li>
-                    <a href="javascript:void(0)" data-tab="tab-1">DashBoard</a>
+                <li data-tab="tab-1" class="selected">
+                    DashBoard
                 </li>
-                <li>
-                    <a href="javascript:void(0)" data-tab="tab-2">Danh Sách Chờ Duyệt</a>
+                <li data-tab="tab-2">
+                    Danh Sách Chờ Duyệt
+                </li>
+                <li data-tab="tab-3">
+                    Quản lý Danh mục
                 </li>
             </ul>
         </div>
@@ -84,21 +89,42 @@
             <div id="tab-2" style="width: 100%;" class="tab-content hide">
                 <h1 style="text-align: center">Danh sách Topic chờ duyệt</h1>
                 <div class="list col-md-12" style="padding: 0  30px">
+                    @if(!empty($aFrontend['aTopics']))
+                        @foreach($aFrontend['aTopics'] as $aTopic)
+                        <div class="col-md-6 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5; width: 45%;margin-right: 20px;margin-bottom: 20px;">
+                            <div class="title" style="height: auto; color: #808080; margin-bottom: 10px; padding: 0 10px;">
+                                <a href=""><h2>{{ $aTopic['title'] }}</h2></a>
+                            </div>
+                            <div class="description" style="padding: 0 10px;margin-bottom: 15px;">
+                                <h4>{{ $aTopic['description'] }}</h4>
+                            </div>
+                            <div class="approve-remove" style="padding: 0 10px;">
+                                <button class="btn btn-success approve" style="margin-right: 20px;" data-id="{{ $aTopic['topic_id'] }}">Chấp nhận</button>
+                                <button class="btn btn-danger remove" data-id="{{ $aTopic['topic_id'] }}">Xóa</button>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            <div class="tab-content hide" id="tab-3">
+                <h1 style="text-align: center">Danh mục</h1>
+                <div class="list col-md-12" style="padding: 0  30px">
+                    @if(!empty($aFrontend['aCategories']))
+                        @foreach($aFrontend['aCategories'] as $aCategory)
+                            <div class="col-md-6 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5; width: 45%;margin-right: 20px;margin-bottom: 20px;">
+                                <div class="title" style="height: auto; color: #808080; margin-bottom: 10px; padding: 0 30px;">
+                                    <a href=""><h3>{{ $aCategory['title'] }}</h3></a>
+                                </div>
+                                <div class="optional-button" style="padding: 0 30px;">
+                                    <button class="btn btn-success see" style="margin-right: 20px;width: 90px" data-id="{{ $aCategory['category_id'] }}">Xem</button>
+                                    <button class="btn btn-warning update" data-id="{{ $aCategory['category_id'] }}" style="margin-right: 20px;width: 90px">Cập nhật</button>
+                                    <button class="btn btn-danger delete" data-id="{{ $aCategory['category_id'] }}" style="margin-right: 20px;width: 90px">Xóa</button>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
 
-                    @foreach($aFrontend['aTopics'] as $aTopic)
-                    <div class="col-md-6 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5; width: 45%;margin-right: 20px;margin-bottom: 20px;">
-                        <div class="title" style="height: auto; color: #808080; margin-bottom: 10px; padding: 0 10px;">
-                            <a href=""><h2>{{ $aTopic['title'] }}</h2></a>
-                        </div>
-                        <div class="description" style="padding: 0 10px;margin-bottom: 15px;">
-                            <h4>{{ $aTopic['description'] }}</h4>
-                        </div>
-                        <div class="approve-remove" style="padding: 0 10px;">
-                            <button class="btn btn-success approve" style="margin-right: 20px;" data-id="{{ $aTopic['topic_id'] }}">Chấp nhận</button>
-                            <button class="btn btn-danger remove" data-id="{{ $aTopic['topic_id'] }}">Xóa</button>
-                        </div>
-                    </div>
-                    @endforeach
                 </div>
             </div>
         </div>
@@ -109,10 +135,12 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $('.option ul li a').click(function(){
+            $('.option ul li').click(function(){
                 var tab=$(this).data('tab');
                 $('.tab-content').addClass('hide');
+                $('.option ul li').removeClass('selected');
                 $('#'+ tab).removeClass('hide');
+                $(this).addClass('selected');
             });
 
             $('.admincp-index').on('click','.approve',function(){

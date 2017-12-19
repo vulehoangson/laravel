@@ -120,6 +120,56 @@ INSERT INTO `topic` VALUES (1,'qwfqwf',1,1111111,'dgssdgsd','11111111111111111',
 UNLOCK TABLES;
 
 --
+-- Table structure for table `topic_category`
+--
+
+DROP TABLE IF EXISTS `topic_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic_category` (
+  `category_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `used` int(10) DEFAULT '0',
+  `time_stamp` int(10) DEFAULT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic_category`
+--
+
+LOCK TABLES `topic_category` WRITE;
+/*!40000 ALTER TABLE `topic_category` DISABLE KEYS */;
+INSERT INTO `topic_category` VALUES (1,'Tất cả',0,1513678325),(2,'Cá cảnh',0,1513678325),(3,'Chó & Mèo',0,1513678325),(4,'Thỏ, Hamster và Nhím',0,1513678325),(5,'Bò sát',0,1513678325),(6,'Các loại thú nuôi khác',0,1513678325);
+/*!40000 ALTER TABLE `topic_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topic_category_data`
+--
+
+DROP TABLE IF EXISTS `topic_category_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic_category_data` (
+  `data_id` int(10) unsigned NOT NULL,
+  `category_id` int(10) NOT NULL,
+  `topic_id` int(10) NOT NULL,
+  PRIMARY KEY (`data_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic_category_data`
+--
+
+LOCK TABLES `topic_category_data` WRITE;
+/*!40000 ALTER TABLE `topic_category_data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topic_category_data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -178,4 +228,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-14 18:41:57
+-- Dump completed on 2017-12-19 18:02:09

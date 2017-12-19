@@ -303,6 +303,7 @@ class ComposerStaticInit65739a29dfa87fa65cc3292291d59954
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Topic\\CategoryModel' => __DIR__ . '/../..' . '/app/Topic/Category.php',
         'App\\Topic\\TopicModel' => __DIR__ . '/../..' . '/app/Topic/Topic.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\User\\LoginModel' => __DIR__ . '/../..' . '/app/User/Login.php',
