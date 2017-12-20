@@ -4,9 +4,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helper\Helper;
 use App\Topic\TopicModel;
+use App\Topic\CategoryModel;
 use App\Http\Controllers\User\LoginController;
 class UploadController extends Controller
 {
+    private $oCategoryModel;
+    private $oTopicModel;
+    public function __construct()
+    {
+        $this->oCategoryModel= new CategoryModel();
+        $this->oTopicModel = new TopicModel();
+    }
+
     public function process(Request $request )
     {
         $oUser=new LoginController();
@@ -17,11 +26,13 @@ class UploadController extends Controller
         }
         $aVals= $request->all();
         $aCurrencies=Helper::getCurrencies();
+        $aCategories = $this->oCategoryModel->getList([
+            ['is_root','<>',1]
+        ]);
         $aFrontend=array();
         if(!empty($aVals))
         {
-            $oTopicModel=new TopicModel($aVals);
-            $iId=$oTopicModel->_add();
+            $iId=$this->oTopicModel->_add($aVals);
             if(!empty($iId))
             {
                 $aFrontend['success']='Upload thành công';
@@ -34,6 +45,10 @@ class UploadController extends Controller
         if(!empty($aCurrencies))
         {
             $aFrontend['aCurrencies'] = $aCurrencies;
+        }
+        if(!empty($aCategories))
+        {
+            $aFrontend['aCategories'] = $aCategories;
         }
 
         return view('upload',['aFrontend' => $aFrontend, 'bLogin' => $bLogin,'iUserGroup' => $iUserGroup]);

@@ -21,6 +21,15 @@
             cursor: pointer;
             color: white;
         }
+        .admincp-index .option ul li h5
+        {
+            display: inline-block;
+        }
+        .admincp-index .option ul li i
+        {
+            color: greenyellow;
+            margin-right: 5px;
+        }
         .container
         {
             padding: 0 !important;
@@ -70,15 +79,24 @@
     </style>
     <div class="admincp-index">
         <div class="option col-md-2" style="background: #0c0c0c;text-align: left;">
+            <div class="back-home" style="border-bottom: 1px solid #dddddd; padding: 20px 10px">
+                <i class="fa fa-home" aria-hidden="true" style="color: greenyellow;margin-right: 5px;"></i>
+                <a href="{{ asset('') }}" style="text-decoration: none; color: white">
+                    Quay lại Trang chủ
+                </a>
+            </div>
             <ul>
                 <li data-tab="tab-1" class="selected">
-                    DashBoard
+                    <i class="fa fa-tachometer" aria-hidden="true" ></i>
+                    <h5>DashBoard</h5>
                 </li>
                 <li data-tab="tab-2">
-                    Danh Sách Chờ Duyệt
+                    <i class="fa fa-list" aria-hidden="true"></i>
+                    <h5>Danh Sách Chờ Duyệt</h5>
                 </li>
                 <li data-tab="tab-3">
-                    Quản lý Danh mục
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    <h5>Quản lý Danh mục</h5>
                 </li>
             </ul>
         </div>
@@ -91,7 +109,7 @@
                 <div class="list col-md-12" style="padding: 0  30px">
                     @if(!empty($aFrontend['aTopics']))
                         @foreach($aFrontend['aTopics'] as $aTopic)
-                        <div class="col-md-6 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5; width: 45%;margin-right: 20px;margin-bottom: 20px;">
+                        <div class="col-md-12 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5;margin-right: 20px;margin-bottom: 20px;">
                             <div class="title" style="height: auto; color: #808080; margin-bottom: 10px; padding: 0 10px;">
                                 <a href=""><h2>{{ $aTopic['title'] }}</h2></a>
                             </div>
@@ -113,7 +131,7 @@
                     @if(!empty($aFrontend['aCategories']))
                         @foreach($aFrontend['aCategories'] as $aCategory)
                             <div class="col-md-6 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5; width: 45%;margin-right: 20px;margin-bottom: 20px;">
-                                <div class="title" style="height: auto; color: #808080; margin-bottom: 10px; padding: 0 30px;">
+                                <div class="title" style="height: auto; color: #808080; margin-bottom: 25px; padding: 0 30px;">
                                     <a href=""><h3>{{ $aCategory['title'] }}</h3></a>
                                 </div>
                                 <div class="optional-button" style="padding: 0 30px;">
@@ -135,6 +153,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
+            $('.header-introduction').hide();
             $('.option ul li').click(function(){
                 var tab=$(this).data('tab');
                 $('.tab-content').addClass('hide');

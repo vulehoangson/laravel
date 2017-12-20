@@ -27,6 +27,17 @@
             </div>
 
             <div>
+                <div><b>Chọn Danh mục</b> :</div>
+                <select id="category" class="form-control" name="category">
+                    @if(!empty($aFrontend['aCategories']))
+                        @foreach($aFrontend['aCategories'] as $aCategory)
+                            <option value="{{ $aCategory['category_id'] }}">{{ $aCategory['title'] }}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
+
+            <div>
                 <div><b>Chọn tiền tệ</b> :</div>
                 <select id="currency" class="form-control" name="currency">
                     @if(!empty($aFrontend['aCurrencies']))
@@ -71,11 +82,11 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            if(bError)
+            /*if(bError)
             {
                 $( "div.error" ).fadeIn( 500 ).delay( 1500 ).fadeOut( 500 );
             }
-
+*/
             if(bSuccess)
             {
                 $( "div.success" ).fadeIn( 500 ).delay( 1500 ).fadeOut( 500 );

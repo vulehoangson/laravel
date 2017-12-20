@@ -4,31 +4,41 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Cookie\CookieController;
 use App\Http\Controllers\Session\SessionController;
+use App\Helper\Helper;
 class TopicModel extends Model
 {
-    private $_aTopic;
-
-    public function __construct($aTopic=array())
+    private $oHelper;
+    public function __construct()
     {
-        $this->_aTopic = $aTopic;
+        $this->oHelper = new Helper();
     }
-
-
-    public function _add()
+    public function _add($aVals = array())
     {
         $iUserId=!empty(SessionController::getSession('user_id')) ? SessionController::getSession('user_id') : (!empty(CookieController::getCookie('user_id')) ? CookieController::getCookie('user_id') : 0 );
         if(!empty($iUserId))
         {
             $iId=DB::table('topic')->insertGetId([
-                'title' => $this->_aTopic['name'],
-                'currency' => (int)$this->_aTopic['currency'],
-                'price' => (int)$this->_aTopic['price'],
-                'description' => $this->_aTopic['description'],
-                'address' => $this->_aTopic['address'],
-                'phone' => $this->_aTopic['phone'],
+                'title' => $aVals['name'],
+                'currency' => (int)$aVals['currency'],
+                'price' => (int)$aVals['price'],
+                'description' => $aVals['description'],
+                'address' => $aVals['address'],
+                'phone' => $aVals['phone'],
                 'user_id' => $iUserId,
                 'status' => 1
             ]);
+
+            DB::table('topic_category_data')->insert([
+                'category_id' => $aVals['category'],
+                'topic_id' => $iId
+            ]);
+
+            DB::table('topic_category')->Where([
+                    ['category_id','=',$aVals['category']],
+                ])
+                ->orWhere([
+                    ['is_root','=',1]
+                ])->increment('used');
             return $iId;
         }
         return false;
@@ -56,27 +66,10 @@ class TopicModel extends Model
                         ['user_id','<>',0],
                         ['status','=',1]
                     ])->get();
-        if(!$aTopics->isEmpty())
-        {
-            return $this->convertDataFromObjectToArray($aTopics);
-        }
+        return $this->oHelper->convertDataFromObjectToArray($aTopics);
 
-        return array();
     }
-    public function convertDataFromObjectToArray($oData)
-    {
-        $aConvert=array();
-
-        foreach ($oData as $iKey => $aData)
-        {
-            foreach ($aData as $sIndex => $value)
-            {
-                $aConvert[$iKey][$sIndex] = $value;
-            }
-        }
-        return $aConvert;
-    }
-
+    
     public function approveTopic($iTopicId)
     {
         if(!empty($iTopicId))
