@@ -54,10 +54,18 @@
 </style>
 <div class="homepage" style="">
     <div class="search" style="padding: 0 15px;">
+
         <h2>Tìm kiếm sản phẩm</h2>
-        <div class="box-search" style="">
-            <input type="text" class="form-control" id="search" name="search" placeholder="Tìm kiếm sản phẩm..." style="height: 60px;">
-        </div>
+        <form id="form_search" method="POST" action="{{ action('Topic\SearchController@process') }}">
+            {!! csrf_field() !!}
+            <div class="box-search" style="position: relative;">
+                <input type="text" class="form-control" id="search" name="search" placeholder="Tìm kiếm sản phẩm..." style="height: 60px;display: inline-block;width: 93%">
+                <button type="submit" id="submit_header" style="display: inline-block;width: 60px;border: none;height: 60px;background-color: #ce1126;position: absolute;font-size: 26px;top: 10px;">
+                    <i class="fa fa-search" style="color: #ffffff"></i>
+                </button>
+            </div>
+        </form>
+
 
     </div>
     <div style="margin: 40px 0 35px 0; border-bottom: 1px solid #dddddd"></div>

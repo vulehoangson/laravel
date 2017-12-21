@@ -105,8 +105,9 @@ CREATE TABLE `topic` (
   `phone` varchar(11) NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   `status` int(10) unsigned NOT NULL,
+  `time_stamp` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`topic_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +116,7 @@ CREATE TABLE `topic` (
 
 LOCK TABLES `topic` WRITE;
 /*!40000 ALTER TABLE `topic` DISABLE KEYS */;
-INSERT INTO `topic` VALUES (1,'qwfqwf',1,1111111,'dgssdgsd','11111111111111111','11111111111',2,2),(2,'bbbbbbbbbbbbbbbbbbbbbbbbbb',1,120000,'cccccccccccccccccccccc','ccccccccccccccccccc','0123456789',1,2);
+INSERT INTO `topic` VALUES (1,'Bán cặp Koi Yellow Thái tại Quận 8 TPHCM',1,650000,'Cá Thái nhập','1953/3/2 Phạm Thế Hiển P6 Q8 TPHCM','0933640651',1,2,1513766253),(2,'Bán mèo tam thể tại Q8 TPHCM',1,250000,'Mèo khỏe mạnh, đã được 1 năm tuổi','1953/3/2 Phạm Thế Hiển P6 Q8 TPHCM','0975080330',1,2,1513766253),(3,'Bán nhím xù tại Q8 TPHCM',1,180000,'Nhím đực, được 5 tháng tuổi','1953/3/2 Phạm Thế Hiển P6 Q8 TPHCM','0933640651',1,2,1513766253),(4,'Bán thằn lằn rừng Châu Phi tại Q8 TPHCM',1,500000,'Thằn lằn Châu Phi, được 3 tháng tuổi','1953/3/2 Phạm Thế Hiển P6 Q8 TPHCM','0933640651',1,2,1513766253),(5,'Bán chim trích tại Q8 TPHCM',1,100000,'Chim được 6 tháng, bao chuồng','1953/3/2 Phạm Thế Hiển P6 Q8 TPHCM','0975080330',1,2,1513766253);
 /*!40000 ALTER TABLE `topic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,6 +132,7 @@ CREATE TABLE `topic_category` (
   `title` varchar(255) NOT NULL,
   `used` int(10) DEFAULT '0',
   `time_stamp` int(10) DEFAULT NULL,
+  `is_root` int(10) DEFAULT '0',
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -141,7 +143,7 @@ CREATE TABLE `topic_category` (
 
 LOCK TABLES `topic_category` WRITE;
 /*!40000 ALTER TABLE `topic_category` DISABLE KEYS */;
-INSERT INTO `topic_category` VALUES (1,'Tất cả',0,1513678325),(2,'Cá cảnh',0,1513678325),(3,'Chó & Mèo',0,1513678325),(4,'Thỏ, Hamster và Nhím',0,1513678325),(5,'Bò sát',0,1513678325),(6,'Các loại thú nuôi khác',0,1513678325);
+INSERT INTO `topic_category` VALUES (1,'Tất cả',5,1513678325,1),(2,'Cá cảnh',1,1513678325,0),(3,'Chó & Mèo',1,1513678325,0),(4,'Thỏ, Hamster và Nhím',1,1513678325,0),(5,'Bò sát',1,1513678325,0),(6,'Các loại thú nuôi khác',1,1513678325,0);
 /*!40000 ALTER TABLE `topic_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,11 +155,11 @@ DROP TABLE IF EXISTS `topic_category_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `topic_category_data` (
-  `data_id` int(10) unsigned NOT NULL,
+  `data_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `category_id` int(10) NOT NULL,
   `topic_id` int(10) NOT NULL,
   PRIMARY KEY (`data_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,6 +168,7 @@ CREATE TABLE `topic_category_data` (
 
 LOCK TABLES `topic_category_data` WRITE;
 /*!40000 ALTER TABLE `topic_category_data` DISABLE KEYS */;
+INSERT INTO `topic_category_data` VALUES (1,2,1),(2,3,2),(3,4,3),(4,5,4),(5,6,5);
 /*!40000 ALTER TABLE `topic_category_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-19 18:02:09
+-- Dump completed on 2017-12-21 16:05:25
