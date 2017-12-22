@@ -35,3 +35,4 @@ Route::post('/topic/approve','Ajax\AjaxController@approveTopic');
 Route::post('/topic/remove','Ajax\AjaxController@removeTopic');
 Route::post('/topic/search','Topic\SearchController@process');
 Route::get('/topic/search','Topic\SearchController@process');
+Route::get('/ping', 'Solr\SolariumController@search');

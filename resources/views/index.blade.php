@@ -53,7 +53,7 @@
 
 </style>
 <div class="homepage" style="">
-    <div class="search" style="padding: 0 15px;">
+    <div class="search " style="padding: 0 15px;">
 
         <h2>Tìm kiếm sản phẩm</h2>
         <form id="form_search" method="POST" action="{{ action('Topic\SearchController@process') }}">
@@ -103,5 +103,35 @@
 
     </div>
 </div>
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
+        $('#search').autocomplete({
+            source: availableTags
+        });
+    });
+</script>
 @endsection

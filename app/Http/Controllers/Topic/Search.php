@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Topic;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\User\LoginController;
-use App\Solr\SolrModel;
+use App\Solr\Solr;
 class SearchController extends Controller
 {
     private $solr;
     public function __construct()
     {
-        $this->solr = new SolrModel();
+        $this->solr = new Solr();
     }
 
     public function process(Request $request)
@@ -18,7 +18,12 @@ class SearchController extends Controller
         $aVals = $request->all();
         if(!empty($aVals))
         {
-            return view('Search',[]);
+            $aParams = array(
+                'query' => 'topic_title : "*'.$aVals['search'].'*"',
+                'field' => '*',
+                'sort' => 'desc'
+            );
+            $aResult = $this->solr->search($aParams);
         }
         return view('Search',[]);
 
