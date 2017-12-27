@@ -1,0 +1,112 @@
+2017-12-27 08:54:05.974 INFO  (main) [   ] o.e.j.s.Server jetty-9.3.20.v20170531
+2017-12-27 08:54:27.638 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 7.1.0
+2017-12-27 08:54:27.638 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
+2017-12-27 08:54:27.638 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /opt/solr_7.1.0, Default config dir: /opt/solr_7.1.0/server/solr/configsets/_default/conf
+2017-12-27 08:54:27.652 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2017-12-27T08:54:27.639Z
+2017-12-27 08:54:27.652 INFO  (main) [   ] o.a.s.u.StartupLoggingUtils Property solr.log.muteconsole given. Muting ConsoleAppender named CONSOLE
+2017-12-27 08:54:27.673 INFO  (main) [   ] o.a.s.c.SolrResourceLoader Using system property solr.solr.home: /opt/solr_7.1.0/server/solr
+2017-12-27 08:54:27.679 INFO  (main) [   ] o.a.s.c.SolrXmlConfig Loading container configuration from /opt/solr_7.1.0/server/solr/solr.xml
+2017-12-27 08:54:50.178 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found 1 core definitions underneath /opt/solr_7.1.0/server/solr
+2017-12-27 08:54:50.180 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Cores are: [test]
+2017-12-27 08:54:50.184 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.TransientSolrCoreCacheDefault Allocating transient cache for 2147483647 transient cores
+2017-12-27 08:54:50.289 INFO  (main) [   ] o.e.j.s.Server Started @54037ms
+2017-12-27 08:54:50.294 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.c.SolrResourceLoader [test] Added 57 libs to classloader, from paths: [/opt/solr_7.1.0/contrib/clustering/lib, /opt/solr_7.1.0/contrib/dataimporthandler/lib, /opt/solr_7.1.0/contrib/extraction/lib, /opt/solr_7.1.0/contrib/langid/lib, /opt/solr_7.1.0/contrib/velocity/lib, /opt/solr_7.1.0/dist]
+2017-12-27 08:54:50.506 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.c.SolrConfig Using Lucene MatchVersion: 7.1.0
+2017-12-27 08:54:50.699 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.s.IndexSchema [test] Schema name=default-config
+2017-12-27 08:54:54.415 WARN  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.c.SolrResourceLoader Solr loaded a deprecated plugin/analysis class [solr.SynonymFilterFactory]. Please consult documentation how to replace it accordingly.
+2017-12-27 08:54:54.789 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.s.IndexSchema Loaded schema default-config/1.6 with uniqueid field topic_id
+2017-12-27 08:54:54.849 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.c.CoreContainer Creating SolrCore 'test' using configuration from instancedir /opt/solr_7.1.0/server/solr/test, trusted=true
+2017-12-27 08:54:54.914 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.c.SolrCore solr.RecoveryStrategy.Builder
+2017-12-27 08:54:54.923 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.c.SolrCore [[test] ] Opening new SolrCore at [/opt/solr_7.1.0/server/solr/test], dataDir=[/opt/solr_7.1.0/server/solr/test/data/]
+2017-12-27 08:54:54.978 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.r.XSLTResponseWriter xsltCacheLifetimeSeconds=5
+2017-12-27 08:54:55.515 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+2017-12-27 08:54:55.515 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+2017-12-27 08:54:55.577 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.u.CommitTracker Hard AutoCommit: if uncommited for 15000ms; 
+2017-12-27 08:54:55.577 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.u.CommitTracker Soft AutoCommit: disabled
+2017-12-27 08:54:55.829 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.s.SolrIndexSearcher Opening [Searcher@5a469dce[test] main]
+2017-12-27 08:54:56.394 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.r.ManagedResourceStorage File-based storage initialized to use dir: /opt/solr_7.1.0/server/solr/test/conf
+2017-12-27 08:54:56.420 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.h.c.SpellCheckComponent Initializing spell checkers
+2017-12-27 08:54:56.431 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.s.DirectSolrSpellChecker init: {name=default,field=_text_,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+2017-12-27 08:54:56.441 INFO  (coreLoadExecutor-6-thread-1) [   x:test] o.a.s.h.ReplicationHandler Commits will be reserved for 10000ms.
+2017-12-27 08:54:56.572 INFO  (searcherExecutor-7-thread-1-processing-x:test) [   x:test] o.a.s.c.QuerySenderListener QuerySenderListener sending requests to Searcher@5a469dce[test] main{ExitableDirectoryReader(UninvertingDirectoryReader(Uninverting(_5(7.1.0):C5)))}
+2017-12-27 08:54:56.572 INFO  (searcherExecutor-7-thread-1-processing-x:test) [   x:test] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2017-12-27 08:54:56.572 INFO  (searcherExecutor-7-thread-1-processing-x:test) [   x:test] o.a.s.h.c.SpellCheckComponent Loading spell index for spellchecker: default
+2017-12-27 08:54:56.627 INFO  (searcherExecutor-7-thread-1-processing-x:test) [   x:test] o.a.s.c.SolrCore [test] Registered new searcher Searcher@5a469dce[test] main{ExitableDirectoryReader(UninvertingDirectoryReader(Uninverting(_5(7.1.0):C5)))}
+2017-12-27 08:55:00.423 INFO  (qtp20671747-16) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=(topic_title+:+"*lara*"+OR+description+:+"*lara*")&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=0 status=0 QTime=54
+2017-12-27 08:55:00.878 INFO  (qtp20671747-21) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=(topic_title+:+"*lar*"+OR+description+:+"*lar*")&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=0 status=0 QTime=1
+2017-12-27 08:55:02.228 INFO  (qtp20671747-14) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=(topic_title+:+"*meo*"+OR+description+:+"*meo*")&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=1 status=0 QTime=4
+2017-12-27 08:55:03.388 INFO  (qtp20671747-21) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=(topic_title+:+"*me*"+OR+description+:+"*me*")&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=0 status=0 QTime=1
+2017-12-27 08:55:04.747 INFO  (qtp20671747-12) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=(topic_title+:+"*chim*"+OR+description+:+"*chim*")&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=1 status=0 QTime=1
+2017-12-27 09:16:53.845 INFO  (qtp20671747-20) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=*:*&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=5 status=0 QTime=1
+2017-12-27 09:17:47.504 INFO  (qtp20671747-20) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=*:*&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=5 status=0 QTime=0
+2017-12-27 09:18:31.637 INFO  (qtp20671747-21) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=*:*&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=5 status=0 QTime=0
+2017-12-27 09:20:25.895 INFO  (qtp20671747-12) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=*:*&json.nl=flat&omitHeader=true&fl=*&start=0&sort=topic_id+desc&rows=10&wt=json} hits=5 status=0 QTime=0
+2017-12-27 09:20:40.207 INFO  (qtp20671747-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1514366440072} status=0 QTime=2
+2017-12-27 09:20:40.257 INFO  (qtp20671747-17) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=50
+2017-12-27 09:20:40.259 INFO  (qtp20671747-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=50
+2017-12-27 09:20:41.657 INFO  (qtp20671747-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1514366440072} status=0 QTime=0
+2017-12-27 09:20:41.668 INFO  (qtp20671747-17) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=4
+2017-12-27 09:20:41.674 INFO  (qtp20671747-15) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/replication params={wt=json&command=details&_=1514366441645} status=0 QTime=2
+2017-12-27 09:20:41.675 INFO  (qtp20671747-18) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/admin/luke params={numTerms=0&show=index&wt=json&_=1514366441645} status=0 QTime=6
+2017-12-27 09:20:41.681 INFO  (qtp20671747-17) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/admin/ping params={action=status&wt=json&_=1514366440073&ts=1514366440073} status=503 QTime=1
+2017-12-27 09:20:41.689 INFO  (qtp20671747-21) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/admin/system params={wt=json&_=1514366441645} status=0 QTime=16
+2017-12-27 09:20:43.897 INFO  (qtp20671747-15) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1514366440072} status=0 QTime=0
+2017-12-27 09:20:43.905 INFO  (qtp20671747-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=8
+2017-12-27 09:20:46.004 INFO  (qtp20671747-16) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=*:*&_=1514366443812} hits=5 status=0 QTime=1
+2017-12-27 09:40:03.981 INFO  (qtp20671747-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1514366440072} status=0 QTime=0
+2017-12-27 09:40:03.988 INFO  (qtp20671747-12) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/admin/mbeans params={cat=QUERY&wt=json&_=1514367603954} status=0 QTime=0
+2017-12-27 09:40:03.989 INFO  (qtp20671747-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=5
+2017-12-27 09:40:04.082 INFO  (qtp20671747-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1514366440072} status=0 QTime=0
+2017-12-27 09:40:04.100 INFO  (qtp20671747-19) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/admin/mbeans params={cat=QUERY&wt=json&_=1514367603954} status=0 QTime=6
+2017-12-27 09:40:04.107 INFO  (qtp20671747-12) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=15
+2017-12-27 09:40:04.113 INFO  (qtp20671747-14) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/dataimport params={indent=on&wt=json&command=show-config&_=1514367603954} status=0 QTime=11
+2017-12-27 09:40:04.152 INFO  (qtp20671747-20) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/dataimport params={indent=on&wt=json&command=status&_=1514367603954} status=0 QTime=0
+2017-12-27 09:42:58.583 INFO  (qtp20671747-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1514366440072} status=0 QTime=0
+2017-12-27 09:42:58.585 INFO  (qtp20671747-18) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/admin/mbeans params={cat=QUERY&wt=json&_=1514367603954} status=0 QTime=0
+2017-12-27 09:42:58.615 INFO  (qtp20671747-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=29
+2017-12-27 09:42:58.651 INFO  (qtp20671747-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1514366440072} status=0 QTime=0
+2017-12-27 09:42:58.658 INFO  (qtp20671747-12) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/admin/mbeans params={cat=QUERY&wt=json&_=1514367603954} status=0 QTime=0
+2017-12-27 09:42:58.662 INFO  (qtp20671747-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=9
+2017-12-27 09:42:58.666 INFO  (qtp20671747-14) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/dataimport params={indent=on&wt=json&command=show-config&_=1514367603954} status=0 QTime=0
+2017-12-27 09:42:58.693 INFO  (qtp20671747-19) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/dataimport params={indent=on&wt=json&command=status&_=1514367603954} status=0 QTime=0
+2017-12-27 09:42:59.875 INFO  (qtp20671747-18) [   x:test] o.a.s.h.d.DataImporter Loading DIH Configuration: data-config.xml
+2017-12-27 09:42:59.885 INFO  (qtp20671747-18) [   x:test] o.a.s.h.d.c.DIHConfiguration The field :category_title present in DataConfig does not have a counterpart in Solr Schema
+2017-12-27 09:42:59.885 INFO  (qtp20671747-18) [   x:test] o.a.s.h.d.c.DIHConfiguration The field :category_id present in DataConfig does not have a counterpart in Solr Schema
+2017-12-27 09:42:59.885 INFO  (qtp20671747-18) [   x:test] o.a.s.h.d.c.DIHConfiguration The field :currency_title present in DataConfig does not have a counterpart in Solr Schema
+2017-12-27 09:42:59.885 INFO  (qtp20671747-18) [   x:test] o.a.s.h.d.c.DIHConfiguration The field :username present in DataConfig does not have a counterpart in Solr Schema
+2017-12-27 09:42:59.885 INFO  (qtp20671747-18) [   x:test] o.a.s.h.d.DataImporter Data Configuration loaded successfully
+2017-12-27 09:42:59.898 INFO  (qtp20671747-18) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/dataimport params={core=test&optimize=false&indent=on&commit=true&name=dataimport&clean=true&wt=json&command=full-import&_=1514367603954&verbose=false} status=0 QTime=23
+2017-12-27 09:42:59.898 INFO  (Thread-14) [   x:test] o.a.s.h.d.DataImporter Starting Full Import
+2017-12-27 09:42:59.902 INFO  (qtp20671747-17) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/dataimport params={indent=on&wt=json&command=status&_=1514367603954} status=0 QTime=0
+2017-12-27 09:42:59.912 INFO  (Thread-14) [   x:test] o.a.s.h.d.SimplePropertiesWriter Read dataimport.properties
+2017-12-27 09:42:59.994 INFO  (Thread-14) [   x:test] o.a.s.s.SolrIndexSearcher Opening [Searcher@55b07596[test] realtime]
+2017-12-27 09:43:00.038 INFO  (Thread-14) [   x:test] o.a.s.h.d.JdbcDataSource Creating a connection for entity topic with URL: jdbc:mysql://localhost:3306/laravel
+2017-12-27 09:43:00.265 INFO  (Thread-14) [   x:test] o.a.s.h.d.JdbcDataSource Time taken for getConnection(): 226
+2017-12-27 09:43:00.270 INFO  (Thread-14) [   x:test] o.a.s.h.d.JdbcDataSource Creating a connection for entity topic_category_data with URL: jdbc:mysql://localhost:3306/laravel
+2017-12-27 09:43:00.273 INFO  (Thread-14) [   x:test] o.a.s.h.d.JdbcDataSource Time taken for getConnection(): 2
+2017-12-27 09:43:00.275 INFO  (Thread-14) [   x:test] o.a.s.h.d.JdbcDataSource Creating a connection for entity user with URL: jdbc:mysql://localhost:3306/laravel
+2017-12-27 09:43:00.278 INFO  (Thread-14) [   x:test] o.a.s.h.d.JdbcDataSource Time taken for getConnection(): 2
+2017-12-27 09:43:00.281 INFO  (Thread-14) [   x:test] o.a.s.h.d.JdbcDataSource Creating a connection for entity currency with URL: jdbc:mysql://localhost:3306/laravel
+2017-12-27 09:43:00.283 INFO  (Thread-14) [   x:test] o.a.s.h.d.JdbcDataSource Time taken for getConnection(): 2
+2017-12-27 09:43:00.329 INFO  (Thread-14) [   x:test] o.a.s.h.d.DocBuilder Import completed successfully
+2017-12-27 09:43:00.329 INFO  (Thread-14) [   x:test] o.a.s.u.DirectUpdateHandler2 start commit{_version_=1587929709626261504,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false,prepareCommit=false}
+2017-12-27 09:43:00.329 INFO  (Thread-14) [   x:test] o.a.s.u.SolrIndexWriter Calling setCommitData with IW:org.apache.solr.update.SolrIndexWriter@4593cbab commitCommandVersion:1587929709626261504
+2017-12-27 09:43:00.412 INFO  (Thread-14) [   x:test] o.a.s.s.SolrIndexSearcher Opening [Searcher@7a73b6bd[test] main]
+2017-12-27 09:43:00.415 INFO  (searcherExecutor-7-thread-1-processing-x:test) [   x:test] o.a.s.c.QuerySenderListener QuerySenderListener sending requests to Searcher@7a73b6bd[test] main{ExitableDirectoryReader(UninvertingDirectoryReader(Uninverting(_6(7.1.0):C5)))}
+2017-12-27 09:43:00.415 INFO  (searcherExecutor-7-thread-1-processing-x:test) [   x:test] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2017-12-27 09:43:00.415 INFO  (searcherExecutor-7-thread-1-processing-x:test) [   x:test] o.a.s.c.SolrCore [test] Registered new searcher Searcher@7a73b6bd[test] main{ExitableDirectoryReader(UninvertingDirectoryReader(Uninverting(_6(7.1.0):C5)))}
+2017-12-27 09:43:00.415 INFO  (Thread-14) [   x:test] o.a.s.u.DirectUpdateHandler2 end_commit_flush
+2017-12-27 09:43:00.417 INFO  (Thread-14) [   x:test] o.a.s.h.d.SimplePropertiesWriter Read dataimport.properties
+2017-12-27 09:43:00.417 INFO  (Thread-14) [   x:test] o.a.s.h.d.SimplePropertiesWriter Wrote last indexed time to dataimport.properties
+2017-12-27 09:43:00.417 INFO  (Thread-14) [   x:test] o.a.s.h.d.DocBuilder Time taken = 0:0:0.504
+2017-12-27 09:43:00.417 INFO  (Thread-14) [   x:test] o.a.s.u.p.LogUpdateProcessorFactory [test]  webapp=/solr path=/dataimport params={core=test&optimize=false&indent=on&commit=true&name=dataimport&clean=true&wt=json&command=full-import&_=1514367603954&verbose=false} status=0 QTime=23{deleteByQuery=*:* (-1587929709218365440),add=[1 (1587929709582221312), 2 (1587929709616824320), 3 (1587929709619970048), 4 (1587929709622067200), 5 (1587929709625212928)],commit=} 0 543
+2017-12-27 09:43:01.356 INFO  (qtp20671747-20) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/dataimport params={indent=on&wt=json&command=status&_=1514367603954} status=0 QTime=0
+2017-12-27 09:43:04.383 INFO  (qtp20671747-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1514366440072} status=0 QTime=0
+2017-12-27 09:43:04.388 INFO  (qtp20671747-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1514366440073} status=0 QTime=4
+2017-12-27 09:43:05.718 INFO  (qtp20671747-19) [   x:test] o.a.s.c.S.Request [test]  webapp=/solr path=/select params={q=*:*&_=1514366443812} hits=5 status=0 QTime=0
+2017-12-27 09:43:21.547 INFO  (ShutdownMonitor) [   ] o.a.s.c.CoreContainer Shutting down CoreContainer instance=1608297024
+2017-12-27 09:43:21.548 INFO  (ShutdownMonitor) [   ] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.node, tag=null
+2017-12-27 09:43:21.548 INFO  (ShutdownMonitor) [   ] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.jvm, tag=null
+2017-12-27 09:43:21.548 INFO  (ShutdownMonitor) [   ] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.jetty, tag=null
+2017-12-27 09:43:21.550 INFO  (coreCloseExecutor-12-thread-1) [   x:test] o.a.s.c.SolrCore [test]  CLOSING SolrCore org.apache.solr.core.SolrCore@4f616a40
+2017-12-27 09:43:21.550 INFO  (coreCloseExecutor-12-thread-1) [   x:test] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.core.test, tag=1331784256

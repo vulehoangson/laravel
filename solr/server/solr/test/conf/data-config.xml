@@ -1,0 +1,53 @@
+<dataConfig>
+	<dataSource type="JdbcDataSource" 
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/laravel" 
+            user="root" 
+            password="985632"/>
+<document>
+  <entity name="topic"  
+    query="select * from topic">
+     <field column="topic_id" name="topic_id"/>
+     <field column="title" name="topic_title"/>
+     <field column="currency" name="currency_id"/>
+     <field column="price" name="price"/>
+     <field column="description" name="description"/>
+     <field column="address" name="address"/>      
+     <field column="phone" name="phone"/>
+     <field column="user_id" name="user_id"/>
+     <field column="status" name="status"/>
+     <field column="time_stamp" name="time_stamp"/>
+     <entity name="topic_category_data"
+        pk="data_id"
+        query="SELECT category_id 
+            FROM topic_category_data
+            WHERE topic_id = '${topic.topic_id}'">
+            <field column="category_id" name="category_id"/>
+            <entity name="topic_category"
+                    pk="category_id"
+                    query="SELECT title 
+                        FROM topic_category
+                        WHERE category_id = '${topic_category_data.category_id}'">
+                     <field column="title" name="category_title"/>
+
+            </entity>
+     </entity>
+     <entity name="user"
+            pk="user_id"
+            query="SELECT username 
+                FROM user
+                WHERE user_id = '${topic.user_id}'">
+             <field column="username" name="username"/>
+
+     </entity>
+     <entity name="currency"
+            pk="currency_id"
+            query="SELECT title 
+                FROM currency
+                WHERE currency_id = '${topic.currency}'">
+             <field column="title" name="currency_title"/>
+
+     </entity>
+  </entity>
+</document>
+</dataConfig>

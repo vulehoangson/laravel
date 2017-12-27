@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Session\SessionController;
 use App\Topic\TopicModel;
+use App\Http\Controllers\Topic\SearchController;
 class AjaxController extends Controller
 {
     public function __construct()
@@ -87,5 +88,13 @@ class AjaxController extends Controller
         }
 
         echo json_encode(array('status' => $bRemove, 'sHtml' => $sHtml));
+    }
+    public function searchSuggestion(Request $request)
+    {
+        $sKey = $request->key;
+        $oSearch = new SearchController();
+        $aResult = $oSearch->suggestion($sKey);
+        echo json_encode($aResult);
+
     }
 }

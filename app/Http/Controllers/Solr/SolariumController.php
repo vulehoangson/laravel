@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace App\Http\Controllers\Solr;
 
 use Illuminate\Http\Request;
@@ -33,7 +33,7 @@ class SolariumController extends Controller
     }
     public function createQuery($aParams = array())
     {
-
+        
     }
     public function search($aParams = array())
     {
@@ -64,4 +64,4 @@ class SolariumController extends Controller
         }
         return $aResult;
     }
-}
+}*/

@@ -104,34 +104,41 @@
     </div>
 </div>
 <script type="text/javascript">
+
     $(document).ready(function(){
-        var availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
         $('#search').autocomplete({
-            source: availableTags
-        });
+            minLength: 0,
+            source: function(request,response){
+                var key=$('#search').val();
+                $.ajax({
+                    type: "GET",
+                    url: '/suggestion',
+                    data: {
+                        key : key,
+                    },
+                    success: function(e) {
+                        var oOutput = $.parseJSON(e);
+                        if(oOutput.status)
+                        {
+                            response(oOutput.data);
+                        }
+
+                    }
+                });
+            },
+            open: function() {},
+            close: function() {},
+            focus: function(event,ui) {
+                /* $( "#project" ).val( ui.item.label );
+                 return false;*/
+            },
+            select: function(event, ui) {}
+        }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+            return $( "<li class='ui-menu-item'></li>" )
+                    .data( "item.autocomplete", item )
+                    .append('<div class="ui-menu-item-wrapper">'+item.label+'</div>')
+                    .appendTo( ul );
+        };
     });
 </script>
 @endsection

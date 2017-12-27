@@ -36,3 +36,4 @@ Route::post('/topic/remove','Ajax\AjaxController@removeTopic');
 Route::post('/topic/search','Topic\SearchController@process');
 Route::get('/topic/search','Topic\SearchController@process');
 Route::get('/ping', 'Solr\SolariumController@search');
+Route::get('/suggestion','Ajax\AjaxController@searchSuggestion');

@@ -32,7 +32,38 @@ class Solr extends Model
     }
     public function createQuery($aParams = array())
     {
+        $sQuery = '';
+        unset($aParams['_token']);
+        foreach($aParams as $sIndex => $value)
+        {
+            if(!empty($value) )
+            {
+                if($sIndex = 'search')
+                {
+                    $aWords = explode(' ',$value);
+                    if ((int)count($aWords) === 1)
+                    {
+                        $sQuery.= '(topic_title : "*'.$aWords[0].'*" OR description : "*'.$aWords[0].'*") AND';
+                    }
+                    else
+                    {
+                        $sTemp='(';
+                        foreach($aWords as $aWord)
+                        {
+                            $sTemp.= '(topic_title : "*'.$aWord.'*" OR description : "*'.$aWord.'*") OR';
+                        }
+                        $sQuery = trim($sTemp,' OR').') AND';
 
+                    }
+                }
+                elseif ($sIndex = 'category')
+                {
+
+                }
+
+            }
+        }
+        return trim($sQuery,'AND');
     }
     public function search($aParams = array())
     {
@@ -53,11 +84,10 @@ class Solr extends Model
         if(!empty((int)$resultset->getNumFound()))
         {
             foreach ($resultset as $iKey => $document) {
-
                 // the documents are also iterable, to get all fields
                 foreach ($document as $field => $value) {
                     // this converts multivalue fields to a comma-separated string
-                    $aResult[$iKey][$field] = $value;
+                    $aResult[$iKey][$field] = ($field == 'time_stamp' ? date('d-m-Y H:i:s',$value) : $value);
                 }
             }
         }
