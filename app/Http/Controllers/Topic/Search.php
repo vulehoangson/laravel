@@ -24,7 +24,11 @@ class SearchController extends Controller
         $aParams = array(
             'query' => $this->solr->createQuery($aVals),
             'field' => '*',
-            'sort' => 'desc'
+            'sort' => array(
+                'time_stamp' => 'desc',
+            ),
+            'limit' => 10,
+            'pagination' => 0
         );
         $aResult = $this->solr->search($aParams);
         if(!empty($aResult))
@@ -39,35 +43,42 @@ class SearchController extends Controller
     {
 
         $aResult = array(
-            'status' => false
+            'status' => false,
         );
-        if(!empty($sKey))
-        {
-            $aSuggestion = array(
-                'search' => $sKey
-            );
-            $aParams = array(
-                'query' => $this->solr->createQuery($aSuggestion),
-                'field' => '*',
-                'sort' => 'desc'
-            );
 
-            $aRows = $this->solr->search($aParams);
-            if(!empty($aRows))
+        $aSuggestion = array(
+            'search' => $sKey
+        );
+        
+        /**
+         * create parameters for solr
+         */
+        $aParams = array(
+            'query' => $this->solr->createQuery($aSuggestion),
+            'field' => '*',
+            'sort' => array(
+                'time_stamp' => 'desc',
+            ),
+            'limit' => 10,
+            'pagination' => 0
+        );
+
+        $aRows = $this->solr->search($aParams);
+        if(!empty($aRows))
+        {
+            $aTemp = array();
+            foreach($aRows as $iKey => $aRow)
             {
-                $aTemp = array();
-                foreach($aRows as $iKey => $aRow)
-                {
-                    $temp=array(
-                        'label' => $aRow['topic_title'],
-                        'value' => $aRow['topic_title']
-                    );
-                    $aTemp[] = $temp;
-                }
-                $aResult['data'] = $aTemp;
-                $aResult['status'] = true;
+                $temp=array(
+                    'label' => $aRow['topic_title'],
+                    'value' => $aRow['topic_title']
+                );
+                $aTemp[] = $temp;
             }
+            $aResult['data'] = $aTemp;
+            $aResult['status'] = true;
         }
+
         return $aResult;
     }
 }

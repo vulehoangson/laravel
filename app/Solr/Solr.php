@@ -8,7 +8,10 @@ class Solr extends Model
 {
     protected $client;
     protected $endpoint;
-
+    private $proximity_matching = 1000;
+    
+    
+    
     public function __construct()
     {
         $this->client = new \Solarium\Client(config('solarium'));
@@ -16,6 +19,9 @@ class Solr extends Model
         $this->client->getEndpoint()->setAuthentication('admin','985632');
     }
 
+    /**
+     * @return string
+     */
     public function ping()
     {
         // create a ping query
@@ -30,6 +36,11 @@ class Solr extends Model
             return "ERROR";
         }
     }
+
+    /**
+     * @param array $aParams
+     * @return string
+     */
     public function createQuery($aParams = array())
     {
         $sQuery = '';
@@ -40,21 +51,8 @@ class Solr extends Model
             {
                 if($sIndex = 'search')
                 {
-                    $aWords = explode(' ',$value);
-                    if ((int)count($aWords) === 1)
-                    {
-                        $sQuery.= '(topic_title : "*'.$aWords[0].'*" OR description : "*'.$aWords[0].'*") AND';
-                    }
-                    else
-                    {
-                        $sTemp='(';
-                        foreach($aWords as $aWord)
-                        {
-                            $sTemp.= '(topic_title : "*'.$aWord.'*" OR description : "*'.$aWord.'*") OR';
-                        }
-                        $sQuery = trim($sTemp,' OR').') AND';
-
-                    }
+                    $sQuery.= '(topic_title : "'.$value.'"~'.$this->proximity_matching.'OR description : "'.$value.'"~'.$this->proximity_matching.') AND';
+                    
                 }
                 elseif ($sIndex = 'category')
                 {
@@ -65,9 +63,16 @@ class Solr extends Model
         }
         return trim($sQuery,'AND');
     }
+
+    /**
+     * @param array $aParams
+     * @return array
+     */
     public function search($aParams = array())
     {
         $query = $this->client->createSelect();
+
+        /*-------check query string-------*/
         if(empty($aParams['query']))
         {
             $query->setQuery('*:*');
@@ -76,17 +81,54 @@ class Solr extends Model
         {
             $query->setQuery($aParams['query']);
         }
-        $query->setFields($aParams['field']);
-        $query->addSort('topic_id', ($aParams['sort'] === 'desc' ? $query::SORT_DESC : $query::SORT_ASC));
+
+        /*-------check field-------*/
+        if(!empty($aParams['field']))
+        {
+            $query->setFields($aParams['field']);
+        }
+        else
+        {
+            $query->setFields('*');
+        }
+
+        /*-------check sort-------*/
+        if(!empty($aParams['sort']))
+        {
+            foreach($aParams['sort'] as $sField => $sOrder)
+            {
+                $query->addSort($sField, ($sOrder === 'desc' ? $query::SORT_DESC : $query::SORT_ASC));
+            }
+        }
+
+        /*-------check limit-------*/
+        if(!empty($aParams['limit']))
+        {
+            $query->setRows((int)$aParams['limit']);
+        }
+        else
+        {
+            $query->setRows(10);
+        }
+
+        /*-------check pagination-------*/
+        if(!empty($aParams['pagination']))
+        {
+            $query->setStart($aParams['pagination']);
+        }
+        else
+        {
+            $query->setStart(0);
+        }
+
+
 
         $resultset = $this->client->select($query);
         $aResult = array();
         if(!empty((int)$resultset->getNumFound()))
         {
             foreach ($resultset as $iKey => $document) {
-                // the documents are also iterable, to get all fields
                 foreach ($document as $field => $value) {
-                    // this converts multivalue fields to a comma-separated string
                     $aResult[$iKey][$field] = ($field == 'time_stamp' ? date('d-m-Y H:i:s',$value) : $value);
                 }
             }

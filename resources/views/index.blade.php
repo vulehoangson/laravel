@@ -122,6 +122,10 @@
                         {
                             response(oOutput.data);
                         }
+                        else
+                        {
+                            response(null);
+                        }
 
                     }
                 });
