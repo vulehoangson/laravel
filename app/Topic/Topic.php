@@ -25,7 +25,8 @@ class TopicModel extends Model
                 'address' => $aVals['address'],
                 'phone' => $aVals['phone'],
                 'user_id' => $iUserId,
-                'status' => 1
+                'status' => 1,
+                'time_stamp' => strtotime(date('d-m-Y H:i:s'))
             ]);
 
             DB::table('topic_category_data')->insert([

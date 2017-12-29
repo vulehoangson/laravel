@@ -37,15 +37,7 @@ class Helper extends Model
 
                     foreach ($aData as $sIndex => $value)
                     {
-                        if($sIndex === 'time_stamp')
-                        {
-                            $aConvert[$iKey][$sIndex] = date('d-m-Y H:i:s',$value);
-                        }
-                        else
-                        {
-                            $aConvert[$iKey][$sIndex] = $value;
-                        }
-
+                        $aConvert[$iKey][$sIndex] = ($sIndex === 'time_stamp' ? date('d-m-Y H:i:s',$value) : ($sIndex === 'price' ? $this->formatNumber($value) : $value));
                     }
                 }
             }
@@ -64,6 +56,9 @@ class Helper extends Model
         }
 
         return $aConvert;
+    }
+    public function formatNumber($iNumber,$decimals=0,$dec_point=',', $thousands_sep='.') {
+        return number_format($iNumber,$decimals,$dec_point,$thousands_sep);
     }
 
 }

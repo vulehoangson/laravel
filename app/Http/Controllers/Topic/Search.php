@@ -5,12 +5,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\User\LoginController;
 use App\Solr\Solr;
+use App\Topic\CategoryModel;
 class SearchController extends Controller
 {
     private $solr;
+    private $oCategoryModel;
     public function __construct()
     {
         $this->solr = new Solr();
+        $this->oCategoryModel = new CategoryModel();
     }
 
     public function process(Request $request)
@@ -31,11 +34,15 @@ class SearchController extends Controller
             'pagination' => 0
         );
         $aResult = $this->solr->search($aParams);
+        $aCategories = $this->oCategoryModel->getList([['is_root','<>',1]]);
         if(!empty($aResult))
         {
             $aFrontend['aTopics'] = $aResult;
         }
-
+        if(!empty($aCategories))
+        {
+            $aFrontend['aCategories'] = $aCategories;
+        }
         return view('Search',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'aFrontend' => $aFrontend]);
 
     }

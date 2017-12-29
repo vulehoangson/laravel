@@ -4,12 +4,13 @@ namespace App\Solr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Helper\Helper;
 class Solr extends Model
 {
     protected $client;
     protected $endpoint;
     private $proximity_matching = 1000;
-    
+    private $oHelper;
     
     
     public function __construct()
@@ -17,6 +18,7 @@ class Solr extends Model
         $this->client = new \Solarium\Client(config('solarium'));
         $this->endpoint = $this->client->getEndpoint();
         $this->client->getEndpoint()->setAuthentication('admin','985632');
+        $this->oHelper = new Helper();
     }
 
     /**
@@ -121,7 +123,7 @@ class Solr extends Model
             $query->setStart(0);
         }
 
-
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
 
         $resultset = $this->client->select($query);
         $aResult = array();
@@ -129,7 +131,7 @@ class Solr extends Model
         {
             foreach ($resultset as $iKey => $document) {
                 foreach ($document as $field => $value) {
-                    $aResult[$iKey][$field] = ($field == 'time_stamp' ? date('d-m-Y H:i:s',$value) : $value);
+                    $aResult[$iKey][$field] = ($field == 'time_stamp' ? date('d-m-Y H:i:s',$value) : ($field == 'price' ? $this->oHelper->formatNumber($value) : $value));
                 }
             }
         }

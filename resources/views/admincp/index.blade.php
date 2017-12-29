@@ -109,7 +109,7 @@
                 <div class="list col-md-12" style="padding: 0  30px">
                     @if(!empty($aFrontend['aTopics']))
                         @foreach($aFrontend['aTopics'] as $aTopic)
-                        <div class="col-md-12 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5;margin-right: 20px;margin-bottom: 20px;">
+                        <div class="col-md-6 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5;margin-right: 20px;margin-bottom: 20px;">
                             <div class="title" style="height: auto; color: #808080; margin-bottom: 10px; padding: 0 10px;">
                                 <a href=""><h2>{{ $aTopic['title'] }}</h2></a>
                             </div>
