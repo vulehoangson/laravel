@@ -78,7 +78,7 @@
                                 <h5 style="font-weight:400;">Danh mục: </h5>
                             </div>
                             <div style="width: 84%;display: inline-block;">
-                                <select id="cat" class="form-control" style="display: inline-block;">
+                                <select id="cat" name="cat" class="form-control" style="display: inline-block;">
                                     <option value="0">Tất cả</option>
                                     @if(!empty($aFrontend['aCategories']))
                                         @foreach($aFrontend['aCategories'] as $aCategory)
@@ -95,7 +95,7 @@
                                     <h5 style="font-weight:400 ">Từ ngày: </h5>
                                 </div>
                                 <div style="width: 65%; display: inline-block">
-                                    <input type="text" id="datefrom" value="01/01/{{ date('Y') }}" class="form-control">
+                                    <input type="text" id="datefrom" name="datefrom" value="01-01-{{ (int)date('Y') }}" class="form-control">
                                 </div>
 
                             </div>
@@ -104,7 +104,7 @@
                                     <h5 style="font-weight:400 ">Đến ngày: </h5>
                                 </div>
                                 <div style="width: 65%; display: inline-block">
-                                    <input type="text" id="dateto" value="{{ date('d-m-Y') }}" class="form-control">
+                                    <input type="text" id="dateto" name="dateto" value="{{ date('d-m-Y') }}" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -178,11 +178,17 @@
                 minLength: 0,
                 source: function(request,response){
                     var key=$('#search').val();
+                    var cat = $('#cat').val();
+                    var datefrom = $('#datefrom').val();
+                    var dateto = $('#dateto').val();
                     $.ajax({
                         type: "GET",
                         url: '/suggestion',
                         data: {
-                            key : key,
+                            search : key,
+                            cat : cat,
+                            datefrom : datefrom,
+                            dateto : dateto
                         },
                         success: function(e) {
                             var oOutput = $.parseJSON(e);

@@ -91,7 +91,7 @@ class AjaxController extends Controller
     }
     public function searchSuggestion(Request $request)
     {
-        $sKey = $request->key;
+        $sKey = $request->all();
         $oSearch = new SearchController();
         $aResult = $oSearch->suggestion($sKey);
         echo json_encode($aResult);

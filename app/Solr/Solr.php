@@ -51,14 +51,21 @@ class Solr extends Model
         {
             if(!empty($value) )
             {
-                if($sIndex = 'search')
+                if($sIndex === 'search')
                 {
                     $sQuery.= '(topic_title : "'.$value.'"~'.$this->proximity_matching.'OR description : "'.$value.'"~'.$this->proximity_matching.') AND';
                     
                 }
-                elseif ($sIndex = 'category')
+                elseif ($sIndex === 'cat')
                 {
-
+                    $sQuery.= '(category_id : '.$value.') AND ';
+                }
+                elseif ($sIndex === 'date' )
+                {
+                    if( (int)$value['datefrom'] <= (int)$value['dateto'])
+                    {
+                        $sQuery.='(time_stamp : ['.strtotime($value['datefrom'].' 00:00:00').' TO '.strtotime($value['dateto'].' 23:59:59').']) AND';
+                    }
                 }
 
             }

@@ -23,7 +23,12 @@ class SearchController extends Controller
         list($bLogin,$iUserGroup)=$oUser->checkAutoLogin(true);
 
         $aVals = $request->all();
-
+        $aVals['date'] = !empty($aVals['datefrom']) && !empty($aVals['dateto']) ? array(
+            'datefrom' => $aVals['datefrom'],
+            'dateto' => $aVals['dateto']
+        ) : array();
+        unset($aVals['datefrom']);
+        unset($aVals['dateto']);
         $aParams = array(
             'query' => $this->solr->createQuery($aVals),
             'field' => '*',
@@ -46,22 +51,23 @@ class SearchController extends Controller
         return view('Search',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'aFrontend' => $aFrontend]);
 
     }
-    public function suggestion($sKey = '')
+    public function suggestion($aVals)
     {
 
         $aResult = array(
             'status' => false,
         );
-
-        $aSuggestion = array(
-            'search' => $sKey
+        $aVals['date'] = array(
+            'datefrom' => $aVals['datefrom'],
+            'dateto' => $aVals['dateto']
         );
-        
+        unset($aVals['datefrom']);
+        unset($aVals['dateto']);
         /**
          * create parameters for solr
          */
         $aParams = array(
-            'query' => $this->solr->createQuery($aSuggestion),
+            'query' => $this->solr->createQuery($aVals),
             'field' => '*',
             'sort' => array(
                 'time_stamp' => 'desc',
