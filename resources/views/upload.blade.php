@@ -26,6 +26,9 @@
         .image-preview-input-title {
             margin-left:2px;
         }
+        video::-internal-media-controls-download-button {
+            display:none;
+        }
     </style>
     <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
         <h2>Tạo bài đăng</h2>
@@ -91,22 +94,29 @@
                 <input type="text" name="phone" id="phone" class="form-control"  placeholder="Số điện thoại">
             </div>
 
+            <div class="attachments">
+                <div><b>Đính kèm file (tối đa 4 files)</b>:</div>
+                <div class="attachment-list">
+                    <div class="input-group image-preview" style="width: 35%;margin-bottom: 15px;position: relative;" data-id="1">
+                        <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                        <span class="input-group-btn">
+                            <!-- image-preview-clear button -->
+                            <button type="button" class="btn btn-default image-preview-clear" style="display:none;margin-top: 10px;height: 40px;border-radius: 0">
+                                <span class="glyphicon glyphicon-remove"></span> Clear
+                            </button>
+                            <!-- image-preview-input -->
+                            <div class="btn btn-default image-preview-input" style="margin-top: 10px;height: 40px;border-radius: 0">
+                                <span class="glyphicon glyphicon-folder-open" style="padding-top: 5px;"></span>
+                                <span class="image-preview-input-title">Browse</span>
+                                <input type="file" accept="image/*, video/mp4" name="input-file-preview" style="height: 40px"/> <!-- rename it -->
+                            </div>
 
-            <div class="input-group image-preview" style="width: 25%;margin-bottom: 20px;">
-                <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-                <span class="input-group-btn">
-                    <!-- image-preview-clear button -->
-                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;margin-top: 10px;height: 40px;">
-                        <span class="glyphicon glyphicon-remove"></span> Clear
-                    </button>
-                    <!-- image-preview-input -->
-                    <div class="btn btn-default image-preview-input" style="margin-top: 10px;height: 40px;">
-                        <span class="glyphicon glyphicon-folder-open" style="padding-top: 5px;"></span>
-                        <span class="image-preview-input-title">Browse</span>
-                        <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
+                        </span>
+                        <div class="remove-attachment" style="position: absolute;top: 20px;left: 425px;display: none;cursor: pointer;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 22px"></i></div>
                     </div>
-                </span>
-            </div><!-- /input-group image-preview [TO HERE]-->
+                </div>
+            </div>
+            <div class="add-attachment-button" style="cursor: pointer;margin-bottom: 15px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 18px;"></i></div>
 
 
             <div>
@@ -130,68 +140,124 @@
             {
                 $( "div.success" ).fadeIn( 500 ).delay( 1500 ).fadeOut( 500 );
             }
+
+            $('.add-attachment-button').click(function(){
+                if($('.attachments .attachment-list .image-preview').length + 1  <= 4)
+                {
+                    var oAttachment = $('.attachments .attachment-list .image-preview:first').clone();
+                    oAttachment.find('.remove-attachment').css('display','block');
+                    oAttachment.attr('data-id',$('.attachments .attachment-list .image-preview').length + 1);
+
+
+                    oAttachment.attr("data-content","");
+                    oAttachment.children('.image-preview-filename').val("");
+                    oAttachment.children('.input-group-btn').children('.image-preview-clear').css('display','none');
+                    oAttachment.children('.input-group-btn').children('.image-preview-input input:file').val("");
+                    oAttachment.children('.input-group-btn').children(".image-preview-input-title").text("Browse");
+
+                    $('.attachments .attachment-list').append(oAttachment);
+                }
+
+            });
+
+            $('.attachments').on('click','.remove-attachment',function(){
+               $(this).parent().remove();
+            });
+
         });
 
         $(document).on('click', '#close-preview', function(){
-            $('.image-preview').popover('hide');
+            console.log($(this).data('id'));
+            var oAttachmentFile = $('.image-preview:nth-child('+$(this).data('id')+')');
+            oAttachmentFile.popover('hide');
             // Hover befor close the preview
-            $('.image-preview').hover(
+            oAttachmentFile.hover(
                     function () {
-                        $('.image-preview').popover('show');
+                        oAttachmentFile.popover('show');
                     },
                     function () {
-                        $('.image-preview').popover('hide');
+                        oAttachmentFile.popover('hide');
                     }
             );
         });
 
         $(function() {
             // Create the close button
-            var closebtn = $('<button/>', {
-                type:"button",
-                text: 'x',
-                id: 'close-preview',
-                style: 'font-size: initial;',
-            });
-            closebtn.attr("class","close pull-right");
-            // Set the popover default content
-            $('.image-preview').popover({
-                trigger:'manual',
-                html:true,
-                title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
-                content: "There's no image",
-                placement:'bottom'
-            });
+
             // Clear event
-            $('.image-preview-clear').click(function(){
-                $('.image-preview').attr("data-content","").popover('hide');
-                $('.image-preview-filename').val("");
-                $('.image-preview-clear').hide();
-                $('.image-preview-input input:file').val("");
-                $(".image-preview-input-title").text("Browse");
-                $('.image-preview').css('width','25%');
+            $('.attachments .attachment-list ').on('click','.image-preview-clear',function(){
+                $(this).parent().parent().attr("data-content","").popover('hide');
+                $(this).parent().parent().children('.image-preview-filename').val("");
+                $(this).hide();
+                $(this).siblings('.image-preview-input').children('.image-preview-input input:file').val("");
+                $(this).siblings('.image-preview-input').children(".image-preview-input-title").text("Browse");
             });
             // Create the preview image
-            $(".image-preview-input input:file").change(function (){
-                $('.image-preview').css('width','30%');
-                var img = $('<img/>', {
-                    id: 'dynamic',
-                    width:250,
-                    height:200
+            $(".attachments .attachment-list ").on('change','.image-preview-input input:file',function (){
+
+
+                var closebtn = $('<button/>', {
+                    type:"button",
+                    text: 'x',
+                    id: 'close-preview',
+                    style: 'font-size: initial;'
+
                 });
+                closebtn.attr("class","close pull-right");
+                closebtn.attr("data-id",$(this).parent().parent().parent().attr('data-id'));
+                // Set the popover default content
+                $(this).parent().parent().parent().popover({
+                    trigger:'manual',
+                    html:true,
+                    title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+                    content: "There's no image/video",
+                    placement:'bottom'
+                });
+
+
+
+
                 var file = this.files[0];
-                var reader = new FileReader();
-                // Set preview image into the popover data-content
-                reader.onload = function (e) {
-                    $(".image-preview-input-title").text("Change");
-                    $(".image-preview-clear").show();
-                    $(".image-preview-filename").val(file.name);
-                    img.attr('src', e.target.result);
-                    $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+                var file_type = file.type;
+                var attachment = '';
+                if(file_type.indexOf('video/mp4') != -1)
+                {
+                    attachment = $('<video/>', {
+                        id: 'dynamic-attachment',
+                        width: 250,
+                        height: 200,
+                        controls: true,
+                        controlsList: "nodownload"
+                    });
                 }
-                reader.readAsDataURL(file);
+                else if(file_type.indexOf('image/') != -1)
+                {
+                    attachment = $('<img/>', {
+                        id: 'dynamic-attachment',
+                        width: 250,
+                        height: 200
+                    });
+                }
+                if(attachment)
+                {
+
+                    var reader = new FileReader();
+                    var oObject = $(this);
+                    // Set preview image into the popover data-content
+                    reader.onload = function (e) {
+                        oObject.parent().children('.image-preview-input-title').text("Change");
+                        oObject.parent().parent().children(".image-preview-clear").show();
+                        oObject.parent().parent().parent().children(".image-preview-filename").val(file.name);
+                        attachment.attr('src', e.target.result);
+                        oObject.parent().parent().parent().attr("data-content",$(attachment)[0].outerHTML).popover("show");
+                    }
+                    reader.readAsDataURL(file);
+                }
+
             });
         });
+
+
     </script>
 @endsection
 
