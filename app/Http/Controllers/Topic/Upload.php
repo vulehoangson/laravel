@@ -30,16 +30,37 @@ class UploadController extends Controller
             ['is_root','<>',1]
         ]);
         $aFrontend=array();
+        $aError = array();
+        $sSuccess = '';
         if(!empty($aVals))
         {
+
             $iId=$this->oTopicModel->_add($aVals);
+
+
             if(!empty($iId))
             {
-                $aFrontend['success']='Upload thành công';
+                $iLimitSize = 1024*1024*5;
+                foreach($request->file as $file)
+                {
+                    $iSize = $file->getClientSize();
+
+                    if($iSize <= $iLimitSize)
+                    {
+                        $file_name = $file->store('files');
+                    }
+                    else
+                    {
+                        $aError[]['content']=(string)'File '.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).' vượt quá 5 MB nên đã bị bỏ qua';
+                    }
+
+                }
+                $sSuccess ='Upload thành công';
+               
             }
             else
             {
-                $aFrontend['error']='Upload không thành công. Kiểm tra lại dữ liệu nhập !!!';
+                $aError[]['content']= 'Upload không thành công. Kiểm tra lại dữ liệu nhập !!!';
             }
         }
         if(!empty($aCurrencies))
@@ -51,6 +72,6 @@ class UploadController extends Controller
             $aFrontend['aCategories'] = $aCategories;
         }
 
-        return view('upload',['aFrontend' => $aFrontend, 'bLogin' => $bLogin,'iUserGroup' => $iUserGroup]);
+        return view('upload',['aFrontend' => $aFrontend, 'bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'aError' => $aError, 'sSuccess' => $sSuccess]);
     }
 }

@@ -33,19 +33,22 @@
     <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
         <h2>Tạo bài đăng</h2>
     </div>
-    @if(!empty($aFrontend['error']))
-        <div class="error" style="padding: 20px;color: white;background-color: #ee5454;margin-bottom: 20px;display: none">
-            {{$aFrontend['error']}}
-        </div>
+    @if(!empty($aError))
+        @foreach($aError as $value)
+            <div class="error" style="padding: 20px;color: white;background-color: #ee5454;margin-bottom: 20px;display: none">
+                {{$value['content']}}
+            </div>
+        @endforeach
+
     @endif
 
-    @if(!empty($aFrontend['success']))
+    @if(!empty($sSuccess))
         <div class="success" style="padding: 20px;color: white;background-color: #67b168;margin-bottom: 20px;display: none">
-            {{$aFrontend['success']}}
+            {{$sSuccess}}
         </div>
     @endif
     <div class="upload" style="padding-left: 15px;">
-        <form method="POST" action="{{ action('Topic\UploadController@process') }}">
+        <form method="POST" action="{{ action('Topic\UploadController@process') }}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div style="margin-bottom: 15px;">
                 <div><b>Tiêu đề </b>:</div>
@@ -108,7 +111,7 @@
                             <div class="btn btn-default image-preview-input" style="margin-top: 10px;height: 40px;border-radius: 0">
                                 <span class="glyphicon glyphicon-folder-open" style="padding-top: 5px;"></span>
                                 <span class="image-preview-input-title">Browse</span>
-                                <input type="file" accept="image/*, video/mp4" name="input-file-preview" style="height: 40px"/> <!-- rename it -->
+                                <input type="file" accept="image/*, video/mp4" name="file[]" style="height: 40px"/> <!-- rename it -->
                             </div>
 
                         </span>
@@ -125,17 +128,16 @@
         </form>
     </div>
     <script type="text/javascript">
-        var bError="{{ !empty($aFrontend['error']) ? $aFrontend['error'] : ''}}";
-        var bSuccess="{{ !empty($aFrontend['success']) ? $aFrontend['success'] : ''}}";
+        var bError="{{ !empty($aError) ? true : false }}";
+        var bSuccess="{{ !empty($sSuccess) ? true : false}}";
     </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-            /*if(bError)
+            if(bError)
             {
-                $( "div.error" ).fadeIn( 500 ).delay( 1500 ).fadeOut( 500 );
+                $( "div.error" ).fadeIn( 500 );
             }
-*/
             if(bSuccess)
             {
                 $( "div.success" ).fadeIn( 500 ).delay( 1500 ).fadeOut( 500 );
@@ -153,7 +155,7 @@
                     oAttachment.children('.image-preview-filename').val("");
                     oAttachment.children('.input-group-btn').children('.image-preview-clear').css('display','none');
                     oAttachment.children('.input-group-btn').children('.image-preview-input input:file').val("");
-                    oAttachment.children('.input-group-btn').children(".image-preview-input-title").text("Browse");
+                    oAttachment.children('.input-group-btn').children().children(".image-preview-input-title").text("Browse");
 
                     $('.attachments .attachment-list').append(oAttachment);
                 }
@@ -171,14 +173,14 @@
             var oAttachmentFile = $('.image-preview:nth-child('+$(this).data('id')+')');
             oAttachmentFile.popover('hide');
             // Hover befor close the preview
-            oAttachmentFile.hover(
+            /*oAttachmentFile.hover(
                     function () {
                         oAttachmentFile.popover('show');
                     },
                     function () {
                         oAttachmentFile.popover('hide');
                     }
-            );
+            );*/
         });
 
         $(function() {
