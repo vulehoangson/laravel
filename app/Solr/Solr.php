@@ -53,7 +53,7 @@ class Solr extends Model
             {
                 if($sIndex === 'search')
                 {
-                    $sQuery.= '(topic_title : "'.$value.'"~'.$this->proximity_matching.'OR description : "'.$value.'"~'.$this->proximity_matching.') AND';
+                    $sQuery.= '(topic_title : "'.$value.'"~'.$this->proximity_matching.' OR description : "'.$value.'"~'.$this->proximity_matching.') AND ';
                     
                 }
                 elseif ($sIndex === 'cat')
@@ -64,13 +64,13 @@ class Solr extends Model
                 {
                     if( (int)$value['datefrom'] <= (int)$value['dateto'])
                     {
-                        $sQuery.='(time_stamp : ['.strtotime($value['datefrom'].' 00:00:00').' TO '.strtotime($value['dateto'].' 23:59:59').']) AND';
+                        $sQuery.='(time_stamp : ['.strtotime($value['datefrom'].' 00:00:00').' TO '.strtotime($value['dateto'].' 23:59:59').']) AND ';
                     }
                 }
 
             }
         }
-        return trim($sQuery,'AND');
+        return trim($sQuery,'AND ');
     }
 
     /**

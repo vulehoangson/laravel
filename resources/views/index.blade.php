@@ -101,7 +101,7 @@
                                 <h5 style="font-weight:400 ">Từ ngày: </h5>
                             </div>
                             <div style="width: 65%; display: inline-block">
-                                <input type="text" id="datefrom" name="datefrom" value="01-01-{{ (int)date('Y') }}" class="form-control">
+                                <input type="text" id="datefrom" name="datefrom" value="01/01/{{ (int)date('Y') }}" class="form-control">
                             </div>
 
                         </div>
@@ -110,7 +110,7 @@
                                 <h5 style="font-weight:400 ">Đến ngày: </h5>
                             </div>
                             <div style="width: 65%; display: inline-block">
-                                <input type="text" id="dateto" name="dateto" value="{{ date('d-m-Y') }}" class="form-control">
+                                <input type="text" id="dateto" name="dateto" value="{{ date('m/d/Y') }}" class="form-control">
                             </div>
                         </div>
                     </div>
