@@ -98,5 +98,11 @@ class TopicModel extends Model
         }
         return false;
     }
+    public function addAttachFiles($aInsert = array())
+    {
+        DB::table('attachment')->insert($aInsert);
+        return true;
+
+    }
 }
 

@@ -6,6 +6,7 @@ use App\Helper\Helper;
 use App\Topic\TopicModel;
 use App\Topic\CategoryModel;
 use App\Http\Controllers\User\LoginController;
+
 class UploadController extends Controller
 {
     private $oCategoryModel;
@@ -41,19 +42,34 @@ class UploadController extends Controller
             if(!empty($iId))
             {
                 $iLimitSize = 1024*1024*5;
+                $aFiles = array();
                 foreach($request->file as $file)
                 {
                     $iSize = $file->getClientSize();
 
                     if($iSize <= $iLimitSize)
                     {
-                        $file_name = $file->store('files');
+                        date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $sPath = $file->store('files');
+                        $aInsert = array(
+                            'path' => $sPath,
+                            'topic_id' => (int)$iId,
+                            'name' => pathinfo($file->getClientOriginalName(),  PATHINFO_FILENAME),
+                            'type' => pathinfo($file->getClientOriginalName(),  PATHINFO_EXTENSION),
+                            'time_stamp' => strtotime(date('d-m-Y H:i:s'))
+                        );
+                        $aFiles[] = $aInsert;
                     }
                     else
                     {
                         $aError[]['content']=(string)'File '.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).' vượt quá 5 MB nên đã bị bỏ qua';
                     }
 
+                }
+
+                if(!empty($aFiles))
+                {
+                    $this->oTopicModel->addAttachFiles($aFiles);
                 }
                 $sSuccess ='Upload thành công';
                
