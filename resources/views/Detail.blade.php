@@ -35,7 +35,7 @@
         <div class="carousel-inner" role="listbox">
 
             <div class="item active">
-                <img src="{{ asset('images/family.jpg') }}" alt="Chania" width="460" height="345">
+                <img src="{{ asset('storage/files/ddd3767c55b50d21398f35d47522f90e.png') }}" alt="Chania" width="460" height="345">
                 <div class="carousel-caption">
                     <h3>Chania</h3>
                     <p>The atmosphere in Chania has a touch of Florence and Venice.</p>

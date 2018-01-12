@@ -6,7 +6,7 @@ use App\Helper\Helper;
 use App\Topic\TopicModel;
 use App\Topic\CategoryModel;
 use App\Http\Controllers\User\LoginController;
-
+use Intervention\Image\ImageManagerStatic as Image;
 class UploadController extends Controller
 {
     private $oCategoryModel;
@@ -50,12 +50,29 @@ class UploadController extends Controller
                     if($iSize <= $iLimitSize)
                     {
                         date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $sPath = $file->store('files');
+                        $sBaseName = $file->getClientOriginalName();
+                        $sName = pathinfo($sBaseName,  PATHINFO_FILENAME);
+                        $sExtension = pathinfo($sBaseName,  PATHINFO_EXTENSION);
+                        $sFileName = '';
+                        $sPath = '';
+                        if($sExtension === 'mp4')
+                        {
+                            $sPath = $file->store('files');
+                        }
+                        else
+                        {
+                            $oImageResize = Image::make($file->getRealPath());
+                            $oImageResize->resize(300, 300);
+                            $sFileName  = md5($sName.date('m/d/Y H:i:s').$sExtension.$sBaseName);
+                            $oImageResize->save(storage_path('app/files/'.$sFileName.'.'.$sExtension) );
+                            $sPath = 'files/'.$sFileName.'.'.$sExtension;
+                        }
+
                         $aInsert = array(
                             'path' => $sPath,
                             'topic_id' => (int)$iId,
-                            'name' => pathinfo($file->getClientOriginalName(),  PATHINFO_FILENAME),
-                            'type' => pathinfo($file->getClientOriginalName(),  PATHINFO_EXTENSION),
+                            'name' => $sName,
+                            'type' => $sExtension,
                             'time_stamp' => strtotime(date('d-m-Y H:i:s'))
                         );
                         $aFiles[] = $aInsert;
