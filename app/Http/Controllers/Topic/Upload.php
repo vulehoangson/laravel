@@ -11,10 +11,12 @@ class UploadController extends Controller
 {
     private $oCategoryModel;
     private $oTopicModel;
+    private $oHelper;
     public function __construct()
     {
         $this->oCategoryModel= new CategoryModel();
         $this->oTopicModel = new TopicModel();
+        $this->oHelper = new Helper();
     }
 
     public function process(Request $request )
@@ -57,14 +59,20 @@ class UploadController extends Controller
                         $sPath = '';
                         if($sExtension === 'mp4')
                         {
-                            $sPath = $file->store('files');
+                            $sPath = $file->store('public/files');
                         }
                         else
                         {
+                            $aImageSize = getimagesize($file);
+                            $iImageWidth = !empty($aImageSize[0]) ? $aImageSize[0] : 0;
+                            $iImageHeight = !empty($aImageSize[1]) ? $aImageSize[1] : 0;
+                            $iTrueWidth = 0;
+                            $iTrueHeight = 0 ;
+                            list($iTrueWidth, $iTrueHeight) = $this->oHelper->calculateImageSize($iImageWidth, $iImageHeight, 600, 600);
                             $oImageResize = Image::make($file->getRealPath());
-                            $oImageResize->resize(300, 300);
+                            $oImageResize->resize($iTrueWidth, $iTrueHeight);
                             $sFileName  = md5($sName.date('m/d/Y H:i:s').$sExtension.$sBaseName);
-                            $oImageResize->save(storage_path('app/files/'.$sFileName.'.'.$sExtension) );
+                            $oImageResize->save(storage_path('app/public/files/'.$sFileName.'.'.$sExtension) );
                             $sPath = 'files/'.$sFileName.'.'.$sExtension;
                         }
 

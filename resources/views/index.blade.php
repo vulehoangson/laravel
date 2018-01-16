@@ -228,12 +228,6 @@
         };
     });
 
-    // hide menu when clicking outsite the menu. except the dropdown button
-    $(document).click(function(e){
-        if(e.target.id !='menu' && !$('#menu').find(e.target).length && e.target.id !='dropdown' )
-        {
-            $('#menu').hide();
-        }
-    });
+
 </script>
 @endsection

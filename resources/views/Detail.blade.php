@@ -1,76 +1,83 @@
+@extends('layout')
+
+@section('title','Tạo bài đăng')
+
+@section('content')
+    <style rel="stylesheet">
+        .container
+        {
+            padding: 0 !important;
+            margin-left: unset !important;
+            width: 100% ;
+            background-color: #f4f4f4;
+        }
+        .topic-detail
+        {
+            background-color: #fff;
+            padding: 15px 0 35px 0;
+            margin-right: auto;
+            margin-left: auto;
+
+        }
 
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        .carousel-inner > .item > img,
-        .carousel-inner > .item > a > img {
-            width: 70%;
-            margin: auto;
+        @media (min-width: 768px)
+        {
+            .topic-detail {
+                width: 750px;
+            }
+        }
+        @media (min-width: 992px)
+        {
+            .topic-detail {
+                width: 970px;
+            }
+        }
+        @media (min-width: 1200px)
+        {
+            .topic-detail {
+                width: 1170px;
+            }
+        }
+        .topic-detail:after
+        {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
         }
     </style>
-</head>
-<body>
+    <div class="topic-detail">
+        <div id="myCarousel" class="carousel slide col-md-8 col-md-offset-3" data-ride="carousel" style="width: 650px;padding: 0 100px;background-color: black;margin-left: 20%;">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" style="">
+                <div class="item active" style="padding: 5px 0;">
+                    <img src="{{ asset('storage/files/31400f7fce3e20d5992511db7dcd4685.png') }}" alt="Los Angeles" style="width:100%;">
+                </div>
 
-<div class="container">
-    <br>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: auto; width: 500px;">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
-        </ol>
+                <div class="item" style="padding-top: 5px">
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-
-            <div class="item active">
-                <img src="{{ asset('storage/files/ddd3767c55b50d21398f35d47522f90e.png') }}" alt="Chania" width="460" height="345">
-                <div class="carousel-caption">
-                    <h3>Chania</h3>
-                    <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+                    <video src="{{ asset('storage/files/EjkHfVjUi7CLhGQbzyMQrRE1OonLZVfwHVJhuR4q.mp4') }}" alt="New york" style="width:100%;" controls="controls"></video>
                 </div>
             </div>
 
-            <div class="item">
-                <img src="{{ asset('images/forever.jpg') }}" alt="Chania" width="460" height="345">
-                <div class="carousel-caption">
-                    <h3>Chania</h3>
-                    <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="{{ asset('images/cover.jpeg') }}" alt="Flower" width="460" height="345">
-                <div class="carousel-caption">
-                    <h3>Flowers</h3>
-                    <p>Beautiful flowers in Kolymbari, Crete.</p>
-                </div>
-            </div>
-
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
-</div>
 
-</body>
-</html>
+
+
+
+@endsection
+
+{{--https://bootsnipp.com/snippets/featured/input-file-popover-preview-image--}}

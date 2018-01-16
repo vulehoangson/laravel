@@ -37,4 +37,4 @@ Route::post('/topic/search','Topic\SearchController@process');
 Route::get('/topic/search','Topic\SearchController@process');
 Route::get('/ping', 'Solr\SolariumController@search');
 Route::get('/suggestion','Ajax\AjaxController@searchSuggestion');
-Route::get('/detail/{id}','Topic\DetailController@process');
+Route::get('/topic/detail/{id}','Topic\DetailController@process');

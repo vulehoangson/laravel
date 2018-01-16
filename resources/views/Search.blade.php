@@ -72,7 +72,7 @@
                     <button class="btn btn-primary" type="submit" id="submit_header" style="display: inline-block;width: 5%;height: 50px;border-radius: 0;margin-top: -2px;margin-left: -4px;">
                         <i class="fa fa-search" style="color: #ffffff"></i>
                     </button>
-                    <div class=" col-md-12 menu" style="box-shadow: 1px 1px 4px #ccc;position: absolute; border-radius: 0;background-color: bisque;top: 83%;padding: 20px 90px; display: none;z-index: 1;">
+                    <div class=" col-md-12 menu" style="box-shadow: 1px 1px 4px #ccc;position: absolute; border-radius: 0;background-color: bisque;top: 83%;padding: 20px 90px; display: none;z-index: 1;" id="menu">
                         <div class="col-md-12 category-selection" style="padding-left: 0; padding-right: 0">
                             <div style="width: 15%;display: inline-block;">
                                 <h5 style="font-weight:400;">Danh mục: </h5>
@@ -172,7 +172,7 @@
             $('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
             $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
             $('#dropdown').click(function () {
-                $('.menu').toggle();
+                $('#menu').toggle();
             });
             $('#search').autocomplete({
                 minLength: 0,
@@ -217,6 +217,13 @@
                         .append('<div class="ui-menu-item-wrapper">'+item.label+'</div>')
                         .appendTo( ul );
             };
+        });
+        // hide menu when clicking outsite the menu. except the dropdown button
+        $(document).click(function(e){
+            if(e.target.id !='menu' && !$('#menu').find(e.target).length && e.target.id !='dropdown' )
+            {
+                $('#menu').hide();
+            }
         });
     </script>
 

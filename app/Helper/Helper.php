@@ -61,4 +61,28 @@ class Helper extends Model
         return number_format($iNumber,$decimals,$dec_point,$thousands_sep);
     }
 
+    public function calculateImageSize($iImageWidth, $iImageHeight, $iThumbnailWidth, $iThumbnailHeight)
+    {
+        $w  = $iThumbnailWidth;
+        $h  = $iThumbnailHeight;
+
+        if ($iImageWidth > $iThumbnailWidth)
+        {
+            $w  = $iThumbnailWidth;
+            $h  = floor($iImageHeight * $iThumbnailWidth/$iImageWidth);
+            if ($h > $iThumbnailHeight)
+            {
+                $h  = $iThumbnailHeight;
+                $w  = floor($iImageWidth * $iThumbnailHeight/$iImageHeight);
+            }
+        }
+        elseif ($iImageHeight > $iThumbnailHeight)
+        {
+            $h  = $iThumbnailHeight;
+            $w  = floor($iImageWidth * $iThumbnailHeight/$iImageHeight);
+        }
+
+        return array($w, $h);
+    }
+
 }
