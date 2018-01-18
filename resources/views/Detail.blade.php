@@ -26,6 +26,9 @@
             .topic-detail {
                 width: 750px;
             }
+            .carousel-indicators {
+                bottom: 0px;
+            }
         }
         @media (min-width: 992px)
         {
@@ -50,17 +53,27 @@
         }
     </style>
     <div class="topic-detail">
-        <div id="myCarousel" class="carousel slide col-md-8 col-md-offset-3" data-ride="carousel" style="width: 650px;padding: 0 100px;background-color: black;margin-left: 20%;">
+        <div id="myCarousel" class="carousel slide col-md-8 col-md-offset-3" data-ride="carousel" style="background-color: #555;;margin-left: 16%;">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
             <!-- Wrapper for slides -->
-            <div class="carousel-inner" style="">
-                <div class="item active" style="padding: 5px 0;">
-                    <img src="{{ asset('storage/files/31400f7fce3e20d5992511db7dcd4685.png') }}" alt="Los Angeles" style="width:100%;">
+            <div class="carousel-inner" style="width: 100%;height: 400px;padding: 0 100px">
+                <div class="item active" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset('storage/files/qVizUtGnhOvSaVieT6XozeA8WeNdlXBYAqDQBUCM.png') }}')">
+
+                </div>
+                <div class="item" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset('storage/files/98f7a94f53772dfcd2939d2a8b309eaa.jpg') }}')">
+
+                </div>
+                <div class="item" style="height: 93%;width:100%;">
+                    <video controls="controls" autoplay style=" width:100%;height: 100%;">
+                        <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+                        <source src="{{ asset('storage/files/Z8oqd0220DbrFokvFpDi7T5HJyYNgQfCcOQVeop9.mp4') }}" type="video/mp4">
+                    </video>
                 </div>
 
-                <div class="item" style="padding-top: 5px">
-
-                    <video src="{{ asset('storage/files/EjkHfVjUi7CLhGQbzyMQrRE1OonLZVfwHVJhuR4q.mp4') }}" alt="New york" style="width:100%;" controls="controls"></video>
-                </div>
             </div>
 
             <!-- Left and right controls -->

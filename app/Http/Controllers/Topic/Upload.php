@@ -66,14 +66,22 @@ class UploadController extends Controller
                             $aImageSize = getimagesize($file);
                             $iImageWidth = !empty($aImageSize[0]) ? $aImageSize[0] : 0;
                             $iImageHeight = !empty($aImageSize[1]) ? $aImageSize[1] : 0;
-                            $iTrueWidth = 0;
-                            $iTrueHeight = 0 ;
-                            list($iTrueWidth, $iTrueHeight) = $this->oHelper->calculateImageSize($iImageWidth, $iImageHeight, 600, 600);
-                            $oImageResize = Image::make($file->getRealPath());
-                            $oImageResize->resize($iTrueWidth, $iTrueHeight);
-                            $sFileName  = md5($sName.date('m/d/Y H:i:s').$sExtension.$sBaseName);
-                            $oImageResize->save(storage_path('app/public/files/'.$sFileName.'.'.$sExtension) );
-                            $sPath = 'files/'.$sFileName.'.'.$sExtension;
+                            if($iImageHeight >= 400)
+                            {
+                                $iTrueWidth = 0;
+                                $iTrueHeight = 0 ;
+                                list($iTrueWidth, $iTrueHeight) = $this->oHelper->calculateImageSize($iImageWidth, $iImageHeight, 400, 400);
+                                $oImageResize = Image::make($file->getRealPath());
+                                $oImageResize->resize($iTrueWidth, $iTrueHeight);
+                                $sFileName  = md5($sName.date('m/d/Y H:i:s').$sExtension.$sBaseName.uniqid());
+                                $oImageResize->save(storage_path('app/public/files/'.$sFileName.'.'.$sExtension) );
+                                $sPath = 'files/'.$sFileName.'.'.$sExtension;
+                            }
+                            else
+                            {
+                                $sPath = $file->store('public/files');
+                            }
+
                         }
 
                         $aInsert = array(
