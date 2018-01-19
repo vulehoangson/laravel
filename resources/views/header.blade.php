@@ -33,6 +33,15 @@
     {
         text-decoration: none;
     }
+    @media (min-width: 992px) and (max-width: 1024px)
+    {
+        .col-md-offset-3 {
+            margin-left: 15%;
+        }
+        .col-md-3 {
+            width: 35%;
+        }
+    }
 </style>
 <div class="header-info" style="height: 40px;background-color: #354c5c;padding: 3px 30px;">
     @if( empty($bLogin) )
@@ -89,7 +98,7 @@
     @endif
 </div>
 <div class="header-introduction" style="height: 110px;padding: 15px 0;background-color: #B2CFEA">
-    <div class="col-md-4 col-md-offset-1" style="float: left">
+    <div class="col-md-4 col-md-offset-1 col-sm-5 col-sm-offset-0" style="float: left">
         <div class="introduction" style="text-align: center;line-height: 4;">
             <marquee>Trang rao vặt</marquee>
 
@@ -97,7 +106,7 @@
         </div>
 
     </div>
-    <div class="col-md-3 col-md-offset-3"   >
+    <div class="col-md-3 col-md-offset-3 col-sm-5 col-sm-offset-2"   >
         <div class="logo">
             <a href="{{ asset('') }}">
                 <img src="{{ asset('images/header_logo.jpg') }}" style="height: 80px;width: 100%">

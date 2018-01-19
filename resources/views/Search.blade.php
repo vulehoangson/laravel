@@ -54,6 +54,22 @@
             clear: both;
             height: 0;
         }
+        @media (max-width: 992px)
+        {
+
+            .search-result .result .list .item .content
+            {
+                padding-left: 35px !important;
+            }
+            .search-result .result .list .item .content div:first-child
+            {
+                margin-bottom: 5px !important;
+            }
+            .search-result .result .list .item .content div:first-child a
+            {
+                font-size: 16px !important;
+            }
+        }
     </style>
     <div class="search-result">
         <div class="search col-md-10 col-md-offset-1">
@@ -90,7 +106,7 @@
 
                         </div>
                         <div class="col-md-12 time-selection" style="padding-left: 0; padding-right: 0;">
-                            <div class="col-md-6" style="display: inline-block;padding-left: 0;padding-right: 0">
+                            <div class="col-md-6 col-sm-6" style="display: inline-block;padding-left: 0;padding-right: 0">
                                 <div style="width: 30%;display: inline-block;">
                                     <h5 style="font-weight:400 ">Từ ngày: </h5>
                                 </div>
@@ -99,7 +115,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-6" style="display: inline-block;padding-left: 0;padding-right: 0">
+                            <div class="col-md-6 col-sm-6" style="display: inline-block;padding-left: 0;padding-right: 0">
                                 <div style="width: 33%;display: inline-block;">
                                     <h5 style="font-weight:400 ">Đến ngày: </h5>
                                 </div>
@@ -122,21 +138,21 @@
                 @if(!empty($aFrontend['aTopics']))
                     @foreach($aFrontend['aTopics'] as $iKey => $aTopic)
 
-                        <div class="col-md-12 item" style="padding: 20px 0;">
-                            <div class="col-md-2 image">
+                        <div class="col-md-12 col-sm-12 item" style="padding: 20px 0;">
+                            <div class="col-md-2 col-sm-2 image">
                                 <img src="{{ asset('images/forever.jpg') }}" style="height: 110px; width: 110px">
                             </div>
-                            <div class="content col-md-7">
+                            <div class="content col-md-7 col-sm-7">
                                 <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="javascript:void(0)" style="text-decoration: none;">{{ $aTopic['topic_title'] }}</a> </div>
                                 <div style="font-size: 15px;margin-bottom: 5px"><b>{{ $aTopic['price'] }}</b> {{ $aTopic['currency_title'] }}</div>
                                 <div style="font-size: 15px;margin-bottom: 5px">Danh mục: <b>{{ $aTopic['category_title'] }}</b></div>
                                 <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
                             </div>
-                            <div class="user col-md-3" >
+                            <div class="user col-md-3 col-sm-3" >
                                 Đăng bởi <b>{{ $aTopic['username'] }}</b>
                             </div>
-                            <div class="col-md-12" style="padding: 0 120px 0 15px;;margin-top: 20px;">
-                                <div class="col-md-12" style="@if((int)$iKey < (int)(count($aFrontend['aTopics']) - 1) )border-bottom: 1px solid #dddddd;@endif">
+                            <div class="col-md-12 col-sm-2" style="padding: 0 120px 0 15px;;margin-top: 20px;">
+                                <div class="col-md-12 col-sm-2" style="@if((int)$iKey < (int)(count($aFrontend['aTopics']) - 1) )border-bottom: 1px solid #dddddd;@endif">
                                 </div>
                             </div>
                         </div>
@@ -171,9 +187,11 @@
             $.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
             $('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
             $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
-            $('#dropdown').click(function () {
+            $('#dropdown').on('touchstart click',function (e) {
+                e.preventDefault();
                 $('#menu').toggle();
             });
+
             $('#search').autocomplete({
                 minLength: 0,
                 source: function(request,response){

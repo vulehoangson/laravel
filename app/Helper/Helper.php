@@ -84,5 +84,33 @@ class Helper extends Model
 
         return array($w, $h);
     }
+    public function parseAddressToCoordinate($sAddress)
+    {
+
+        $sUrl = 'http://developers.vietbando.com/V2/Service/PartnerPortalService.svc/rest/SearchAll';
+        $sRegisterKey = '6f8a969e-76cc-4956-934f-370d6d5456f5';
+
+        $aVals=array(
+            "IsOrder" => true,
+            "Keyword" => $sAddress,
+            "Page" => 1,
+            "PageSize" => 10,
+        );
+        $aHeader = array('Content-Type:application/json','RegisterKey:'.$sRegisterKey);
+        $ch = curl_init(); //depend extension
+        curl_setopt($ch, CURLOPT_URL, $sUrl);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $aHeader);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aVals));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);
+        curl_close($ch);
+        $oOutput = json_decode($server_output,true);
+        if($oOutput['IsSuccess'])
+        {
+            return array($oOutput['List'][0]['Latitude'],$oOutput['List'][0]['Longitude']);
+        }
+        return array();
+    }
 
 }

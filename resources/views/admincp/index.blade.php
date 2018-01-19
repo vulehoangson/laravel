@@ -76,9 +76,28 @@
             background-color: #f4645f;
             padding: 10px 15px !important;
         }
+        @media (max-width: 1024px)
+        {
+            .admincp-index .content #tab-3 .list .item
+            {
+                width: 100% !important;
+            }
+        }
+        @media (min-width: 992px)
+        {
+            .admincp-index .option
+            {
+                width: 25% !important;
+            }
+            .admincp-index .content
+            {
+                width: 75% !important;
+            }
+
+        }
     </style>
     <div class="admincp-index">
-        <div class="option col-md-2" style="background: #0c0c0c;text-align: left;">
+        <div class="option col-md-2 col-sm-3" style="background: #0c0c0c;text-align: left;">
             <div class="back-home" style="border-bottom: 1px solid #dddddd; padding: 20px 10px">
                 <i class="fa fa-home" aria-hidden="true" style="color: greenyellow;margin-right: 5px;"></i>
                 <a href="{{ asset('') }}" style="text-decoration: none; color: white">
@@ -100,7 +119,7 @@
                 </li>
             </ul>
         </div>
-        <div class="content col-md-10">
+        <div class="content col-md-10 col-sm-9">
             <div id="tab-1" style="width: 100%" class="tab-content">
 
             </div>
@@ -127,10 +146,10 @@
             </div>
             <div class="tab-content hide" id="tab-3">
                 <h1 style="text-align: center">Danh mục</h1>
-                <div class="list col-md-12" style="padding: 0  30px">
+                <div class="list col-md-12 col-sm-12" style="padding: 0  30px">
                     @if(!empty($aFrontend['aCategories']))
                         @foreach($aFrontend['aCategories'] as $aCategory)
-                            <div class="col-md-6 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5; width: 45%;margin-right: 20px;margin-bottom: 20px;">
+                            <div class="col-md-6 col-sm-12 item" style="padding: 0px 0 20px 5px !important;  border: 1px solid #e5e5e5; width: 45%;margin-right: 20px;margin-bottom: 20px;">
                                 <div class="title" style="height: auto; color: #808080; margin-bottom: 25px; padding: 0 30px;">
                                     <a href=""><h3>{{ $aCategory['title'] }}</h3></a>
                                 </div>

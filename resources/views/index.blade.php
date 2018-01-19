@@ -180,8 +180,9 @@
         $.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
         $('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
         $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
-        $('#dropdown').click(function () {
-           $('#menu').toggle();
+        $('#dropdown').on('touchstart click',function (e) {
+            e.preventDefault();
+            $('#menu').toggle();
         });
 
 
