@@ -23,35 +23,65 @@ class Helper extends Model
         }
         return array();
     }
-    public function convertDataFromObjectToArray($oData,$bConverTimestamp=false)
+    public function convertDataFromObjectToArray($oData,$bConverTimestamp=false,$bObject = false)
     {
         $aConvert=array();
 
         if(!$oData->isEmpty())
         {
-            if($bConverTimestamp)
+            if($bObject)
             {
-                date_default_timezone_set('Asia/Ho_Chi_Minh');
-                foreach ($oData as $iKey => $aData)
+                if($bConverTimestamp)
                 {
-
-                    foreach ($aData as $sIndex => $value)
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    foreach ($oData as $iKey => $aData)
                     {
-                        $aConvert[$iKey][$sIndex] = ($sIndex === 'time_stamp' ? date('d-m-Y H:i:s',$value) : ($sIndex === 'price' ? $this->formatNumber($value) : $value));
+
+                        foreach ($aData as $sIndex => $value)
+                        {
+                            $aConvert[$sIndex] = ($sIndex === 'time_stamp' ? date('d-m-Y H:i:s',$value) : ($sIndex === 'price' ? $this->formatNumber($value) : $value));
+                        }
+                    }
+                }
+                else
+                {
+                    foreach ($oData as $iKey => $aData)
+                    {
+
+                        foreach ($aData as $sIndex => $value)
+                        {
+                            $aConvert[$iKey][$sIndex] = $value;
+                        }
                     }
                 }
             }
             else
             {
-                foreach ($oData as $iKey => $aData)
+                if($bConverTimestamp)
                 {
-
-                    foreach ($aData as $sIndex => $value)
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    foreach ($oData as $iKey => $aData)
                     {
-                        $aConvert[$iKey][$sIndex] = $value;
+
+                        foreach ($aData as $sIndex => $value)
+                        {
+                            $aConvert[$iKey][$sIndex] = ($sIndex === 'time_stamp' ? date('d-m-Y H:i:s',$value) : ($sIndex === 'price' ? $this->formatNumber($value) : $value));
+                        }
+                    }
+                }
+                else
+                {
+                    foreach ($oData as $iKey => $aData)
+                    {
+
+                        foreach ($aData as $sIndex => $value)
+                        {
+                            $aConvert[$iKey][$sIndex] = $value;
+                        }
                     }
                 }
             }
+
 
         }
 

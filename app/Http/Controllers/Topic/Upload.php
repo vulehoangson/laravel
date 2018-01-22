@@ -59,7 +59,13 @@ class UploadController extends Controller
                         $sPath = '';
                         if($sExtension === 'mp4')
                         {
-                            $sPath = $file->store('public/files');
+                            /*--------Save files in storage/app/public/files using function store---------*/
+                            //$sPath = $file->store('public/files');
+
+
+                            /*--------Save files in public/files using function move-----------*/
+                            $sFileName = md5($sName.date('m/d/Y H:i:s').$sExtension.$sBaseName.uniqid());
+                            $sPath = $file->move('files/',$sFileName.'.'.$sExtension);
                         }
                         else
                         {
@@ -71,20 +77,28 @@ class UploadController extends Controller
                                 $iTrueWidth = 0;
                                 $iTrueHeight = 0 ;
                                 list($iTrueWidth, $iTrueHeight) = $this->oHelper->calculateImageSize($iImageWidth, $iImageHeight, 400, 400);
+
+                                /*------Using Image library of Laravel to resize image---------------*/
                                 $oImageResize = Image::make($file->getRealPath());
                                 $oImageResize->resize($iTrueWidth, $iTrueHeight);
                                 $sFileName  = md5($sName.date('m/d/Y H:i:s').$sExtension.$sBaseName.uniqid());
-                                $oImageResize->save(storage_path('app/public/files/'.$sFileName.'.'.$sExtension) );
+                                $oImageResize->save(public_path('/files/'.$sFileName.'.'.$sExtension) );
                                 $sPath = 'files/'.$sFileName.'.'.$sExtension;
+
                             }
                             else
                             {
-                                $sPath = $file->store('public/files');
+                                /*--------Save files in storage/app/public/files using function store---------*/
+                                //$sPath = $file->store('public/files');
+
+                                /*--------Save files in public/files using function move-----------*/
+                                $sFileName = md5($sName.date('m/d/Y H:i:s').$sExtension.$sBaseName.uniqid());
+                                $sPath = $file->move('files/',$sFileName.'.'.$sExtension);
                             }
 
                         }
 
-                        $aInsert = array(
+                            $aInsert = array(
                             'path' => $sPath,
                             'topic_id' => (int)$iId,
                             'name' => $sName,

@@ -52,7 +52,15 @@ class TopicModel extends Model
     }
     public function getQuickTopic($iTopic)
     {
-        
+        $aRow = DB::table('topic')->join('user','user.user_id','=','topic.user_id')
+            ->join('currency','currency.currency_id','=','topic.currency')
+            ->select('topic.*','user.username','currency.title AS currency_title')
+            ->where([
+                ['topic.topic_id','=',$iTopic],
+            ])->get();
+        $aTopicConver = $this->oHelper->convertDataFromObjectToArray($aRow,true,true);
+        $aTopicConver['attachment'] = $this->getAttachmentFiles($iTopic);
+        return $aTopicConver;
     }
 
     public function _update($iTopicId)
@@ -103,6 +111,13 @@ class TopicModel extends Model
         DB::table('attachment')->insert($aInsert);
         return true;
 
+    }
+    public function getAttachmentFiles($iTopicId)
+    {
+        $aRow = DB::table('attachment')->select('*')
+                                    ->where('topic_id',$iTopicId)
+                                    ->get();
+        return $this->oHelper->convertDataFromObjectToArray($aRow);
     }
 }
 

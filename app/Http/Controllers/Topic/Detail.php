@@ -4,23 +4,35 @@ namespace App\Http\Controllers\Topic;
 use App\Http\Controllers\Controller;
 use App\Helper\Helper;
 use App\Http\Controllers\User\LoginController;
+use Illuminate\Http\Request;
+use App\Topic\TopicModel;
 class DetailController extends Controller
 {
     private $oHelper;
+    private $oTopic;
     public function __construct()
     {
         $this->oHelper = new Helper();
+        $this->oTopic = new TopicModel();
     }
 
-    public function process()
+    public function process(Request $request)
     {
         $oUser=new LoginController();
         $aFrontend=array();
         list($bLogin,$iUserGroup)=$oUser->checkAutoLogin(true);
-        $aResult = $this->oHelper->parseAddressToCoordinate('Trường đại học Khoa học tự nhiên Thành phố Hồ Chí Minh');
-        if(!empty($aResult))
+
+
+        $iTopicId = $request->id;
+        $aTopic = $this->oTopic->getQuickTopic($iTopicId);
+        $aCoordinateConvert = !empty($aTopic['address']) ? $this->oHelper->parseAddressToCoordinate($aTopic['address']) : array();
+        if(!empty($aCoordinateConvert))
         {
-            $aFrontend['Coordinate'] = $aResult;
+            $aFrontend['Coordinate'] = $aCoordinateConvert;
+        }
+        if(!empty($aTopic))
+        {
+            $aFrontend['aTopic'] = $aTopic;
         }
         return view('Detail',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'aFrontend' => $aFrontend]);
     }

@@ -73,6 +73,7 @@
 
     </style>
     <div class="topic-detail">
+        @if( !empty($aFrontend['aTopic']['attachment']))
         <div id="myCarousel" class="carousel slide col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-18 " data-ride="carousel" style="background-color: #555;">
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -81,19 +82,21 @@
             </ol>
             <!-- Wrapper for slides -->
             <div class="carousel-inner col-sm-12" style="width: 100%;height: 500px;padding: 0 100px">
-                <div class="item active col-sm-12" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset('storage/files/qVizUtGnhOvSaVieT6XozeA8WeNdlXBYAqDQBUCM.png') }}')">
+                @foreach($aFrontend['aTopic']['attachment'] as $iKey => $value)
+                    @if($value['type'] != 'mp4')
+                        <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset($value['path']) }}')">
 
-                </div>
-                <div class="item col-sm-12" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset('storage/files/98f7a94f53772dfcd2939d2a8b309eaa.jpg') }}')">
+                        </div>
+                    @else
+                        <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" >
+                            <video controls="controls" autoplay style=" width:100%; margin-top: 9%;">
+                                <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+                                <source src="{{ asset($value['path']) }}" type="video/mp4">
+                            </video>
+                        </div>
+                    @endif
 
-                </div>
-                <div class="item col-sm-12" >
-                    <video controls="controls" autoplay style=" width:100%; margin-top: 9%;">
-                        <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
-                        <source src="{{ asset('storage/files/Z8oqd0220DbrFokvFpDi7T5HJyYNgQfCcOQVeop9.mp4') }}" type="video/mp4">
-                    </video>
-                </div>
-
+                @endforeach
             </div>
 
             <!-- Left and right controls -->
@@ -106,6 +109,7 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
+        @endif
         <div class="detail col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-18" style="padding-left: 0; padding-right: 0; word-wrap: break-word; word-break: keep-all">
            <div class="title col-md-12 col-sm-12" style="color: #ce1126; margin-bottom: 5px;padding-left: 0; padding-right: 0; ">
                <h2 style="font-weight: bold">aaaaaaaaaaaaaaaaa</h2>
