@@ -143,7 +143,7 @@
                                 <img src="{{ asset('images/forever.jpg') }}" style="height: 110px; width: 110px">
                             </div>
                             <div class="content col-md-7 col-sm-7">
-                                <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="javascript:void(0)" style="text-decoration: none;">{{ $aTopic['topic_title'] }}</a> </div>
+                                <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['topic_title'] }}</a> </div>
                                 <div style="font-size: 15px;margin-bottom: 5px"><b>{{ $aTopic['price'] }}</b> {{ $aTopic['currency_title'] }}</div>
                                 <div style="font-size: 15px;margin-bottom: 5px">Danh mục: <b>{{ $aTopic['category_title'] }}</b></div>
                                 <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
@@ -152,7 +152,7 @@
                                 Đăng bởi <b>{{ $aTopic['username'] }}</b>
                             </div>
                             <div class="col-md-12 col-sm-2" style="padding: 0 120px 0 15px;;margin-top: 20px;">
-                                <div class="col-md-12 col-sm-2" style="@if((int)$iKey < (int)(count($aFrontend['aTopics']) - 1) )border-bottom: 1px solid #dddddd;@endif">
+                                <div class="col-md-12 col-sm-2" style="@if((int)$iKey < (int)(count($aFrontend['aTopics']) - 1) ) border-bottom: 1px solid #dddddd; @endif">
                                 </div>
                             </div>
                         </div>
@@ -191,7 +191,39 @@
                 e.preventDefault();
                 $('#menu').toggle();
             });
+            $('#search').on('input',function()
+            {
+                if($(this).val() !='')
+                {
+                    $(this).css('border','1px solid #dddddd');
+                }
 
+            });
+            $('#submit_header').click(function(event){
+                var sString=$('#search').val();
+                var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(sString);
+                if(sString=='') {
+                    event.preventDefault();
+                    $('#search').css("border", "5px solid orange");
+                } else if(checkSpecialCharacter === true ) {
+                    event.preventDefault();
+                    $('#search').css("border", "5px solid orange");
+                }
+            });
+            $('#search').keypress(function(e)
+            {
+                var sString=$(this).val();
+                var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(sString);
+                if(e.which == 13) {
+                    if(sString=='') {
+                        e.preventDefault();
+                        $(this).css("border", "5px solid orange");
+                    } else if(checkSpecialCharacter === true) {
+                        e.preventDefault();
+                        $(this).css("border", "5px solid orange");
+                    }
+                }
+            });
             $('#search').autocomplete({
                 minLength: 0,
                 source: function(request,response){
@@ -199,6 +231,12 @@
                     var cat = $('#cat').val();
                     var datefrom = $('#datefrom').val();
                     var dateto = $('#dateto').val();
+                    var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(key);
+                    if(checkSpecialCharacter === true)
+                    {
+                        response(null)
+                        return false;
+                    }
                     $.ajax({
                         type: "GET",
                         url: '/suggestion',
@@ -236,13 +274,7 @@
                         .appendTo( ul );
             };
         });
-        // hide menu when clicking outsite the menu. except the dropdown button
-        $(document).click(function(e){
-            if(e.target.id !='menu' && !$('#menu').find(e.target).length && e.target.id !='dropdown' )
-            {
-                $('#menu').hide();
-            }
-        });
+
     </script>
 
 @endsection

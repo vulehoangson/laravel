@@ -54,7 +54,9 @@ class TopicModel extends Model
     {
         $aRow = DB::table('topic')->join('user','user.user_id','=','topic.user_id')
             ->join('currency','currency.currency_id','=','topic.currency')
-            ->select('topic.*','user.username','currency.title AS currency_title')
+            ->join('topic_category_data','topic.topic_id','=','topic_category_data.topic_id')
+            ->join('topic_category','topic_category_data.category_id','=','topic_category.category_id')
+            ->select('topic.*','user.username','currency.title AS currency_title','topic_category.category_id','topic_category.title AS category_title')
             ->where([
                 ['topic.topic_id','=',$iTopic],
             ])->get();
@@ -62,7 +64,23 @@ class TopicModel extends Model
         $aTopicConver['attachment'] = $this->getAttachmentFiles($iTopic);
         return $aTopicConver;
     }
-
+    public function getRelatedTopics($iTopicId, $iCategoryId)
+    {
+        $aRows = DB::table('topic')->join('user','user.user_id','=','topic.user_id')
+            ->join('currency','currency.currency_id','=','topic.currency')
+            ->join('topic_category_data','topic.topic_id','=','topic_category_data.topic_id')
+            ->join('topic_category','topic_category_data.category_id','=','topic_category.category_id')
+            ->select('topic.*','user.username','currency.title AS currency_title','topic_category.category_id','topic_category.title AS category_title')
+            ->where([
+                ['topic.topic_id','<>',$iTopicId],
+                ['topic_category.category_id','=',$iCategoryId],
+                ['topic.status', '=' , 2]
+            ])
+            ->orderBy('topic.time_stamp', 'desc')
+            ->limit(5)->get();
+        $aConvert = $this->oHelper->convertDataFromObjectToArray($aRows,true);
+        return $aConvert;
+    }
     public function _update($iTopicId)
     {
 

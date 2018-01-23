@@ -25,6 +25,7 @@ class DetailController extends Controller
 
         $iTopicId = $request->id;
         $aTopic = $this->oTopic->getQuickTopic($iTopicId);
+        $aRelatedTopic = $this->oTopic->getRelatedTopics($aTopic['topic_id'], $aTopic['category_id']);
         $aCoordinateConvert = !empty($aTopic['address']) ? $this->oHelper->parseAddressToCoordinate($aTopic['address']) : array();
         if(!empty($aCoordinateConvert))
         {
@@ -33,6 +34,10 @@ class DetailController extends Controller
         if(!empty($aTopic))
         {
             $aFrontend['aTopic'] = $aTopic;
+        }
+        if(!empty($aRelatedTopic))
+        {
+            $aFrontend['aRelatedTopics'] = $aRelatedTopic;
         }
         return view('Detail',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'aFrontend' => $aFrontend]);
     }

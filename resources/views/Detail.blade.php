@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Tạo bài đăng')
+@section('title','Chi tiết sản phẩm')
 
 @section('content')
     <style rel="stylesheet">
@@ -17,13 +17,22 @@
             padding: 15px 0 35px 0;
             margin-right: auto;
             margin-left: auto;
+            margin-bottom: 15px;
 
         }
-
+        .related-topic
+        {
+            background-color: #fff;
+            padding: 15px 0 35px 0;
+            margin-right: auto;
+            margin-left: auto;
+        }
 
         @media (min-width: 768px)
         {
-            .topic-detail {
+            .topic-detail,
+            .related-topic
+            {
                 width: 750px;
             }
             .carousel-indicators {
@@ -32,13 +41,17 @@
         }
         @media (min-width: 992px)
         {
-            .topic-detail {
+            .topic-detail,
+            .related-topic
+            {
                 width: 970px;
             }
         }
         @media (min-width: 1200px)
         {
-            .topic-detail {
+            .topic-detail,
+            .related-topic
+            {
                 width: 1170px;
             }
         }
@@ -51,12 +64,26 @@
             clear: both;
             height: 0;
         }
+        .related-topic:after
+        {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
+        }
+        .topic-detail #myCarousel .carousel-inner .item video
+        {
+            width:100%;
+            margin-top: 9%;
+        }
 
         @media (max-width: 1024px)
         {
             .topic-detail #myCarousel .carousel-inner .item video
             {
-                margin-top: 19% !important;
+                margin-top: 19%;
             }
         }
         @media (max-width: 992px)
@@ -64,17 +91,83 @@
             .topic-detail #myCarousel .carousel-inner
             {
                 height: 350px !important;
-            }
-            .topic-detail #myCarousel .carousel-inner
-            {
                 padding: 0 50px !important;
             }
+            .topic-detail #myCarousel .carousel-inner .item video
+            {
+                margin-top: 9%;
+            }
+        }
+        .MiniPopup
+        {
+            color: #333333;
+            float: left;
+            line-height: 18px;
+            width: 300px;
+        }
+        .MiniPopup .Title {
+            float: left;
+            font-size: 15px;
+            font-weight: bold;
+            margin-left: 18px;
+        }
+        .MiniPopup p {
+            float: left;
+            font-size: 13px;
+            line-height: 15px;
+            margin: 7px 0 0;
+            padding: 0 0 5px;
+        }
+        .MiniPopup .Content .address {
+            display: block;
+            margin-bottom: 8px;
+            padding-left: 18px;
+        }
+        .MiniPopup .Content .phone {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding-left: 18px;
+        }
+        .MiniPopup a:hover
+        {
+            color: #297fc7 !important;
+
+        }
+        .topic-detail .title
+        {
+            padding-bottom: 5px;
+            border-bottom: 1px solid #dddddd;
+            margin-bottom: 30px;
+            padding-left: 15px;
+        }
+        .topic-detail .title h2
+        {
+            margin-top: 0;
         }
 
+        .related-topic .title
+        {
+            padding-bottom: 5px;
+            border-bottom: 1px solid #dddddd;
+            margin-bottom: 30px;
+            padding-left: 15px;
+        }
+        .related-topic .title h2
+        {
+            margin-top: 0;
+        }
+        .carousel-control
+        {
+            width: 10%;
+        }
     </style>
+
     <div class="topic-detail">
+        <div class="title">
+            <h2>Chi Tiết Sản Phẩm</h2>
+        </div>
         @if( !empty($aFrontend['aTopic']['attachment']))
-        <div id="myCarousel" class="carousel slide col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-18 " data-ride="carousel" style="background-color: #555;">
+        <div id="myCarousel" class="carousel slide col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-18 " data-interval="false" data-ride="carousel" style="background-color: #555;">
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -89,7 +182,7 @@
                         </div>
                     @else
                         <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" >
-                            <video controls="controls" autoplay style=" width:100%; margin-top: 9%;">
+                            <video id="video" controls="controls" autoplay >
                                 <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
                                 <source src="{{ asset($value['path']) }}" type="video/mp4">
                             </video>
@@ -111,26 +204,29 @@
         </div>
         @endif
         <div class="detail col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-18" style="padding-left: 0; padding-right: 0; word-wrap: break-word; word-break: keep-all">
-           <div class="title col-md-12 col-sm-12" style="color: #ce1126; margin-bottom: 5px;padding-left: 0; padding-right: 0; ">
-               <h2 style="font-weight: bold">aaaaaaaaaaaaaaaaa</h2>
+           <div class="title-detail col-md-12 col-sm-12" style="color: #ce1126; padding-left: 0; padding-right: 0; ">
+               <h2 style="font-weight: bold">{{ $aFrontend['aTopic']['title'] }}</h2>
            </div>
+            <div class="time col-md-12 col-sm-12" style="font-size: 12px;padding-left: 0; padding-right: 0;margin-bottom: 15px;">
+                Đăng lúc <b>{{ $aFrontend['aTopic']['time_stamp'] }}</b> - bởi <b>{{ $aFrontend['aTopic']['username'] }}</b>
+            </div>
             <div class="contact col-md-12 col-sm-12" style="margin-bottom: 15px;padding-left: 0; padding-right: 0; font-size: 16px;color: darkslategrey;">
                 <span class="price">
                     <i class="fa fa-money" aria-hidden="true" style="font-weight: bold;"></i>
-                    <span style="margin-left: 10px">250.000</span>
+                    <span style="margin-left: 10px">{{ $aFrontend['aTopic']['price'] }} {{ $aFrontend['aTopic']['currency_title'] }}</span>
                 </span>
                 <span class="phone" style="margin-left: 25px;">
                     <i class="fa fa-phone" aria-hidden="true" style="font-weight: bold;"></i>
-                    <span style="margin-left: 5px">0933640651</span>
+                    <span style="margin-left: 5px">{{ $aFrontend['aTopic']['phone'] }}</span>
                 </span>
             </div>
             <div class="description col-md-12 col-sm-12" style="margin-bottom: 15px;padding-left: 0; padding-right: 0; font-size: 24px;color: darkslategrey;word-wrap: break-word; word-break: keep-all">
-asfffffffffffffffffffffffffffffffffffffffffffff
+                {{ $aFrontend['aTopic']['description'] }}
             </div>
 
             <div class="address col-md-12 col-sm-12" style="margin-bottom: 15px; padding-left: 0; padding-right: 0; font-size: 18px;color: darkslategrey;">
                 <i class="fa fa-map-marker" aria-hidden="true" style="font-weight: bold;"></i>
-                <span style="margin-left: 10px">1953/3/2 Phạm Thế Hiển P6 Q8 TPHCM</span>
+                <span style="margin-left: 10px">{{ $aFrontend['aTopic']['address'] }}</span>
             </div>
 
             <div class="map col-md-12 col-sm-12" style="height: 400px;" id="vietbando">
@@ -138,18 +234,49 @@ asfffffffffffffffffffffffffffffffffffffffffffff
             </div>
         </div>
     </div>
-
-
+    @if(!empty($aFrontend['aRelatedTopics']))
+        <div class="related-topic">
+            <div class="title">
+                <h2>Bài Viết Liên Quan</h2>
+            </div>
+            <div class="result col-md-12">
+                <div class="list" >
+                    @foreach($aFrontend['aRelatedTopics'] as $iKey => $aRelatedTopic)
+                        <div class="col-md-12 col-sm-12 item" style="padding: 20px 0;">
+                            <div class="col-md-2 col-sm-2 image">
+                                <img src="{{ asset('images/forever.jpg') }}" style="height: 110px; width: 110px">
+                            </div>
+                            <div class="content col-md-7 col-sm-7">
+                                <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="{{ url('topic/detail/'.$aRelatedTopic['topic_id']) }}" style="text-decoration: none;">{{ $aRelatedTopic['title'] }}</a> </div>
+                                <div style="font-size: 15px;margin-bottom: 5px"><b>{{ $aRelatedTopic['price'] }}</b> {{ $aRelatedTopic['currency_title'] }}</div>
+                                <div style="font-size: 15px;margin-bottom: 5px">Danh mục: <b>{{ $aRelatedTopic['category_title'] }}</b></div>
+                                <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aRelatedTopic['time_stamp'] }}</b></div>
+                            </div>
+                            <div class="user col-md-3 col-sm-3" >
+                                Đăng bởi <b>{{ $aRelatedTopic['username'] }}</b>
+                            </div>
+                            <div class="col-md-12 col-sm-2" style="padding: 0 120px 0 15px;;margin-top: 20px;">
+                                <div class="col-md-12 col-sm-2" style="@if((int)$iKey < (int)(count($aFrontend['aRelatedTopics']) - 1) ) border-bottom: 1px solid #dddddd; @endif">
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
 <script type="text/javascript" src="https://developers.vietbando.com/V2/Scripts/VietbandoMapsAPI.js?key=a4421f51-dabb-45b5-aa92-d361989037fc"></script>
 <script type="text/javascript">
     var lat = parseFloat("{{ $aFrontend['Coordinate'][0] }}");
     var lng = parseFloat("{{ $aFrontend['Coordinate'][1] }}");
+    var find_address = "{{ $aFrontend['aTopic']['address'] }}";
+    var find_phone = "{{ $aFrontend['aTopic']['phone'] }}";
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
         var mapProp = {
             center: new vbd.LatLng(lat, lng),
-            zoom: 17,
+            zoom: 15,
             /*Nếu layer == null là lấy layer mặc định. Nếu layer là [layer1,layer2,.....] khởi động map với nhiều layer*/
             layer:null
         };
@@ -164,6 +291,19 @@ asfffffffffffffffffffffffffffffffffffffffffffff
         /*options.icon = icon;*/
         var marker=new vbd.Marker(options);
         marker.setMap(map);
+        var content = '<div class="MiniPopup"><p class="Content"> <span class="address"><i class="fa fa-home" style="font-size:14px;margin-right: 5px;"></i>' + find_address + '</span> <span class="phone"><i class="fa fa-phone" style="font-size:13px;margin-right: 7px;"></i>' + find_phone + '</span></p> </div>'
+        var infowindow = new vbd.InfoWindow();
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+        vbd.event.addListener(marker, 'click', function (param) {
+            infowindow.open(map, marker);
+        });
+
+        // stop video playing when click next or pre slide
+        $('#myCarousel').on('slide.bs.carousel', function () {
+            document.getElementById('video').pause();
+        });
+
     });
 </script>
 @endsection

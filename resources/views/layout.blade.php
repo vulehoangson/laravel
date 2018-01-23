@@ -47,7 +47,6 @@
             list-style: none;
             font-size: 14px;
             text-align: left;
-            background-color: #ffffff;
             border: 1px solid #cccccc;
             border: 1px solid rgba(0, 0, 0, 0.15);
             border-radius: 4px;

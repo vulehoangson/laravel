@@ -132,8 +132,8 @@
                             {{ $aCategory['title'] }}
                         </div>
                         @if(!empty($aCategory['aTopics']))
-                            @foreach($aCategory['aTopics'] as $aTopic)
-                                <div class="col-md-12 item" style="border-bottom: 1px solid #dddddd;padding: 20px 0;">
+                            @foreach($aCategory['aTopics'] as $iKey => $aTopic)
+                                <div class="col-md-12 item" style="@if((int)$iKey < (int)(count($aCategory['aTopics']) - 1) )border-bottom: 1px solid #dddddd; @endif padding: 20px 0;">
                                     <div class="col-md-2 image">
                                         <img src="images/forever.jpg" style="height: 110px; width: 110px">
                                     </div>
@@ -185,6 +185,39 @@
             $('#menu').toggle();
         });
 
+        $('#search').on('input',function()
+        {
+            if($(this).val() !='')
+            {
+                $(this).css('border','1px solid #dddddd');
+            }
+
+        });
+        $('#submit_header').click(function(event){
+            var sString=$('#search').val();
+            var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(sString);
+            if(sString=='') {
+                event.preventDefault();
+                $('#search').css("border", "5px solid orange");
+            } else if(checkSpecialCharacter === true ) {
+                event.preventDefault();
+                $('#search').css("border", "5px solid orange");
+            }
+        });
+        $('#search').keypress(function(e)
+        {
+            var sString=$(this).val();
+            var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(sString);
+            if(e.which == 13) {
+                if(sString=='') {
+                    e.preventDefault();
+                    $(this).css("border", "5px solid orange");
+                } else if(checkSpecialCharacter === true) {
+                    e.preventDefault();
+                    $(this).css("border", "5px solid orange");
+                }
+            }
+        });
 
         $('#search').autocomplete({
             minLength: 0,
@@ -193,6 +226,12 @@
                 var cat = $('#cat').val();
                 var datefrom = $('#datefrom').val();
                 var dateto = $('#dateto').val();
+                var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(key);
+                if(checkSpecialCharacter === true)
+                {
+                    response(null)
+                    return false;
+                }
                 $.ajax({
                     type: "GET",
                     url: '/suggestion',

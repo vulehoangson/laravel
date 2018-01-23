@@ -118,7 +118,7 @@ class UploadController extends Controller
                 {
                     $this->oTopicModel->addAttachFiles($aFiles);
                 }
-                $sSuccess ='Upload thành công';
+                $sSuccess ='Upload thành công. Bài đăng sẽ được Admin xét duyệt sớm nhất. Cám ơn';
                
             }
             else
