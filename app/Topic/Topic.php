@@ -1,22 +1,28 @@
 <?php
 namespace App\Topic;
+use App\User\UserModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Cookie\CookieController;
 use App\Http\Controllers\Session\SessionController;
 use App\Helper\Helper;
+use App\User\UserMode;
 class TopicModel extends Model
 {
     private $oHelper;
+    private $oUserModel;
     public function __construct()
     {
         $this->oHelper = new Helper();
+        $this->oUserModel = new UserModel();
     }
     public function _add($aVals = array())
     {
         $iUserId=!empty(SessionController::getSession('user_id')) ? SessionController::getSession('user_id') : (!empty(CookieController::getCookie('user_id')) ? CookieController::getCookie('user_id') : 0 );
+
         if(!empty($iUserId))
         {
+            $iUserGroup = (int)$this->oUserModel->getUserGroup($iUserId);
             $iId=DB::table('topic')->insertGetId([
                 'title' => $aVals['name'],
                 'currency' => (int)$aVals['currency'],
@@ -25,7 +31,7 @@ class TopicModel extends Model
                 'address' => $aVals['address'],
                 'phone' => $aVals['phone'],
                 'user_id' => $iUserId,
-                'status' => 1,
+                'status' => ($iUserGroup <> 1 && $iUserGroup <> 2) ? 1 : 2,
                 'time_stamp' => strtotime(date('d-m-Y H:i:s'))
             ]);
 
@@ -64,6 +70,7 @@ class TopicModel extends Model
         $aTopicConver['attachment'] = $this->getAttachmentFiles($iTopic);
         return $aTopicConver;
     }
+
     public function getRelatedTopics($iTopicId, $iCategoryId)
     {
         $aRows = DB::table('topic')->join('user','user.user_id','=','topic.user_id')
@@ -81,9 +88,20 @@ class TopicModel extends Model
         $aConvert = $this->oHelper->convertDataFromObjectToArray($aRows,true);
         return $aConvert;
     }
-    public function _update($iTopicId)
+    public function _update($iTopicId, $aUpdate)
     {
-
+        if(!empty($iTopicId))
+        {
+            DB::table('topic')
+                    ->where([
+                        ['topic_id','=',$iTopicId]
+                    ])
+                    ->update([
+                        'title' => $aUpdate['name'],
+                        'currency' => $aUpdate['currency'],
+                        'price' => $aUpdate['price']
+                    ]);
+        }
     }
 
     public function getApprovedWaitingTopics()

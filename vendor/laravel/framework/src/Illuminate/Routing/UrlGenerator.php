@@ -333,7 +333,7 @@ class UrlGenerator implements UrlGeneratorContract
      */
     public function action($action, $parameters = [], $absolute = true)
     {
-        if (is_null($route = $this->routes->getByAction($action = $this->formatAction($action)))) {
+            if (is_null($route = $this->routes->getByAction($action = $this->formatAction($action)))) {
             throw new InvalidArgumentException("Action {$action} not defined.");
         }
 

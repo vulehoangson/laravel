@@ -138,7 +138,7 @@
                                         <img src="images/forever.jpg" style="height: 110px; width: 110px">
                                     </div>
                                     <div class="content col-md-7">
-                                        <div style="font-size: 19px;margin-bottom: 5px;color: #196c4b"><a href="javascript:void(0)" style="text-decoration: none;">{{ $aTopic['title'] }}</a> </div>
+                                        <div style="font-size: 19px;margin-bottom: 5px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['title'] }}</a> </div>
                                         <div style="font-size: 16px;margin-bottom: 25px"><b>{{ $aTopic['price'] }}</b> {{ $aTopic['currency_title'] }}</div>
                                         <div style="font-size: 16px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
                                     </div>

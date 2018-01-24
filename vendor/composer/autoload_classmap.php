@@ -23,6 +23,7 @@ return array(
     'App\\Http\\Controllers\\Session\\SessionController' => $baseDir . '/app/Http/Controllers/Session/Session.php',
     'App\\Http\\Controllers\\Test' => $baseDir . '/app/Http/Controllers/Test.php',
     'App\\Http\\Controllers\\Topic\\DetailController' => $baseDir . '/app/Http/Controllers/Topic/Detail.php',
+    'App\\Http\\Controllers\\Topic\\EditController' => $baseDir . '/app/Http/Controllers/Topic/Edit.php',
     'App\\Http\\Controllers\\Topic\\SearchController' => $baseDir . '/app/Http/Controllers/Topic/Search.php',
     'App\\Http\\Controllers\\Topic\\UploadController' => $baseDir . '/app/Http/Controllers/Topic/Upload.php',
     'App\\Http\\Controllers\\User\\LoginController' => $baseDir . '/app/Http/Controllers/User/Login.php',

@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Chi tiết sản phẩm')
+@section('title',$aFrontend['aTopic']['title'])
 
 @section('content')
     <style rel="stylesheet">
@@ -160,6 +160,29 @@
         {
             width: 10%;
         }
+        .topic-detail .detail .time .edit-button
+        {
+            width: 45px;
+            height: 40px;
+            background: #e6e6e6;
+            cursor: pointer;
+        }
+        .topic-detail .detail .time .edit-button:before
+        {
+            transform: translate(0, 0);
+            text-indent: 0 !important;
+            content: '\f044';
+            font-size: 20px;
+            color: #626262;
+            position: absolute;
+            padding: 0;
+            line-height: 40px;
+            text-align: center;
+            font-family: "FontAwesome";
+            font-style: normal;
+            font-weight: normal;
+            text-rendering: auto;
+        }
     </style>
 
     <div class="topic-detail">
@@ -208,7 +231,13 @@
                <h2 style="font-weight: bold">{{ $aFrontend['aTopic']['title'] }}</h2>
            </div>
             <div class="time col-md-12 col-sm-12" style="font-size: 12px;padding-left: 0; padding-right: 0;margin-bottom: 15px;">
-                Đăng lúc <b>{{ $aFrontend['aTopic']['time_stamp'] }}</b> - bởi <b>{{ $aFrontend['aTopic']['username'] }}</b>
+                <div class="col-md-10 col-sm-10">
+                    Đăng lúc <b>{{ $aFrontend['aTopic']['time_stamp'] }}</b> - bởi <b>{{ $aFrontend['aTopic']['username'] }}</b>
+                </div>
+                <a class="col-md-2 col-sm-2 edit-button" href="{{ url('topic/edit/'.$aFrontend['aTopic']['topic_id']) }}">
+
+                </a>
+
             </div>
             <div class="contact col-md-12 col-sm-12" style="margin-bottom: 15px;padding-left: 0; padding-right: 0; font-size: 16px;color: darkslategrey;">
                 <span class="price">

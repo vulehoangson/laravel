@@ -38,3 +38,10 @@ Route::get('/topic/search','Topic\SearchController@process');
 Route::get('/ping', 'Solr\SolariumController@search');
 Route::get('/suggestion','Ajax\AjaxController@searchSuggestion');
 Route::get('/topic/detail/{id}','Topic\DetailController@process');
+Route::get('/topic/edit/{id}','Topic\EditController@process');
+
+//using it when method post with params
+Route::post('/topic/edit/{id}',[
+   'uses' => 'Topic\EditController@process',
+   'as' => 'edit.route'
+]);

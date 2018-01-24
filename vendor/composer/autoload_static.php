@@ -316,6 +316,7 @@ class ComposerStaticInit65739a29dfa87fa65cc3292291d59954
         'App\\Http\\Controllers\\Session\\SessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Session/Session.php',
         'App\\Http\\Controllers\\Test' => __DIR__ . '/../..' . '/app/Http/Controllers/Test.php',
         'App\\Http\\Controllers\\Topic\\DetailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Topic/Detail.php',
+        'App\\Http\\Controllers\\Topic\\EditController' => __DIR__ . '/../..' . '/app/Http/Controllers/Topic/Edit.php',
         'App\\Http\\Controllers\\Topic\\SearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/Topic/Search.php',
         'App\\Http\\Controllers\\Topic\\UploadController' => __DIR__ . '/../..' . '/app/Http/Controllers/Topic/Upload.php',
         'App\\Http\\Controllers\\User\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/Login.php',

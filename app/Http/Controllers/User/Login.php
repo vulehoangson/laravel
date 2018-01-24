@@ -72,4 +72,14 @@ class LoginController extends Controller
         return ($bGetUserGroup ? array(false, false) : false);
 
     }
+    public function getCurrentUserId()
+    {
+        $user_id = 0;
+        if(!$user_id=SessionController::getSession($this->CookiesId))
+        {
+
+            $user_id = !empty($_COOKIE['user_id'] ) ? $_COOKIE['user_id'] : 0;
+        }
+        return (int)$user_id;
+    }
 }

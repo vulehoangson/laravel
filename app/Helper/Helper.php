@@ -90,6 +90,11 @@ class Helper extends Model
     public function formatNumber($iNumber,$decimals=0,$dec_point=',', $thousands_sep='.') {
         return number_format($iNumber,$decimals,$dec_point,$thousands_sep);
     }
+    public function parseFormattedNumberToInt($sNumber)
+    {
+        $oNumberFormatter = new \NumberFormatter("en_EN", NumberFormatter::DECIMAL);
+        return $oNumberFormatter->parse($sNumber, NumberFormatter::TYPE_INT32);
+    }
 
     public function calculateImageSize($iImageWidth, $iImageHeight, $iThumbnailWidth, $iThumbnailHeight)
     {
