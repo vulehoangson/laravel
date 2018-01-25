@@ -53,8 +53,10 @@ class TopicModel extends Model
     }
     public function _delete($iTopicId)
     {
-        $bDelete=DB::table('topic')->where('topic_id',$iTopicId)->delete();
-        return $bDelete;
+        DB::table('attachment')->where('topic_id',$iTopicId)->delete();
+        DB::table('topic_category_data')->where('topic_id',$iTopicId)->delete();
+        DB::table('topic')->where('topic_id',$iTopicId)->delete();
+        return true;
     }
     public function getQuickTopic($iTopic)
     {

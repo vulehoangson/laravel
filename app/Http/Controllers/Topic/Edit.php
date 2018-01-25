@@ -32,6 +32,10 @@ class EditController extends Controller
         $aCategories = $this->oCategoryModel->getList([
             ['is_root','<>',1]
         ]);
+        if(!empty($aTopic))
+        {
+            return redirect(url(''));
+        }
         if(!$bLogin || $aTopic['user_id'] <> $iCurrentUserId )
         {
             return back();
