@@ -99,9 +99,19 @@ class TopicModel extends Model
                     ->update([
                         'title' => $aUpdate['name'],
                         'currency' => $aUpdate['currency'],
-                        'price' => $aUpdate['price']
+                        'price' => $aUpdate['price'],
+                        'description' => $aUpdate['description'],
+                        'address' => $aUpdate['address'],
+                        'phone' => $aUpdate['phone']
                     ]);
+            DB::table('topic_category_data')->where([
+                ['topic_id','=',$iTopicId]
+            ])->update([
+                'category_id' => $aUpdate['category']
+            ]);
+            return true;
         }
+        return false;
     }
 
     public function getApprovedWaitingTopics()
@@ -154,6 +164,24 @@ class TopicModel extends Model
                                     ->where('topic_id',$iTopicId)
                                     ->get();
         return $this->oHelper->convertDataFromObjectToArray($aRow);
+    }
+    public function deleteAttachmentFilesWithId($aIds = [])
+    {
+        /*DB::delete('DELETE FROM attachment WHERE attachment_id IN (:)',$aIds);*/
+        if(!empty($aIds))
+        {
+            DB::table('attachment')->whereIn('attachment_id',$aIds)->delete();
+            return true;
+        }
+        return false;
+    }
+    public function getFilesNotIn($iTopicId, $aIds = [])
+    {
+        $aRows = DB::table('attachment')->select('*')
+                                        ->where('topic_id',$iTopicId)
+                                        ->whereNotIn('attachment_id', $aIds)
+                                        ->get();
+        return $this->oHelper->convertDataFromObjectToArray($aRows);
     }
 }
 

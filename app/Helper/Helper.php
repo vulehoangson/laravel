@@ -147,5 +147,20 @@ class Helper extends Model
         }
         return array();
     }
+    public function deleteFiles($aFiles = [])
+    {
+        if(!empty($aFiles))
+        {
+            foreach($aFiles as $aFile)
+            {
+                $sPublicPath = public_path().'/'.$aFile['path'];
+                if(file_exists($sPublicPath))
+                {
+                    unlink($sPublicPath);
+                }
+
+            }
+        }
+    }
 
 }

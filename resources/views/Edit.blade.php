@@ -58,11 +58,14 @@
     @endif
     <div class="upload" style="padding-left: 15px;">
         {{-- using route(route_name,params) when method post with params  --}}
-        <form method="POST" action="{{ route('edit.route',$aFrontend['aTopic']['topic_id']) }}" enctype="multipart/form-data">
+        <form id="frm_edit" method="POST" action="{{ route('edit.route',$aFrontend['aTopic']['topic_id']) }}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div style="margin-bottom: 15px;">
                 <div><b>Tiêu đề </b>:</div>
-                <input type="text" name="val[name]" id="name" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;"  placeholder="Bạn đang bán gì ?" value="{{ $aFrontend['aTopic']['title'] }}">
+                <input type="text" name="val[name]" id="name" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;"  placeholder="Bạn đang bán gì ?" value="{{ $aFrontend['aTopic']['title'] }}" class="check-special-characters">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                </div>
             </div>
 
             <div>
@@ -98,27 +101,39 @@
 
             <div>
                 <div><b>Giá tiền </b>:</div>
-                <input type="text" name="val[price]" id="price" class="form-control"  placeholder="Giá tiền" value="{{ $aFrontend['aTopic']['price'] }}">
+                <input type="text" name="val[price]" id="price" class="form-control check-special-characters"  placeholder="Giá tiền" value="{{ $aFrontend['aTopic']['price'] }}">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                </div>
             </div>
 
             <div>
                 <div><b>Mô tả sản phẩm </b>:</div>
-                <input type="text" name="val[description]" id="description" class="form-control"  placeholder="Mô tả sản phẩm" value="{{ $aFrontend['aTopic']['description'] }}">
+                <input type="text" name="val[description]" id="description" class="form-control check-special-characters"  placeholder="Mô tả sản phẩm" value="{{ $aFrontend['aTopic']['description'] }}">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                </div>
             </div>
 
             <div>
                 <div><b>Địa chỉ </b>:</div>
-                <input type="text" name="val[address]" id="address" class="form-control"  placeholder="Địa chỉ" value="{{ $aFrontend['aTopic']['address'] }}">
+                <input type="text" name="val[address]" id="address" class="form-control check-special-characters"  placeholder="Địa chỉ" value="{{ $aFrontend['aTopic']['address'] }}">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                </div>
             </div>
 
             <div>
                 <div><b>Số điện thọai </b>:</div>
-                <input type="text" name="val[phone]" id="phone" class="form-control"  placeholder="Số điện thoại" value="{{ $aFrontend['aTopic']['phone'] }}">
+                <input type="text" name="val[phone]" id="phone" class="form-control check-special-characters"  placeholder="Số điện thoại" value="{{ $aFrontend['aTopic']['phone'] }}">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                </div>
             </div>
 
             <div class="attachments">
                 <div><b>Đính kèm file (tối đa 4 files)</b>:</div>
-                <div class="attachment-list">
+                <div class="attachment-list col-md-12 col-sm-12" style="padding-left: 0; padding-right: 0;">
                     @foreach($aFrontend['aTopic']['attachment'] as $iKey => $aAttachment)
                         <div class="item col-md-12" data-id="{{ (int)$iKey + 1 }}" style="padding-left: 0; padding-right: 0; margin-bottom: 15px;" id="item_{{ (int)$iKey + 1 }}">
                             <div class="input-group image-preview" style="margin-bottom: 15px;position: relative; width: 35%;">
@@ -138,7 +153,7 @@
                                 <div class="remove-attachment" style="position: absolute;top: 20px;left: 425px;@if((int)$iKey === 0)display: none; @endif cursor: pointer;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 22px"></i></div>
 
                             </div>
-                            <div class="col-md-4 preview-file" style="padding-left: 0;height: auto;width: 100%;padding-top: 10px;padding-right: 0;">
+                            <div class="col-md-4 col-sm-4 preview-file" style="padding-left: 0;height: auto;width: 100%;padding-top: 10px;padding-right: 0;">
                                 @if($aAttachment['type'] === 'mp4')
                                     <video id="video" controls="controls" style="width: 35%;">
                                         <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
@@ -245,6 +260,50 @@
              });*/
 
             //***********************************************************
+
+            $('.check-special-characters').each(function() {
+                $mainElement = $(this);
+                // return a function that executes instead of type code directly to function (can't work)
+                $mainElement.on('input',function($mainElement) {
+                    return function() {
+                        var checkSpecialCharacter = /[~`!#$%\^&*+=\\[\]\\';.,{}|?_@":<>]/g.test($mainElement.val());
+                        if(checkSpecialCharacter)
+                        {
+
+                            $mainElement.parent().children('.warning').show();
+                        }
+                        else
+                        {
+                            $mainElement.parent().children('.warning').hide();
+                        }
+
+                    }
+                }($mainElement));
+            });
+
+
+            /*$('form').one('submit',function (e) {
+                e.preventDefault();
+                var count = 0 ;
+                $('.check-special-characters').each(function() {
+                    $mainElement = $(this);
+                    var checkSpecialCharacter = /[~`!#$%\^&*+=\\[\]\\';.,{}|?_":<>]/g.test($mainElement.val());
+                    if(checkSpecialCharacter)
+                    {
+                        console.log($(this));
+                        count++;
+                    }
+                });
+                console.log(count);
+                if(count === 0)
+                {
+                    console.log('yes');
+                    $(this).submit();
+                }
+            });*/
+
+
+
 
         });
 
