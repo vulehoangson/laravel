@@ -21,7 +21,7 @@ class DetailController extends Controller
         $oUser=new LoginController();
         $aFrontend=array();
         list($bLogin,$iUserGroup)=$oUser->checkAutoLogin(true);
-
+        $iCurrentUserId = $oUser->getCurrentUserId();
 
         $iTopicId = $request->id;
         $aTopic = $this->oTopic->getQuickTopic($iTopicId);
@@ -39,6 +39,6 @@ class DetailController extends Controller
         {
             $aFrontend['aRelatedTopics'] = $aRelatedTopic;
         }
-        return view('Detail',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'aFrontend' => $aFrontend]);
+        return view('Detail',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'iCurrentUserId' => (int)$iCurrentUserId,'aFrontend' => $aFrontend]);
     }
 }

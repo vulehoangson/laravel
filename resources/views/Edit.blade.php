@@ -132,7 +132,7 @@
             </div>
 
             <div class="attachments">
-                <div><b>Đính kèm file (tối đa 4 files)</b>:</div>
+                <div><b>Đính kèm file (tối đa 4 files - mỗi file tối đa 5MB)</b>:</div>
                 <div class="attachment-list col-md-12 col-sm-12" style="padding-left: 0; padding-right: 0;">
                     @foreach($aFrontend['aTopic']['attachment'] as $iKey => $aAttachment)
                         <div class="item col-md-12" data-id="{{ (int)$iKey + 1 }}" style="padding-left: 0; padding-right: 0; margin-bottom: 15px;" id="item_{{ (int)$iKey + 1 }}">

@@ -107,7 +107,7 @@
             </div>
 
             <div class="attachments">
-                <div><b>Đính kèm file (tối đa 4 files)</b>:</div>
+                <div><b>Đính kèm file (tối đa 4 files - mỗi file tối đa 5MB)</b>:</div>
                 <div class="attachment-list">
                     <div class="item col-md-12" data-id="1" style="padding-left: 0; padding-right: 0; margin-bottom: 15px;" id="item_1">
                         <div class="input-group image-preview" style="margin-bottom: 15px;position: relative; width: 35%;">

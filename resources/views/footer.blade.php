@@ -54,7 +54,7 @@
             Về Chúng Tôi
         </div>
         <div class="content" style="word-break: keep-all;color: #dddddd">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla justo consectetur velit. Morbi volutpat. Nam et nibh. Sed nec metus vitae libero luctus cursus. Nulla facilisi. Duis at orci ut mauris imperdiet mattis. Integer quam enim, feugiat at, sagittis at, venenatis in, lacus. Phasellus at tellus. Praesent orci justo, malesuada ac, pulvinar sed, iaculis non, leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+            Là một người mới ra trường và non kém về mặt UX/UI. Tôi luôn cố gắng tìm hiểu và chỉnh sửa từng ngày để giúp cho Website luôn được mọi người yêu thích và muốn gắn bó.
         </div>
     </div>
 </div>

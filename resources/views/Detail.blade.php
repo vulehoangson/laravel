@@ -17,7 +17,7 @@
             padding: 15px 0 35px 0;
             margin-right: auto;
             margin-left: auto;
-            margin-bottom: 15px;
+            margin-bottom: 30px;
 
         }
         .related-topic
@@ -26,6 +26,7 @@
             padding: 15px 0 35px 0;
             margin-right: auto;
             margin-left: auto;
+            margin-bottom: 30px;
         }
 
         @media (min-width: 768px)
@@ -234,10 +235,11 @@
                 <div class="col-md-10 col-sm-10">
                     Đăng lúc <b>{{ $aFrontend['aTopic']['time_stamp'] }}</b> - bởi <b>{{ $aFrontend['aTopic']['username'] }}</b>
                 </div>
-                <a class="col-md-2 col-sm-2 edit-button" href="{{ url('topic/edit/'.$aFrontend['aTopic']['topic_id']) }}">
+                @if( $bLogin && (int)$iCurrentUserId === (int)$aFrontend['aTopic']['user_id'])
+                    <a class="col-md-2 col-sm-2 edit-button" href="{{ url('topic/edit/'.$aFrontend['aTopic']['topic_id']) }}">
 
-                </a>
-
+                    </a>
+                @endif
             </div>
             <div class="contact col-md-12 col-sm-12" style="margin-bottom: 15px;padding-left: 0; padding-right: 0; font-size: 16px;color: darkslategrey;">
                 <span class="price">
@@ -282,7 +284,7 @@
                                 <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aRelatedTopic['time_stamp'] }}</b></div>
                             </div>
                             <div class="user col-md-3 col-sm-3" >
-                                Đăng bởi <b>{{ $aRelatedTopic['username'] }}</b>
+                                Đăng bởi <a href="{{ asset('profile/'.$aRelatedTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aRelatedTopic['username'] }}</b></a>
                             </div>
                             <div class="col-md-12 col-sm-2" style="padding: 0 120px 0 15px;;margin-top: 20px;">
                                 <div class="col-md-12 col-sm-2" style="@if((int)$iKey < (int)(count($aFrontend['aRelatedTopics']) - 1) ) border-bottom: 1px solid #dddddd; @endif">

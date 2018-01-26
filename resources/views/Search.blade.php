@@ -185,8 +185,11 @@
                 yearSuffix: ""
             };
             $.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
-            $('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
-            $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
+            /*$('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
+            $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});*/
+            $('#datefrom').datepicker({format: 'dd/mm/yyyy'});
+            $('#dateto').datepicker({format: 'dd/mm/yyyy'});
+
             $('#dropdown').on('touchstart click',function (e) {
                 e.preventDefault();
                 $('#menu').toggle();
@@ -273,6 +276,13 @@
                         .append('<div class="ui-menu-item-wrapper">'+item.label+'</div>')
                         .appendTo( ul );
             };
+        });
+        // hide menu when clicking outsite the menu. except the dropdown button
+        $(document).click(function(e){
+            if(e.target.id !='menu' && !$('#menu').find(e.target).length && e.target.id !='dropdown' )
+            {
+                $('#menu').hide();
+            }
         });
 
     </script>

@@ -32,4 +32,8 @@ class UserModel extends Model
     {
         return DB::table('user')->where('user_id',$iUserId)->value('group_id');
     }
+    public function updateUser($iUserId, $aUpdate = [])
+    {
+        return ( !empty($aUpdate) ? DB::table('user')->where('user_id',$iUserId)->update($aUpdate) : false );
+    }
 }

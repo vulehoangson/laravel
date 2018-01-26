@@ -143,7 +143,7 @@
                                         <div style="font-size: 16px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
                                     </div>
                                     <div class="user col-md-3" >
-                                        Đăng bởi <b>{{ $aTopic['username'] }}</b>
+                                        Đăng bởi <a href="{{ asset('profile/'.$aTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aTopic['username'] }}</b></a>
                                     </div>
                                 </div>
                             @endforeach
@@ -178,8 +178,10 @@
             yearSuffix: ""
         };
         $.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
-        $('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
-        $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
+        /*$('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
+        $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});*/
+        $('#datefrom').datepicker({format: 'dd/mm/yyyy'});
+        $('#dateto').datepicker({format: 'dd/mm/yyyy'});
         $('#dropdown').on('touchstart click',function (e) {
             e.preventDefault();
             $('#menu').toggle();

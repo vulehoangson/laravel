@@ -179,11 +179,16 @@ class TopicModel extends Model
     }
     public function getFilesNotIn($iTopicId, $aIds = [])
     {
-        $aRows = DB::table('attachment')->select('*')
-                                        ->where('topic_id',$iTopicId)
-                                        ->whereNotIn('attachment_id', $aIds)
-                                        ->get();
-        return $this->oHelper->convertDataFromObjectToArray($aRows);
+        if(!empty($aIds))
+        {
+            $aRows = DB::table('attachment')->select('*')
+                ->where('topic_id',$iTopicId)
+                ->whereNotIn('attachment_id', $aIds)
+                ->get();
+            return $this->oHelper->convertDataFromObjectToArray($aRows);
+        }
+        return [];
+
     }
 }
 

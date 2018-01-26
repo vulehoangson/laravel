@@ -98,9 +98,9 @@
     @endif
 </div>
 <div class="header-introduction" style="height: 110px;padding: 15px 0;background-color: #B2CFEA">
-    <div class="col-md-4 col-md-offset-1 col-sm-5 col-sm-offset-0" style="float: left">
+    <div class="col-md-4 col-md-offset-1 col-sm-5 col-sm-offset-0" style="float: left;">
         <div class="introduction" style="text-align: center;line-height: 4;">
-            <marquee>Trang rao vặt</marquee>
+            <marquee>Website mua bán thú cưng và các động vật bò sát. Hy vọng sẽ mang đến cho mọi người một nơi bán vui vẻ và uy tín. Chúc các bạn mua may bán đắt</marquee>
 
 
         </div>
@@ -109,7 +109,7 @@
     <div class="col-md-3 col-md-offset-3 col-sm-5 col-sm-offset-2"   >
         <div class="logo">
             <a href="{{ asset('') }}">
-                <img src="{{ asset('images/header_logo.jpg') }}" style="height: 80px;width: 100%">
+                <img src="{{ asset('images/logo.gif') }}" style="height: 80px;width: 100%">
             </a>
 
         </div>
