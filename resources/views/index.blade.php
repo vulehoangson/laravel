@@ -134,16 +134,21 @@
                         @if(!empty($aCategory['aTopics']))
                             @foreach($aCategory['aTopics'] as $iKey => $aTopic)
                                 <div class="col-md-12 item" style="@if((int)$iKey < (int)(count($aCategory['aTopics']) - 1) )border-bottom: 1px solid #dddddd; @endif padding: 20px 0;">
-                                    <div class="col-md-2 image">
+                                    <div class="col-md-2 col-sm-2 image">
                                         <img src="images/forever.jpg" style="height: 110px; width: 110px">
                                     </div>
-                                    <div class="content col-md-7">
+                                    <div class="content col-md-7 col-sm-7">
                                         <div style="font-size: 19px;margin-bottom: 5px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['title'] }}</a> </div>
                                         <div style="font-size: 16px;margin-bottom: 25px"><b>{{ $aTopic['price'] }}</b> {{ $aTopic['currency_title'] }}</div>
                                         <div style="font-size: 16px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
                                     </div>
-                                    <div class="user col-md-3" >
-                                        Đăng bởi <a href="{{ asset('profile/'.$aTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aTopic['username'] }}</b></a>
+                                    <div class="user col-md-3 col-sm-3" >
+                                        Đăng bởi <a href="{{ asset('profile/'.$aTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aTopic['full_name'] }}</b></a>
+                                        @if((int)$aTopic['user_group'] === 1)
+                                            <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>
+                                        @elseif((int)$aTopic['user_group'] === 2)
+                                            <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 -17px;height: 12px;width: 12px;display: inline-block;"></div>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach

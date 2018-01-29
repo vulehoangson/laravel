@@ -26,13 +26,14 @@ class DetailController extends Controller
         $iTopicId = $request->id;
         $aTopic = $this->oTopic->getQuickTopic($iTopicId);
         $aRelatedTopic = $this->oTopic->getRelatedTopics($aTopic['topic_id'], $aTopic['category_id']);
-        $aCoordinateConvert = !empty($aTopic['address']) ? $this->oHelper->parseAddressToCoordinate($aTopic['address']) : array();
+        $aCoordinateConvert = !empty($aTopic['address']) ? $this->oHelper->parseAddressToCoordinate($aTopic['address']) : [];
         if(!empty($aCoordinateConvert))
         {
             $aFrontend['Coordinate'] = $aCoordinateConvert;
         }
         if(!empty($aTopic))
         {
+            $aTopic['attachment'] = $this->oTopic->getAttachmentFiles($iTopicId);
             $aFrontend['aTopic'] = $aTopic;
         }
         if(!empty($aRelatedTopic))

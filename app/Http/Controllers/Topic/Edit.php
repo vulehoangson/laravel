@@ -40,6 +40,7 @@ class EditController extends Controller
         {
             return back();
         }
+        $aTopic['attachment'] = $this->oTopicModel->getAttachmentFiles($iTopicId);
         $aFrontend = array();
         $aError = array();
         $sSuccess = '';

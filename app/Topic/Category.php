@@ -1,10 +1,9 @@
 <?php
 namespace App\Topic;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Helper\Helper;
-class CategoryModel extends Model
+class CategoryModel
 {
     private $oHelper;
     public function __construct()
@@ -27,7 +26,7 @@ class CategoryModel extends Model
                                    ->join('topic_category','topic_category.category_id','=','topic_category_data.category_id')
                                    ->join('user','user.user_id','=','topic.user_id')
                                    ->join('currency','currency.currency_id','=','topic.currency')
-                                   ->select('topic.*','user.username','currency.title AS currency_title')
+                                   ->select('topic.*','user.full_name','currency.title AS currency_title','user.group_id AS user_group')
                                    ->where([
                                        ['topic_category.is_root','<>',1],
                                        ['topic.status','=',2],

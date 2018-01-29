@@ -1,10 +1,10 @@
 <?php
 
 namespace App\User;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Support\Facades\DB;
 
-class UserModel extends Model
+class UserModel
 {
     public function getUserInfo($user_id)
     {

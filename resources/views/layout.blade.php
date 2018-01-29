@@ -83,6 +83,41 @@
             position: absolute;
             width: 1px;
         }
+        .MiniPopup
+        {
+            color: #333333;
+            float: left;
+            line-height: 18px;
+            width: 300px;
+        }
+        .MiniPopup .Title {
+            float: left;
+            font-size: 15px;
+            font-weight: bold;
+            margin-left: 18px;
+        }
+        .MiniPopup p {
+            float: left;
+            font-size: 13px;
+            line-height: 15px;
+            margin: 7px 0 0;
+            padding: 0 0 5px;
+        }
+        .MiniPopup .Content .address {
+            display: block;
+            margin-bottom: 8px;
+            padding-left: 18px;
+        }
+        .MiniPopup .Content .phone {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding-left: 18px;
+        }
+        .MiniPopup a:hover
+        {
+            color: #297fc7 !important;
+
+        }
     </style>
 </head>
 <body>

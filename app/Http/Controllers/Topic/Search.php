@@ -29,16 +29,21 @@ class SearchController extends Controller
         ) : array();
         unset($aVals['datefrom']);
         unset($aVals['dateto']);
-        $aParams = array(
-            'query' => $this->solr->createQuery($aVals),
-            'field' => '*',
-            'sort' => array(
-                'time_stamp' => 'desc',
-            ),
-            'limit' => 10,
-            'pagination' => 0
-        );
-        $aResult = $this->solr->search($aParams);
+        $aResult = [];
+        if($this->solr->ping())
+        {
+            $aParams = array(
+                'query' => $this->solr->createQuery($aVals),
+                'field' => '*',
+                'sort' => array(
+                    'time_stamp' => 'desc',
+                ),
+                'limit' => 10,
+                'pagination' => 0
+            );
+            $aResult = $this->solr->search($aParams);
+        }
+
         $aCategories = $this->oCategoryModel->getList([['is_root','<>',1]]);
         if(!empty($aResult))
         {

@@ -1,9 +1,7 @@
 <?php
 namespace App\Helper;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
-class Helper extends Model
+class Helper
 {
     public static function getCurrencies()
     {

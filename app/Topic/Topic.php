@@ -1,13 +1,13 @@
 <?php
 namespace App\Topic;
+
 use App\User\UserModel;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Cookie\CookieController;
 use App\Http\Controllers\Session\SessionController;
 use App\Helper\Helper;
 use App\User\UserMode;
-class TopicModel extends Model
+class TopicModel
 {
     private $oHelper;
     private $oUserModel;
@@ -69,7 +69,7 @@ class TopicModel extends Model
                 ['topic.topic_id','=',$iTopic],
             ])->get();
         $aTopicConver = $this->oHelper->convertDataFromObjectToArray($aRow,true,true);
-        $aTopicConver['attachment'] = $this->getAttachmentFiles($iTopic);
+        /*$aTopicConver['attachment'] = $this->getAttachmentFiles($iTopic);*/
         return $aTopicConver;
     }
 

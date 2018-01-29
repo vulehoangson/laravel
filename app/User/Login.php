@@ -1,11 +1,11 @@
 <?php
 
 namespace App\User;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class LoginModel extends Model
+class LoginModel
 {
     private $username;
     private $password;
