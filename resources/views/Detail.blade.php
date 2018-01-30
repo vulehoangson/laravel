@@ -231,9 +231,14 @@
            <div class="title-detail col-md-12 col-sm-12" style="color: #ce1126; padding-left: 0; padding-right: 0; ">
                <h2 style="font-weight: bold">{{ $aFrontend['aTopic']['title'] }}</h2>
            </div>
-            <div class="time col-md-12 col-sm-12" style="font-size: 12px;padding-left: 0; padding-right: 0;margin-bottom: 15px;">
+            <div class="time col-md-12 col-sm-12" style="font-size: 14px;padding-left: 0; padding-right: 0;margin-bottom: 15px;">
                 <div class="col-md-10 col-sm-10">
-                    Đăng lúc <b>{{ $aFrontend['aTopic']['time_stamp'] }}</b> - bởi <b>{{ $aFrontend['aTopic']['username'] }}</b>
+                    Đăng lúc <b>{{ $aFrontend['aTopic']['time_stamp'] }}</b> - bởi <a href="{{ asset('profile/'.$aFrontend['aTopic']['user_id']) }}" style="text-decoration: none;"><b>{{ $aFrontend['aTopic']['full_name'] }}</b></a>
+                    @if((int)$aFrontend['aTopic']['user_group'] === 1)
+                        <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>
+                    @elseif((int)$aFrontend['aTopic']['user_group'] === 2)
+                        <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 -17px;height: 12px;width: 12px;display: inline-block;"></div>
+                    @endif
                 </div>
                 @if( $bLogin && (int)$iCurrentUserId === (int)$aFrontend['aTopic']['user_id'])
                     <a class="col-md-2 col-sm-2 edit-button" href="{{ url('topic/edit/'.$aFrontend['aTopic']['topic_id']) }}">
@@ -284,7 +289,12 @@
                                 <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aRelatedTopic['time_stamp'] }}</b></div>
                             </div>
                             <div class="user col-md-3 col-sm-3" >
-                                Đăng bởi <a href="{{ asset('profile/'.$aRelatedTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aRelatedTopic['username'] }}</b></a>
+                                Đăng bởi <a href="{{ asset('profile/'.$aRelatedTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aRelatedTopic['full_name'] }}</b></a>
+                                @if((int)$aRelatedTopic['user_group'] === 1)
+                                    <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>
+                                @elseif((int)$aRelatedTopic['user_group'] === 2)
+                                    <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 -17px;height: 12px;width: 12px;display: inline-block;"></div>
+                                @endif
                             </div>
                             <div class="col-md-12 col-sm-2" style="padding: 0 120px 0 15px;;margin-top: 20px;">
                                 <div class="col-md-12 col-sm-2" style="@if((int)$iKey < (int)(count($aFrontend['aRelatedTopics']) - 1) ) border-bottom: 1px solid #dddddd; @endif">

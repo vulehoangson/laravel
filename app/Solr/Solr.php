@@ -28,14 +28,12 @@ class Solr extends Model
     {
         // create a ping query
         $ping = $this->client->createPing();
-
         // execute the ping query
         try {
-            $ping = $this->client->ping($ping)->getResponse()->getBody();
-            $aStatus = json_decode($ping,true);
-            return $aStatus['status'];
+            $this->client->ping($ping);
+            return response()->json('OK');
         } catch (\Solarium\Exception $e) {
-            return "ERROR";
+            return response()->json('ERROR', 500);
         }
     }
 

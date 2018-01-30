@@ -51,7 +51,7 @@ class LoginController extends Controller
             return redirect(url(''));
         } else
         {
-            return view('Login',['error' => 'Login Failed']);
+            return view('Login',['error' => 'Đăng nhập thất bại. Kiểm tra lại Username và Password']);
         }
     }
     public function checkAutoLogin($bGetUserGroup = false)

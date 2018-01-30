@@ -64,7 +64,7 @@ class TopicModel
             ->join('currency','currency.currency_id','=','topic.currency')
             ->join('topic_category_data','topic.topic_id','=','topic_category_data.topic_id')
             ->join('topic_category','topic_category_data.category_id','=','topic_category.category_id')
-            ->select('topic.*','user.username','currency.title AS currency_title','topic_category.category_id','topic_category.title AS category_title')
+            ->select('topic.*','user.full_name','user.group_id AS user_group','user.user_id','currency.title AS currency_title','topic_category.category_id','topic_category.title AS category_title')
             ->where([
                 ['topic.topic_id','=',$iTopic],
             ])->get();
@@ -79,7 +79,7 @@ class TopicModel
             ->join('currency','currency.currency_id','=','topic.currency')
             ->join('topic_category_data','topic.topic_id','=','topic_category_data.topic_id')
             ->join('topic_category','topic_category_data.category_id','=','topic_category.category_id')
-            ->select('topic.*','user.username','currency.title AS currency_title','topic_category.category_id','topic_category.title AS category_title')
+            ->select('topic.*','user.full_name','user.user_id','user.group_id AS user_group','currency.title AS currency_title','topic_category.category_id','topic_category.title AS category_title')
             ->where([
                 ['topic.topic_id','<>',$iTopicId],
                 ['topic_category.category_id','=',$iCategoryId],

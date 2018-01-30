@@ -34,7 +34,7 @@ class SignupController extends Controller
         {
             $aInsert=array(
                 'username' => $aVals['username'],
-                'password' => $aVals['username'],
+                'password' => $aVals['password'],
                 'full_name' => $aVals['full_name'],
                 'address' => $aVals['address'],
                 'phone' => $aVals['phone'],
