@@ -26,6 +26,7 @@ class DetailController extends Controller
         $iTopicId = $request->id;
         $aTopic = $this->oTopic->getQuickTopic($iTopicId);
         $aRelatedTopic = $this->oTopic->getRelatedTopics($aTopic['topic_id'], $aTopic['category_id']);
+
         $aCoordinateConvert = !empty($aTopic['address']) ? $this->oHelper->parseAddressToCoordinate($aTopic['address']) : [];
         if(!empty($aCoordinateConvert))
         {
@@ -38,7 +39,21 @@ class DetailController extends Controller
         }
         if(!empty($aRelatedTopic))
         {
-            $aFrontend['aRelatedTopics'] = $aRelatedTopic;
+            $aIds =[];
+            $aRelatedTopicConvert = [];
+            foreach($aRelatedTopic as $iKey => $aValue)
+            {
+                $aValue['attachment_path'] = '';
+                $aValue['stt'] = (int)$iKey;
+                $aRelatedTopicConvert[$aValue['topic_id']] = $aValue;
+                $aIds[] = $aValue['topic_id'];
+            }
+            $aTemps = $this->oTopic->getListTopicHasAvatar($aIds);
+            foreach($aTemps as $aTemp)
+            {
+                $aRelatedTopicConvert[$aTemp['topic_id']]['attachment_path'] = $aTemp['attachment_path'];
+            }
+            $aFrontend['aRelatedTopics'] = $aRelatedTopicConvert;
         }
         return view('Detail',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'iCurrentUserId' => (int)$iCurrentUserId,'aFrontend' => $aFrontend]);
     }

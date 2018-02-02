@@ -278,9 +278,9 @@
             <div class="result col-md-12">
                 <div class="list" >
                     @foreach($aFrontend['aRelatedTopics'] as $iKey => $aRelatedTopic)
-                        <div class="col-md-12 col-sm-12 item" style="padding: 20px 0;">
+                        <div class="col-md-12 col-sm-12 item" style="cursor: pointer; @if((int)$aRelatedTopic['stt'] < (int)(count($aFrontend['aRelatedTopics']) - 1) ) border-bottom: 1px solid #dddddd; @endif padding: 20px 0;" data-id="{{ $aRelatedTopic['topic_id'] }}">
                             <div class="col-md-2 col-sm-2 image">
-                                <img src="{{ asset('images/forever.jpg') }}" style="height: 110px; width: 110px">
+                                <img src="@if(!empty($aRelatedTopic['attachment_path'])) {{ asset($aRelatedTopic['attachment_path']) }} @else{{ asset('images/default_product.jpg') }}@endif" style="border: 1px solid #dddddd; height: 110px; width: 110px">
                             </div>
                             <div class="content col-md-7 col-sm-7">
                                 <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="{{ url('topic/detail/'.$aRelatedTopic['topic_id']) }}" style="text-decoration: none;">{{ $aRelatedTopic['title'] }}</a> </div>
@@ -312,6 +312,7 @@
     var lng = parseFloat("{{ $aFrontend['Coordinate'][1] }}");
     var find_address = "{{ $aFrontend['aTopic']['address'] }}";
     var find_phone = "{{ $aFrontend['aTopic']['phone'] }}";
+    var detail_url = "{{ asset('topic/detail') }}";
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -344,7 +345,10 @@
         $('#myCarousel').on('slide.bs.carousel', function () {
             document.getElementById('video').pause();
         });
-
+        $('.item').click(function () {
+            var id = $(this).data('id');
+            window.location.href = detail_url+'/'+id;
+        });
     });
 </script>
 @endsection

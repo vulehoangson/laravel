@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Topic;
 
 use App\Http\Controllers\Controller;
+use App\Topic\TopicModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\User\LoginController;
 use App\Solr\Solr;
@@ -10,10 +11,12 @@ class SearchController extends Controller
 {
     private $solr;
     private $oCategoryModel;
+    private $oTopic;
     public function __construct()
     {
         $this->solr = new Solr();
         $this->oCategoryModel = new CategoryModel();
+        $this->oTopic = new TopicModel();
     }
 
     public function process(Request $request)
@@ -42,12 +45,25 @@ class SearchController extends Controller
                 'pagination' => 0
             );
             $aResult = $this->solr->search($aParams);
+
         }
 
         $aCategories = $this->oCategoryModel->getList([['is_root','<>',1]]);
         if(!empty($aResult))
         {
-            $aFrontend['aTopics'] = $aResult;
+            $aIds = [];
+            $aResultConvert = [];
+            foreach ($aResult as $value)
+            {
+                $aIds[] = $value['topic_id'];
+                $aResultConvert[$value['topic_id']] = $value;
+            }
+            $aTempList = $this->oTopic->getListTopicHasAvatar($aIds);
+            foreach($aTempList as $aTemp)
+            {
+                $aResultConvert[$aTemp['topic_id']]['attachment_path'] = $aTemp['attachment_path'];
+            }
+            $aFrontend['aTopics'] = $aResultConvert;
         }
         if(!empty($aCategories))
         {

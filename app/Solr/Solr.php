@@ -138,6 +138,7 @@ class Solr extends Model
                 foreach ($document as $field => $value) {
                     $aResult[$iKey][$field] = ($field == 'time_stamp' ? date('d-m-Y H:i:s',$value) : ($field == 'price' ? $this->oHelper->formatNumber($value) : $value));
                 }
+                $aResult[$iKey]['attachment_path'] = '';
             }
         }
         return $aResult;

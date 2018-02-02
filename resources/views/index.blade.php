@@ -132,10 +132,10 @@
                             {{ $aCategory['title'] }}
                         </div>
                         @if(!empty($aCategory['aTopics']))
-                            @foreach($aCategory['aTopics'] as $iKey => $aTopic)
-                                <div class="col-md-12 item" style="@if((int)$iKey < (int)(count($aCategory['aTopics']) - 1) )border-bottom: 1px solid #dddddd; @endif padding: 20px 0;">
+                            @foreach($aCategory['aTopics'] as  $aTopic)
+                                <div class="col-md-12 item" style="@if((int)$aTopic['stt'] < (int)(count($aCategory['aTopics']) - 1) ) border-bottom: 1px solid #dddddd; @endif padding: 20px 0;cursor: pointer;" data-id="{{ $aTopic['topic_id'] }}">
                                     <div class="col-md-2 col-sm-2 image">
-                                        <img src="{{ asset('images/default_product.jpg') }}" style="border: 1px solid #dddddd; height: 110px; width: 110px">
+                                        <img src="@if(!empty($aTopic['attachment_path'])) {{ asset($aTopic['attachment_path']) }} @else{{ asset('images/default_product.jpg') }}@endif" style="border: 1px solid #dddddd; height: 110px; width: 110px">
                                     </div>
                                     <div class="content col-md-7 col-sm-7">
                                         <div style="font-size: 19px;margin-bottom: 5px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['title'] }}</a> </div>
@@ -161,6 +161,9 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    var detail_url = "{{ asset('topic/detail') }}";
+</script>
 <script type="text/javascript">
 
     $(document).ready(function(){
@@ -273,14 +276,19 @@
                     .append('<div class="ui-menu-item-wrapper">'+item.label+'</div>')
                     .appendTo( ul );
         };
+
+        $('.item').click(function () {
+           var id = $(this).data('id');
+            window.location.href = detail_url+'/'+id;
+        });
     });
     // hide menu when clicking outsite the menu. except the dropdown button
-    $(document).click(function(e){
+    /*$(document).click(function(e){
         if(e.target.id !='menu' && !$('#menu').find(e.target).length && e.target.id !='dropdown' )
         {
             $('#menu').hide();
         }
-    });
+    });*/
 
 
 </script>

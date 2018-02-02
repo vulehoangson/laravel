@@ -190,5 +190,23 @@ class TopicModel
         return [];
 
     }
+    public function getListTopicHasAvatar($aIds = [])
+    {
+        $aRows = DB::table('topic')->join('topic_category_data','topic.topic_id','=','topic_category_data.topic_id')
+            ->join('topic_category','topic_category.category_id','=','topic_category_data.category_id')
+            ->join('user','user.user_id','=','topic.user_id')
+            ->join('currency','currency.currency_id','=','topic.currency')
+            ->join('attachment','topic.topic_id','=','attachment.topic_id')
+            ->select('topic.topic_id','attachment.path AS attachment_path',DB::raw('MIN(attachment.attachment_id) AS attachment_id'))
+            ->where([
+                ['topic_category.is_root','<>',1],
+                ['attachment.type','<>','mp4']
+            ])
+            ->whereIn('topic.topic_id', $aIds)
+            ->groupBy('topic.topic_id')
+            ->orderBy('topic.time_stamp', 'desc')
+            ->get();
+        return $this->oHelper->convertDataFromObjectToArray($aRows);
+    }
 }
 

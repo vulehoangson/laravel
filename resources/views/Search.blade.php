@@ -138,9 +138,9 @@
                 @if(!empty($aFrontend['aTopics']))
                     @foreach($aFrontend['aTopics'] as $iKey => $aTopic)
 
-                        <div class="col-md-12 col-sm-12 item" style="padding: 20px 0;">
+                        <div class="col-md-12 col-sm-12 item" style="padding: 20px 0;cursor: pointer" data-id="{{ $aTopic['topic_id'] }}">
                             <div class="col-md-2 col-sm-2 image">
-                                <img src="{{ asset('images/forever.jpg') }}" style="height: 110px; width: 110px">
+                                <img src="@if(!empty($aTopic['attachment_path'])) {{ asset($aTopic['attachment_path']) }} @else{{ asset('images/default_product.jpg') }}@endif" style="border: 1px solid #dddddd; height: 110px; width: 110px">
                             </div>
                             <div class="content col-md-7 col-sm-7">
                                 <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['topic_title'] }}</a> </div>
@@ -149,7 +149,12 @@
                                 <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
                             </div>
                             <div class="user col-md-3 col-sm-3" >
-                                Đăng bởi <b>{{ $aTopic['username'] }}</b>
+                                Đăng bởi <a style="text-decoration: none;" href="{{ asset('profile/'.$aTopic['user_id']) }}"><b>{{ $aTopic['full_name'] }}</b></a>
+                                @if((int)$aTopic['user_group'] === 1)
+                                    <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>
+                                @elseif((int)$aTopic['user_group'] === 2)
+                                    <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 -17px;height: 12px;width: 12px;display: inline-block;"></div>
+                                @endif
                             </div>
                             <div class="col-md-12 col-sm-2" style="padding: 0 120px 0 15px;;margin-top: 20px;">
                                 <div class="col-md-12 col-sm-2" style="@if((int)$iKey < (int)(count($aFrontend['aTopics']) - 1) ) border-bottom: 1px solid #dddddd; @endif">
@@ -163,6 +168,9 @@
         </div>
 
     </div>
+    <script type="text/javascript">
+        var detail_url = "{{ asset('topic/detail') }}";
+    </script>
     <script type="text/javascript">
 
         $(document).ready(function(){
@@ -276,14 +284,18 @@
                         .append('<div class="ui-menu-item-wrapper">'+item.label+'</div>')
                         .appendTo( ul );
             };
+            $('.item').click(function () {
+                var id = $(this).data('id');
+                window.location.href = detail_url+'/'+id;
+            });
         });
-        // hide menu when clicking outsite the menu. except the dropdown button
+        /*// hide menu when clicking outsite the menu. except the dropdown button
         $(document).click(function(e){
             if(e.target.id !='menu' && !$('#menu').find(e.target).length && e.target.id !='dropdown' )
             {
                 $('#menu').hide();
             }
-        });
+        });*/
 
     </script>
 
