@@ -200,19 +200,22 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner col-sm-12" style="width: 100%;height: 500px;padding: 0 100px">
                 @foreach($aFrontend['aTopic']['attachment'] as $iKey => $value)
-                    @if($value['type'] != 'mp4')
-                        <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset($value['path']) }}')">
+                    @if(file_exists(public_path().'/'.$value['path']))
+                        @if($value['type'] != 'mp4')
+                            <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset($value['path']) }}')">
 
-                        </div>
-                    @else
-                        <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" >
-                            <video id="video" controls="controls" autoplay >
-                                <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
-                                <source src="{{ asset($value['path']) }}" type="video/mp4">
-                            </video>
-                        </div>
+                            </div>
+                        @else
+
+                                <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" >
+                                    <video id="video" controls="controls" autoplay >
+                                        <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+                                        <source src="{{ asset($value['path']) }}" type="video/mp4">
+                                    </video>
+                                </div>
+
+                        @endif
                     @endif
-
                 @endforeach
             </div>
 
@@ -343,9 +346,13 @@
 
         // stop video playing when click next or pre slide
         $('#myCarousel').on('slide.bs.carousel', function () {
-            document.getElementById('video').pause();
+            if(document.getElementById('video'))
+            {
+                document.getElementById('video').pause();
+            }
+
         });
-        $('.item').click(function () {
+        $('.related-topic .item').click(function () {
             var id = $(this).data('id');
             window.location.href = detail_url+'/'+id;
         });

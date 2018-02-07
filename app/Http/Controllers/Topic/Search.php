@@ -105,7 +105,8 @@ class SearchController extends Controller
             {
                 $temp=array(
                     'label' => $aRow['topic_title'],
-                    'value' => $aRow['topic_title']
+                    'value' => $aRow['topic_title'],
+                    'url' => asset('topic/detail/').'/'.$aRow['topic_id']
                 );
                 $aTemp[] = $temp;
             }

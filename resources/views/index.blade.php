@@ -269,7 +269,9 @@
             close: function() {},
             focus: function(event,ui) {
             },
-            select: function(event, ui) {}
+            select: function(event, ui) {
+                window.location.href = ui.item.url;
+            }
         }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
             return $( "<li class='ui-menu-item'></li>" )
                     .data( "item.autocomplete", item )
