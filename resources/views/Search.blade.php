@@ -143,7 +143,7 @@
                                 <img src="@if(!empty($aTopic['attachment_path'])) {{ asset($aTopic['attachment_path']) }} @else{{ asset('images/default_product.jpg') }}@endif" style="border: 1px solid #dddddd; height: 110px; width: 110px">
                             </div>
                             <div class="content col-md-7 col-sm-7">
-                                <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['topic_title'] }}</a> </div>
+                                <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['title'] }}</a> </div>
                                 <div style="font-size: 15px;margin-bottom: 5px"><b>{{ $aTopic['price'] }}</b> {{ $aTopic['currency_title'] }}</div>
                                 <div style="font-size: 15px;margin-bottom: 5px">Danh mục: <b>{{ $aTopic['category_title'] }}</b></div>
                                 <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
@@ -277,7 +277,9 @@
                     /* $( "#project" ).val( ui.item.label );
                      return false;*/
                 },
-                select: function(event, ui) {}
+                select: function(event, ui) {
+                    window.location.href = ui.item.url;
+                }
             }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
                 return $( "<li class='ui-menu-item'></li>" )
                         .data( "item.autocomplete", item )

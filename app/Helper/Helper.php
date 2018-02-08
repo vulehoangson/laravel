@@ -85,6 +85,72 @@ class Helper
 
         return $aConvert;
     }
+
+
+    public function convertDataFromRawObjectToArray($oData,$bConverTimestamp=false,$bObject = false)
+    {
+        $aConvert=array();
+
+        if(!empty($oData))
+        {
+            if($bObject)
+            {
+                if($bConverTimestamp)
+                {
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    foreach ($oData as $iKey => $aData)
+                    {
+                        foreach ($aData as $sIndex => $value)
+                        {
+                            $aConvert[$sIndex] = ($sIndex === 'time_stamp' ? date('d-m-Y H:i:s',$value) : ($sIndex === 'price' ? $this->formatNumber($value) : $value));
+                        }
+                    }
+                }
+                else
+                {
+                    foreach ($oData as $iKey => $aData)
+                    {
+
+                        foreach ($aData as $sIndex => $value)
+                        {
+                            $aConvert[$iKey][$sIndex] = $value;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if($bConverTimestamp)
+                {
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    foreach ($oData as $iKey => $aData)
+                    {
+
+                        foreach ($aData as $sIndex => $value)
+                        {
+                            $aConvert[$iKey][$sIndex] = ($sIndex === 'time_stamp' ? date('d-m-Y H:i:s',$value) : ($sIndex === 'price' ? $this->formatNumber($value) : $value));
+                        }
+                    }
+                }
+                else
+                {
+                    foreach ($oData as $iKey => $aData)
+                    {
+
+                        foreach ($aData as $sIndex => $value)
+                        {
+                            $aConvert[$iKey][$sIndex] = $value;
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+        return $aConvert;
+    }
+
     public function formatNumber($iNumber,$decimals=0,$dec_point=',', $thousands_sep='.') {
         return number_format($iNumber,$decimals,$dec_point,$thousands_sep);
     }

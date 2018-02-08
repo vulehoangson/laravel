@@ -208,5 +208,36 @@ class TopicModel
             ->get();
         return $this->oHelper->convertDataFromObjectToArray($aRows);
     }
+    public function search($aVals = [])
+    {
+        $sSearch = '';
+        if(!empty($aVals['search']))
+        {
+            $sTitle = '( ';
+            $sDescription = '( ';
+            $charSet = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $aVals['search']);
+            $charSet = rtrim($charSet);
+            $aSearch = explode(" ",$charSet);
+            foreach($aSearch as $key => $value)
+            {
+                $sTitle.='MATCH (t.title) AGAINST (\'"'.$value.'" \') AND ';
+                $sDescription.='MATCH (t.description) AGAINST (\'"'.$value.'" \') AND ';
+            }
+            $sTitle = trim($sTitle,'AND ').')';
+            $sDescription = trim($sDescription,'AND ').')';
+            $sSearch.='AND ( '.$sTitle.' OR '.$sDescription.' )';
+        }
+
+       $aRows = DB::select('
+              SELECT t.*, tcd.category_id, tc.title AS category_title, u.full_name, u.group_id AS user_group, c.title AS currency_title   
+              FROM topic t
+              INNER JOIN topic_category_data tcd ON t.topic_id = tcd.topic_id
+              INNER JOIN user u ON t.user_id = u.user_id
+              INNER JOIN topic_category tc ON tc.category_id = tcd.category_id
+              INNER JOIN currency c ON c.currency_id = t.currency
+              WHERE (t.status = 2) '.(!empty($sSearch) ? $sSearch : '').(!empty($aVals['cat']) ? 'AND (tcd.category_id = '.$aVals['cat'].' ) ': '').( !empty($aVals['date']) && (int)$aVals['date']['datefrom'] <= (int)$aVals['date']['dateto'] ? 'AND (t.time_stamp BETWEEN '.strtotime($aVals['date']['datefrom']).' AND '.strtotime($aVals['date']['dateto']).') ' : '')
+            .'ORDER BY t.time_stamp DESC LIMIT 10');
+       return $this->oHelper->convertDataFromRawObjectToArray($aRows,true);
+    }
 }
 

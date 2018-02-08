@@ -33,7 +33,7 @@ class SearchController extends Controller
         unset($aVals['datefrom']);
         unset($aVals['dateto']);
         $aResult = [];
-        if($this->solr->ping())
+        /*if($this->solr->ping())
         {
             $aParams = array(
                 'query' => $this->solr->createQuery($aVals),
@@ -46,8 +46,9 @@ class SearchController extends Controller
             );
             $aResult = $this->solr->search($aParams);
 
-        }
-
+        }*/
+        
+        $aResult = $this->oTopic->search($aVals);
         $aCategories = $this->oCategoryModel->getList([['is_root','<>',1]]);
         if(!empty($aResult))
         {
@@ -85,9 +86,9 @@ class SearchController extends Controller
         unset($aVals['datefrom']);
         unset($aVals['dateto']);
         /**
-         * create parameters for solr
+         * create parameters for query solr
          */
-        $aParams = array(
+        /*$aParams = array(
             'query' => $this->solr->createQuery($aVals),
             'field' => '*',
             'sort' => array(
@@ -106,6 +107,29 @@ class SearchController extends Controller
                 $temp=array(
                     'label' => $aRow['topic_title'],
                     'value' => $aRow['topic_title'],
+                    'url' => asset('topic/detail/').'/'.$aRow['topic_id']
+                );
+                $aTemp[] = $temp;
+            }
+            $aResult['data'] = $aTemp;
+            $aResult['status'] = true;
+        }
+        */
+        
+        
+        /*
+         * search full text with MYSQL
+         */
+        $aRows = $this->oTopic->search($aVals);
+
+        if(!empty($aRows))
+        {
+            $aTemp = array();
+            foreach($aRows as $iKey => $aRow)
+            {
+                $temp=array(
+                    'label' => $aRow['title'],
+                    'value' => $aRow['title'],
                     'url' => asset('topic/detail/').'/'.$aRow['topic_id']
                 );
                 $aTemp[] = $temp;
