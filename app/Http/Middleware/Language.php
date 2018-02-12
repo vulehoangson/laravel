@@ -13,14 +13,6 @@ class Language
      * @param  \Closure  $next
      * @return mixed
      */
-    public function __construct()
-    {
-        if(empty(CookieController::getCookie('language')))
-        {
-            CookieController::setCookie('language','vi');
-        }
-    }
-
     public function handle($request, Closure $next)
     {
         $sLanguage = CookieController::getCookie('language');
