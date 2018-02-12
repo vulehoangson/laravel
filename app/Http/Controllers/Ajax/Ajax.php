@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Session\SessionController;
 use App\Topic\TopicModel;
 use App\Http\Controllers\Topic\SearchController;
+use App;
 class AjaxController extends Controller
 {
     public function __construct()
@@ -96,5 +97,10 @@ class AjaxController extends Controller
         $aResult = $oSearch->suggestion($sKey);
         echo json_encode($aResult);
 
+    }
+    public function changeLanguage(Request $request)
+    {
+        $sLanguage = $request->language;
+        CookieController::setCookie('language',$sLanguage);
     }
 }

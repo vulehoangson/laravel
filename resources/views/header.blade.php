@@ -44,12 +44,13 @@
     }
 </style>
 <div class="header-info" style="height: 40px;background-color: #354c5c;padding: 3px 30px;">
+    
     @if( empty($bLogin) )
         <div class="signup" style="float: right;color: white">
-            <button id="signup" type="button" class="btn btn-warning">Đăng ký</button>
+            <button id="signup" type="button" class="btn btn-warning">@lang('phrases.signup')</button>
         </div>
         <div class="login" style="float: right;color: white;margin-right: 10px;">
-            <button id="login" type="button" class="btn btn-warning">Đăng nhập</button>
+            <button id="login" type="button" class="btn btn-warning">@lang('phrases.signin')</button>
         </div>
     @else
         <div class="avatar" style="background-color: white;float: right">
@@ -67,7 +68,7 @@
                 <li>
                     <a href="{{ asset('admincp') }}">
                         <i class="fa fa-diamond" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
-                        AdminCP
+                        @lang('phrases.admincp')
                     </a>
 
                 </li>
@@ -75,34 +76,42 @@
                 <li>
                     <a href="{{ (!empty($_SESSION['user_id']) ? url('profile/'.$_SESSION['user_id'] ) : (!empty($_COOKIE['user_id']) ? url('profile/'.$_COOKIE['user_id'] ) : 'javascript:void(0)') )}}">
                         <i class="fa fa-user" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
-                        Vào trang cá nhân
+                        @lang('phrases.gotoprofile')
                     </a>
 
                 </li>
                 <li>
                     <a href="{{ asset('upload') }}" >
                         <i class="fa fa-plus" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 10px"></i>
-                        Thêm Topic
+                        @lang('phrases.create_topic')
                     </a>
 
                 </li>
                 <li style="border-bottom: none !important;">
                     <a href="{{ asset('logout') }}">
                         <i class="fa fa-sign-out" aria-hidden="true" style="color: yellowgreen; font-size: 20px;margin-right: 6px"></i>
-                        Đăng xuất
+                        @lang('phrases.signout')
                     </a>
 
                 </li>
             </ul>
         </div>
     @endif
+    <div class="language" style="float: right; font-size: 13px;margin-right: 20px;margin-top: 1px;">
+        <div style="display: inline-block;margin-left: 5px">
+            <img src="{{ asset('images/vietnam.png') }}" title="@lang('phrases.vietnamese')">
+            <a class="change-language" data-language="vi" style="text-decoration: none;color: #fff;cursor: pointer;">@lang('phrases.vietnamese')</a>
+        </div>
+        <div style="display: inline-block; margin-left: 5px">
+            <img src="{{ asset('images/england.png') }}" title="@lang('phrases.english')">
+            <a class="change-language" data-language="en" style="text-decoration: none;color: #fff;cursor: pointer;">@lang('phrases.english')</a>
+        </div>
+    </div>
 </div>
 <div class="header-introduction" style="height: 110px;padding: 15px 0;background-color: #B2CFEA">
     <div class="col-md-4 col-md-offset-1 col-sm-5 col-sm-offset-0" style="float: left;">
         <div class="introduction" style="text-align: center;line-height: 4;">
-            <marquee>Website mua bán thú cưng và các động vật bò sát. Hy vọng sẽ mang đến cho mọi người một nơi bán vui vẻ và uy tín. Chúc các bạn mua may bán đắt</marquee>
-
-
+            <marquee>@lang('phrases.website_title')</marquee>
         </div>
 
     </div>
@@ -118,6 +127,8 @@
 <script type="text/javascript">
    var login = "{{ asset('login') }}";
     var signup= "{{ asset('signup') }}";
+    var change_language_url = "{{ asset('changelanguage') }}";
+   var token_check = "{{ csrf_token() }}";
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -132,6 +143,21 @@
         });
         $('.setting-button').click(function(){
             $('.setting-option').toggleClass('hide');
+        });
+        $('.change-language').click(function () {
+            var sLanguage = $(this).data('language');
+            console.log(sLanguage);
+            $.ajax({
+                type: "POST",
+                url: change_language_url,
+                data: {
+                    language: sLanguage,
+                    _token : token_check
+                },
+                success: function(){
+                    window.location.reload();
+                }
+            });
         });
     });
 </script>

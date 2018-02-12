@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','Tìm kiếm Topic')
+@section('title',trans('phrases.search_product_title'))
 
 @section('content')
     <style rel="stylesheet">
@@ -73,11 +73,11 @@
     </style>
     <div class="search-result">
         <div class="search col-md-10 col-md-offset-1">
-            <h2 style="text-align: center">Tìm kiếm sản phẩm</h2>
+            <h2 style="text-align: center">@lang('phrases.search_product_title')</h2>
             <form id="form_search" method="POST" action="{{ action('Topic\SearchController@process') }}">
                 {!! csrf_field() !!}
                 <div class="box-search" style="position: relative;">
-                    <input type="text" class="form-control" id="search" name="search" placeholder="Tìm kiếm sản phẩm..." style="height: 50px;display: inline-block;width: 90%">
+                    <input type="text" class="form-control" id="search" name="search" placeholder="@lang('phrases.search_product_placeholder')" style="height: 50px;display: inline-block;width: 90%">
 
                     <button class="btn btn-success " type="button" id="dropdown"  style="display: inline-block;width: 5%;height: 50px;border-radius: 0;margin-top: -2px;margin-left: -4px;">
                         <span class="caret"></span>
@@ -91,11 +91,11 @@
                     <div class=" col-md-12 menu" style="box-shadow: 1px 1px 4px #ccc;position: absolute; border-radius: 0;background-color: bisque;top: 83%;padding: 20px 90px; display: none;z-index: 1;" id="menu">
                         <div class="col-md-12 category-selection" style="padding-left: 0; padding-right: 0">
                             <div style="width: 15%;display: inline-block;">
-                                <h5 style="font-weight:400;">Danh mục: </h5>
+                                <h5 style="font-weight:400;">@lang('phrases.category'): </h5>
                             </div>
                             <div style="width: 84%;display: inline-block;">
                                 <select id="cat" name="cat" class="form-control" style="display: inline-block;">
-                                    <option value="0">Tất cả</option>
+                                    <option value="0">@lang('phrases.all')</option>
                                     @if(!empty($aFrontend['aCategories']))
                                         @foreach($aFrontend['aCategories'] as $aCategory)
                                             <option value="{{ $aCategory['category_id'] }}">{{ $aCategory['title'] }}</option>
@@ -108,7 +108,7 @@
                         <div class="col-md-12 time-selection" style="padding-left: 0; padding-right: 0;">
                             <div class="col-md-6 col-sm-6" style="display: inline-block;padding-left: 0;padding-right: 0">
                                 <div style="width: 30%;display: inline-block;">
-                                    <h5 style="font-weight:400 ">Từ ngày: </h5>
+                                    <h5 style="font-weight:400 ">@lang('phrases.datefrom'): </h5>
                                 </div>
                                 <div style="width: 65%; display: inline-block">
                                     <input type="text" id="datefrom" name="datefrom" value="01/01/{{ (int)date('Y') }}" class="form-control">
@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-md-6 col-sm-6" style="display: inline-block;padding-left: 0;padding-right: 0">
                                 <div style="width: 33%;display: inline-block;">
-                                    <h5 style="font-weight:400 ">Đến ngày: </h5>
+                                    <h5 style="font-weight:400 ">@lang('phrases.dateto'): </h5>
                                 </div>
                                 <div style="width: 65%; display: inline-block">
                                     <input type="text" id="dateto" name="dateto" value="{{ date('m/d/Y') }}" class="form-control">
@@ -145,11 +145,11 @@
                             <div class="content col-md-7 col-sm-7">
                                 <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['title'] }}</a> </div>
                                 <div style="font-size: 15px;margin-bottom: 5px"><b>{{ $aTopic['price'] }}</b> {{ $aTopic['currency_title'] }}</div>
-                                <div style="font-size: 15px;margin-bottom: 5px">Danh mục: <b>{{ $aTopic['category_title'] }}</b></div>
-                                <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
+                                <div style="font-size: 15px;margin-bottom: 5px">@lang('phrases.category'): <b>{{ $aTopic['category_title'] }}</b></div>
+                                <div style="font-size: 15px; margin-bottom: 5px;">@lang('phrases.posted_at') <b>{{ $aTopic['time_stamp'] }}</b></div>
                             </div>
                             <div class="user col-md-3 col-sm-3" >
-                                Đăng bởi <a style="text-decoration: none;" href="{{ asset('profile/'.$aTopic['user_id']) }}"><b>{{ $aTopic['full_name'] }}</b></a>
+                                @lang('phrases.by') <a style="text-decoration: none;" href="{{ asset('profile/'.$aTopic['user_id']) }}"><b>{{ $aTopic['full_name'] }}</b></a>
                                 @if((int)$aTopic['user_group'] === 1)
                                     <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>
                                 @elseif((int)$aTopic['user_group'] === 2)
@@ -170,6 +170,7 @@
     </div>
     <script type="text/javascript">
         var detail_url = "{{ asset('topic/detail') }}";
+        var suggestion_url = "{{ asset('suggestion') }}";
     </script>
     <script type="text/javascript">
 
@@ -250,7 +251,7 @@
                     }
                     $.ajax({
                         type: "GET",
-                        url: '/suggestion',
+                        url: suggestion_url,
                         data: {
                             search : key,
                             cat : cat,

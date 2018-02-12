@@ -26,7 +26,7 @@
                 <i class="fa fa-map-marker" aria-hidden="true" style="color: white;font-size: 22px"></i>
             </div>
             <div class="info col-md-10 col-sm-10" style="color: white;padding-top: 9px;font-size: 16px;word-break: keep-all">
-                1953/3/2 Phạm Thế Hiển, Phường 6, Quận 8, TPHCM
+                @lang('phrases.admin_address')
             </div>
         </div>
 
@@ -35,7 +35,7 @@
                 <i class="fa fa-phone" aria-hidden="true" style="color: white;font-size: 21px"></i>
             </div>
             <div class="info col-md-10 col-sm-10" style="color: white;padding-top: 9px;font-size: 16px;word-break: keep-all">
-                0933640651
+                @lang('phrases.admin_phone')
             </div>
         </div>
 
@@ -44,17 +44,17 @@
                 <i class="fa fa-envelope" aria-hidden="true" style="color: white;font-size: 17px"></i>
             </div>
             <div class="info col-md-10 col-sm-10" style="color: white;padding-top: 9px;font-size: 16px;color: #2ab27b; font-weight: bold;word-break: keep-all">
-                vulehoangson1995@gmail.com
+                @lang('phrases.admin_email')
             </div>
         </div>
     </div>
 
     <div class="about-us col-md-6 col-sm-6">
         <div style="font-size: 16px;font-weight: bold;color: white;margin-bottom: 20px">
-            Về Chúng Tôi
+            @lang('phrases.about_me_title')
         </div>
         <div class="content" style="word-break: keep-all;color: #dddddd">
-            Là một người mới ra trường và non kém về mặt UX/UI. Tôi luôn cố gắng tìm hiểu và chỉnh sửa từng ngày để giúp cho Website luôn được mọi người yêu thích và muốn gắn bó.
+            @lang('phrases.about_me_content')
         </div>
     </div>
 </div>

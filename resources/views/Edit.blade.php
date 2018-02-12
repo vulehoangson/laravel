@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Chỉnh sửa bài đăng')
+@section('title',trans('phrases.edit_title'))
 
 @section('content')
     <style rel="stylesheet">
@@ -40,7 +40,7 @@
         }
     </style>
     <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
-        <h2>Tạo bài đăng</h2>
+        <h2>@lang('phrases.create_topic')</h2>
     </div>
     @if(!empty($aError))
         @foreach($aError as $value)
@@ -61,15 +61,16 @@
         <form id="frm_edit" method="POST" action="{{ route('edit.route',$aFrontend['aTopic']['topic_id']) }}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div style="margin-bottom: 15px;">
-                <div><b>Tiêu đề </b>:</div>
+                <div><b>@lang('phrases.create_topic_title') </b>:</div>
                 <input type="text" name="val[name]" id="name" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;"  placeholder="Bạn đang bán gì ?" value="{{ $aFrontend['aTopic']['title'] }}" class="check-special-characters">
                 <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
-                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                    @lang('phrases.special_character_permission')
+                    {{--* Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!--}}
                 </div>
             </div>
 
             <div>
-                <div><b>Chọn Danh mục</b> :</div>
+                <div><b>@lang('phrases.choose_category')</b> :</div>
                 <select id="category" class="form-control" name="val[category]">
                     @if(!empty($aFrontend['aCategories']))
                         @foreach($aFrontend['aCategories'] as $aCategory)
@@ -85,7 +86,7 @@
             </div>
 
             <div>
-                <div><b>Chọn tiền tệ</b> :</div>
+                <div><b>@lang('phrases.choose_currency')</b> :</div>
                 <select id="currency" class="form-control" name="val[currency]">
                     @if(!empty($aFrontend['aCurrencies']))
                         @foreach($aFrontend['aCurrencies'] as $aCurrency)
@@ -100,39 +101,39 @@
             </div>
 
             <div>
-                <div><b>Giá tiền </b>:</div>
+                <div><b>@lang('phrases.price') </b>:</div>
                 <input type="text" name="val[price]" id="price" class="form-control check-special-characters"  placeholder="Giá tiền" value="{{ $aFrontend['aTopic']['price'] }}">
                 <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
-                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                    @lang('phrases.special_character_permission')
                 </div>
             </div>
 
             <div>
-                <div><b>Mô tả sản phẩm </b>:</div>
+                <div><b>@lang('phrases.product_description') </b>:</div>
                 <input type="text" name="val[description]" id="description" class="form-control check-special-characters"  placeholder="Mô tả sản phẩm" value="{{ $aFrontend['aTopic']['description'] }}">
                 <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
-                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                    @lang('phrases.special_character_permission')
                 </div>
             </div>
 
             <div>
-                <div><b>Địa chỉ </b>:</div>
+                <div><b>@lang('phrases.address') </b>:</div>
                 <input type="text" name="val[address]" id="address" class="form-control check-special-characters"  placeholder="Địa chỉ" value="{{ $aFrontend['aTopic']['address'] }}">
                 <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
-                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                    @lang('phrases.special_character_permission')
                 </div>
             </div>
 
             <div>
-                <div><b>Số điện thọai </b>:</div>
+                <div><b>@lang('phrases.phone') </b>:</div>
                 <input type="text" name="val[phone]" id="phone" class="form-control check-special-characters"  placeholder="Số điện thoại" value="{{ $aFrontend['aTopic']['phone'] }}">
                 <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
-                    * Nội dung chứa ký tự không được phép. Vui lòng thay đổi !!!
+                    @lang('phrases.special_character_permission')
                 </div>
             </div>
 
             <div class="attachments">
-                <div><b>Đính kèm file (tối đa 4 files - mỗi file tối đa 5MB)</b>:</div>
+                <div><b>@lang('phrases.attach_file_title')</b>:</div>
                 <div class="attachment-list col-md-12 col-sm-12" style="padding-left: 0; padding-right: 0;">
                     @foreach($aFrontend['aTopic']['attachment'] as $iKey => $aAttachment)
                         <div class="item col-md-12" data-id="{{ (int)$iKey + 1 }}" style="padding-left: 0; padding-right: 0; margin-bottom: 15px;" id="item_{{ (int)$iKey + 1 }}">
@@ -174,7 +175,7 @@
 
 
             <div class="col-md-12" style="padding-left: 0;">
-                <button class="btn btn-danger" id="submit" value="login">Tạo</button>
+                <button class="btn btn-danger" id="submit" value="login">@lang('phrases.edit_title')</button>
             </div>
         </form>
     </div>
@@ -266,15 +267,18 @@
                 // return a function that executes instead of type code directly to function (can't work)
                 $mainElement.on('input',function($mainElement) {
                     return function() {
-                        var checkSpecialCharacter = /[~`!#$%\^&*+=\\[\]\\';.,{}|?_@":<>]/g.test($mainElement.val());
+                        console.log($mainElement.val());
+                        var checkSpecialCharacter = /[~`!#$%\^&*+=\\[\]\\';{}|?_@":<>]/g.test($mainElement.val());
                         if(checkSpecialCharacter)
                         {
-
+                            console.log($mainElement);
+                            console.log('true');
                             $mainElement.parent().children('.warning').show();
                         }
                         else
                         {
                             $mainElement.parent().children('.warning').hide();
+                            console.log('false');
                         }
 
                     }

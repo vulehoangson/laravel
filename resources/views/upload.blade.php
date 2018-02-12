@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Tạo bài đăng')
+@section('title',trans('phrases.create_topic'))
 
 @section('content')
     <style rel="stylesheet">
@@ -40,7 +40,7 @@
         }
     </style>
     <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
-        <h2>Tạo bài đăng</h2>
+        <h2>@lang('phrases.create_topic')</h2>
     </div>
     @if(!empty($aError))
         @foreach($aError as $value)
@@ -60,12 +60,15 @@
         <form method="POST" action="{{ action('Topic\UploadController@process') }}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div style="margin-bottom: 15px;">
-                <div><b>Tiêu đề </b>:</div>
-                <input type="text" name="name" id="name" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;"  placeholder="Bạn đang bán gì ?">
+                <div><b>@lang('phrases.create_topic_title') </b>:</div>
+                <input type="text" name="name" id="name" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;"  placeholder="Bạn đang bán gì ?" class="check-special-characters">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    @lang('phrases.special_character_permission')
+                </div>
             </div>
 
             <div>
-                <div><b>Chọn Danh mục</b> :</div>
+                <div><b>@lang('phrases.choose_category')</b> :</div>
                 <select id="category" class="form-control" name="category">
                     @if(!empty($aFrontend['aCategories']))
                         @foreach($aFrontend['aCategories'] as $aCategory)
@@ -76,7 +79,7 @@
             </div>
 
             <div>
-                <div><b>Chọn tiền tệ</b> :</div>
+                <div><b>@lang('phrases.choose_currency')</b> :</div>
                 <select id="currency" class="form-control" name="currency">
                     @if(!empty($aFrontend['aCurrencies']))
                         @foreach($aFrontend['aCurrencies'] as $aCurrency)
@@ -87,27 +90,39 @@
             </div>
 
             <div>
-                <div><b>Giá tiền </b>:</div>
-                <input type="text" name="price" id="price" class="form-control"  placeholder="Giá tiền">
+                <div><b>@lang('phrases.price') </b>:</div>
+                <input type="text" name="price" id="price" class="form-control check-special-characters"  placeholder="@lang('phrases.price')">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    @lang('phrases.special_character_permission')
+                </div>
             </div>
 
             <div>
-                <div><b>Mô tả sản phẩm </b>:</div>
-                <input type="text" name="description" id="description" class="form-control"  placeholder="Mô tả sản phẩm">
+                <div><b>@lang('phrases.product_description') </b>:</div>
+                <input type="text" name="description" id="description" class="form-control check-special-characters"  placeholder="@lang('phrases.product_description')">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    @lang('phrases.special_character_permission')
+                </div>
             </div>
 
             <div>
-                <div><b>Địa chỉ </b>:</div>
-                <input type="text" name="address" id="address" class="form-control"  placeholder="Địa chỉ">
+                <div><b>@lang('phrases.address') </b>:</div>
+                <input type="text" name="address" id="address" class="form-control check-special-characters"  placeholder="@lang('phrases.address')">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    @lang('phrases.special_character_permission')
+                </div>
             </div>
 
             <div>
-                <div><b>Số điện thọai </b>:</div>
-                <input type="text" name="phone" id="phone" class="form-control"  placeholder="Số điện thoại">
+                <div><b>@lang('phrases.phone') </b>:</div>
+                <input type="text" name="phone" id="phone" class="form-control check-special-characters"  placeholder="@lang('phrases.phone')">
+                <div class="col-md-12 col-sm-12 warning" style="color: #ce1126;padding-left: 0; padding-right: 0; margin-bottom: 10px;display: none;">
+                    @lang('phrases.special_character_permission')
+                </div>
             </div>
 
             <div class="attachments">
-                <div><b>Đính kèm file (tối đa 4 files - mỗi file tối đa 5MB)</b>:</div>
+                <div><b>@lang('phrases.attach_file_title')</b>:</div>
                 <div class="attachment-list">
                     <div class="item col-md-12" data-id="1" style="padding-left: 0; padding-right: 0; margin-bottom: 15px;" id="item_1">
                         <div class="input-group image-preview" style="margin-bottom: 15px;position: relative; width: 35%;">
@@ -138,7 +153,7 @@
 
 
             <div class="col-md-12" style="padding-left: 0;">
-                <button class="btn btn-danger" id="submit" value="login">Tạo</button>
+                <button class="btn btn-danger" id="submit" value="login">@lang('phrases.create_title')</button>
             </div>
         </form>
     </div>
@@ -184,7 +199,24 @@
 
                $(this).parent().parent().remove();
             });
+            $('.check-special-characters').each(function() {
+                $mainElement = $(this);
+                // return a function that executes instead of type code directly to function (can't work)
+                $mainElement.on('input',function($mainElement) {
+                    return function() {
+                        var checkSpecialCharacter = /[~`!#$%\^&*+=\\[\]\\';{}|?_@":<>]/g.test($mainElement.val());
+                        if(checkSpecialCharacter)
+                        {
+                            $mainElement.parent().children('.warning').show();
+                        }
+                        else
+                        {
+                            $mainElement.parent().children('.warning').hide();
+                        }
 
+                    }
+                }($mainElement));
+            });
             //*************************** preview with div ******************************
 
            /* $(".attachments .attachment-list .item .image-preview ").on('change','input:file',function (){

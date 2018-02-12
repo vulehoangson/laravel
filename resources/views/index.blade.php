@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Trang chủ')
+@section('title',trans('phrases.homepage'))
 
 @section('content')
 <style rel="stylesheet">
@@ -63,11 +63,11 @@
 <div class="homepage" style="">
     <div class="search col-md-10 col-md-offset-1" style="padding-right: 10px;">
 
-        <h2 style="text-align: center">Tìm kiếm sản phẩm</h2>
+        <h2 style="text-align: center">@lang('phrases.search_product_title')</h2>
         <form id="form_search" method="POST" action="{{ action('Topic\SearchController@process') }}">
             {!! csrf_field() !!}
             <div class="box-search" style="position: relative;">
-                <input type="text" class="form-control" id="search" name="search" placeholder="Tìm kiếm sản phẩm..." style="height: 50px;display: inline-block;width: 90%">
+                <input type="text" class="form-control" id="search" name="search" placeholder="@lang('phrases.search_product_placeholder')" style="height: 50px;display: inline-block;width: 90%">
 
                 <button class="btn btn-success " type="button" id="dropdown"  style="display: inline-block;width: 5%;height: 50px;border-radius: 0;margin-top: -2px;margin-left: -4px;">
                     <span class="caret"></span>
@@ -81,11 +81,11 @@
                 <div class="col-md-12 menu" id="menu" style="box-shadow: 1px 1px 4px #ccc;position: absolute; border-radius: 0;background-color: bisque;top: 83%;padding: 20px 90px; display: none;z-index: 1;">
                     <div class="col-md-12 category-selection" style="padding-left: 0; padding-right: 0">
                         <div style="width: 15%;display: inline-block;">
-                            <h5 style="font-weight:400;">Danh mục: </h5>
+                            <h5 style="font-weight:400;">@lang('phrases.category'): </h5>
                         </div>
                         <div style="width: 84%;display: inline-block;">
                             <select id="cat" name="cat" class="form-control" style="display: inline-block;">
-                                <option value="0">Tất cả</option>
+                                <option value="0">@lang('phrases.all')</option>
                                 @if(!empty($aFrontend['aCategories']))
                                     @foreach($aFrontend['aCategories'] as $aCategory)
                                         <option value="{{ $aCategory['category_id'] }}">{{ $aCategory['title'] }}</option>
@@ -98,7 +98,7 @@
                     <div class="col-md-12 time-selection" style="padding-left: 0; padding-right: 0;">
                         <div class="col-md-6" style="display: inline-block;padding-left: 0;padding-right: 0">
                             <div style="width: 30%;display: inline-block;">
-                                <h5 style="font-weight:400 ">Từ ngày: </h5>
+                                <h5 style="font-weight:400 ">@lang('phrases.datefrom'): </h5>
                             </div>
                             <div style="width: 65%; display: inline-block">
                                 <input type="text" id="datefrom" name="datefrom" value="01/01/{{ (int)date('Y') }}" class="form-control">
@@ -107,10 +107,10 @@
                         </div>
                         <div class="col-md-6" style="display: inline-block;padding-left: 0;padding-right: 0">
                             <div style="width: 33%;display: inline-block;">
-                                <h5 style="font-weight:400 ">Đến ngày: </h5>
+                                <h5 style="font-weight:400 ">@lang('phrases.dateto'): </h5>
                             </div>
                             <div style="width: 65%; display: inline-block">
-                                <input type="text" id="dateto" name="dateto" value="{{ date('m/d/Y') }}" class="form-control">
+                                <input type="text" id="dateto" name="dateto" value="{{ date('d/m/Y') }}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
     </div>
     <div class="col-md-12" style="margin: 40px 0 35px 0; border-bottom: 1px solid #dddddd"></div>
     <div class="categories col-md-12" style="margin-top: 20px;padding: 0 15px;">
-        <h2 style="text-align: center;">Danh mục sản phẩm</h2>
+        <h2 style="text-align: center;">@lang('phrases.product_category')</h2>
         <div class="list" >
             @if(!empty($aFrontend['aCategories']))
                 @foreach($aFrontend['aCategories'] as $aCategory)
@@ -140,10 +140,10 @@
                                     <div class="content col-md-7 col-sm-7">
                                         <div style="font-size: 19px;margin-bottom: 5px;color: #196c4b"><a href="{{ url('topic/detail/'.$aTopic['topic_id']) }}" style="text-decoration: none;">{{ $aTopic['title'] }}</a> </div>
                                         <div style="font-size: 16px;margin-bottom: 25px"><b>{{ $aTopic['price'] }}</b> {{ $aTopic['currency_title'] }}</div>
-                                        <div style="font-size: 16px; margin-bottom: 5px;">Đăng lúc <b>{{ $aTopic['time_stamp'] }}</b></div>
+                                        <div style="font-size: 16px; margin-bottom: 5px;">@lang('phrases.posted_at') <b>{{ $aTopic['time_stamp'] }}</b></div>
                                     </div>
                                     <div class="user col-md-3 col-sm-3" >
-                                        Đăng bởi <a href="{{ asset('profile/'.$aTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aTopic['full_name'] }}</b></a>
+                                        @lang('phrases.by') <a href="{{ asset('profile/'.$aTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aTopic['full_name'] }}</b></a>
                                         @if((int)$aTopic['user_group'] === 1)
                                             <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>
                                         @elseif((int)$aTopic['user_group'] === 2)
@@ -163,6 +163,7 @@
 </div>
 <script type="text/javascript">
     var detail_url = "{{ asset('topic/detail') }}";
+    var suggestion_url = "{{ asset('suggestion') }}";
 </script>
 <script type="text/javascript">
 
@@ -244,7 +245,7 @@
                 }
                 $.ajax({
                     type: "GET",
-                    url: '/suggestion',
+                    url: suggestion_url,
                     data: {
                         search : key,
                         cat : cat,
@@ -284,13 +285,13 @@
             window.location.href = detail_url+'/'+id;
         });
     });
-    // hide menu when clicking outsite the menu. except the dropdown button
+    /*// hide menu when clicking outsite the menu. except the dropdown button
     $(document).click(function(e){
         if(e.target.id !='menu' && !$('#menu').find(e.target).length && e.target.id !='dropdown' )
         {
             $('#menu').hide();
         }
-    });
+    });*/
 
 
 </script>

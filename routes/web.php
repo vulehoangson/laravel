@@ -12,13 +12,6 @@
 */
 
 Route::get('','IndexController@process');
-Route::get('/test/{str}/{s}','Test@showNotify')->name('vl')->where(['str' => '[0-9]+']);
-Route::get('/goiten/{a}/{b}',function($a,$b){
-   return redirect()->route('vl',['str' =>$a, 's' => $b ]);
-});
-
-
-
 Route::get('/book','Test@getBookList');
 Route::get('/login','User\LoginController@openFormLogin');
 Route::get('/signup','User\SignupController@openFormSignup');
@@ -39,6 +32,7 @@ Route::get('/ping', 'Solr\SolariumController@search');
 Route::get('/suggestion','Ajax\AjaxController@searchSuggestion');
 Route::get('/topic/detail/{id}','Topic\DetailController@process');
 Route::get('/topic/edit/{id}','Topic\EditController@process');
+Route::post('/changelanguage','Ajax\AjaxController@changeLanguage');
 
 //using it when method post with params
 Route::post('/topic/edit/{id}',[

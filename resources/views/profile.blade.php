@@ -76,7 +76,7 @@
 <div class="profile" style="margin-bottom: 60px;">
 
     <div class="title">
-        <h2>Trang cá nhân</h2>
+        <h2>@lang('phrases.profile')</h2>
     </div>
     <div class="detail col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-18">
         <div class="cover-photo" style="position: relative;height: 450px;overflow: hidden;text-decoration: none; @if(empty($aFrontend['aUser']['cover_photo'])) background-color: #1d2129; @endif ">

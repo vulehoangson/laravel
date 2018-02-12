@@ -2,7 +2,7 @@
 
 
 @section('content')
-@section('title','Đăng ký')
+@section('title',trans('phrases.signup'))
 <style rel="stylesheet">
     .image-preview-input {
         position: relative;
@@ -64,7 +64,7 @@
     }
 </style>
 <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
-    <h2>Đăng ký</h2>
+    <h2>@lang('phrases.signup')</h2>
 </div>
 @if(!empty($aError))
     @foreach($aError as $value)
@@ -77,32 +77,32 @@
     <form method="POST" action="{{ action('User\SignupController@validateSignup') }}" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <div style="margin-bottom: 15px;">
-            <b>Username</b>:
+            <b>@lang('phrases.username')</b>:
             <input type="text" name="val[username]" id="username" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;" >
         </div>
 
         <div>
-            <b>Password</b>:
+            <b>@lang('phrases.password')</b>:
             <input type="password" name="val[password]" id="password" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;" >
         </div>
 
         <div>
-            <b>Họ tên</b>:
+            <b>@lang('phrases.full_name')</b>:
             <input type="text" name="val[full_name]" id="full_name" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;" >
         </div>
 
         <div>
-            <b>Địa chỉ</b>:
+            <b>@lang('phrases.address')</b>:
             <input type="text" name="val[address]" id="address" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;" >
         </div>
 
         <div>
-            <b>Số điện thoại</b>:
+            <b>@lang('phrases.phone')</b>:
             <input type="text" name="val[phone]" id="phone" style="display: block;width: 100%; height: 40px; font-size: 14px;padding: 9px 12px;border: 1px solid #dddddd;outline: none; margin: 10px 0;" >
         </div>
 
         <div class="avatar">
-            <b>Ảnh đại diện</b>:
+            <b>@lang('phrases.avatar')</b>:
             <div class="input-group image-preview" style="margin-bottom: 15px;position: relative; width: 35%;">
                 <input type="text" class="form-control image-preview-filename" disabled="disabled">
                 <span class="input-group-btn">
@@ -120,7 +120,7 @@
             </div>
         </div>
         <div class="cover-photo">
-            <b>Ảnh Cover</b>:
+            <b>@lang('phrases.cover_background')</b>:
             <div class="input-group image-preview-cover" style="margin-bottom: 15px;position: relative; width: 35%;">
                 <input type="text" class="form-control image-preview-filename-cover" disabled="disabled">
                 <span class="input-group-btn">
@@ -138,7 +138,7 @@
             </div>
         </div>
         <div>
-            <button class="btn btn-danger" id="submit" value="login">Đăng ký</button>
+            <button class="btn btn-danger" id="submit" value="login">@lang('phrases.signup')</button>
         </div>
     </form>
 </div>

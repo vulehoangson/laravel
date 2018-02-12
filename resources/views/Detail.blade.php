@@ -188,7 +188,7 @@
 
     <div class="topic-detail">
         <div class="title">
-            <h2>Chi Tiết Sản Phẩm</h2>
+            <h2>@lang('phrases.product_detail')</h2>
         </div>
         @if( !empty($aFrontend['aTopic']['attachment']))
         <div id="myCarousel" class="carousel slide col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-18 " data-interval="false" data-ride="carousel" style="background-color: #555;">
@@ -236,7 +236,7 @@
            </div>
             <div class="time col-md-12 col-sm-12" style="font-size: 14px;padding-left: 0; padding-right: 0;margin-bottom: 15px;">
                 <div class="col-md-10 col-sm-10">
-                    Đăng lúc <b>{{ $aFrontend['aTopic']['time_stamp'] }}</b> - bởi <a href="{{ asset('profile/'.$aFrontend['aTopic']['user_id']) }}" style="text-decoration: none;"><b>{{ $aFrontend['aTopic']['full_name'] }}</b></a>
+                    @lang('phrases.posted_at') <b>{{ $aFrontend['aTopic']['time_stamp'] }}</b> - @lang('phrases.by') <a href="{{ asset('profile/'.$aFrontend['aTopic']['user_id']) }}" style="text-decoration: none;"><b>{{ $aFrontend['aTopic']['full_name'] }}</b></a>
                     @if((int)$aFrontend['aTopic']['user_group'] === 1)
                         <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>
                     @elseif((int)$aFrontend['aTopic']['user_group'] === 2)
@@ -276,7 +276,7 @@
     @if(!empty($aFrontend['aRelatedTopics']))
         <div class="related-topic">
             <div class="title">
-                <h2>Bài Viết Liên Quan</h2>
+                <h2>@lang('phrases.related_topic')</h2>
             </div>
             <div class="result col-md-12">
                 <div class="list" >
@@ -288,11 +288,11 @@
                             <div class="content col-md-7 col-sm-7">
                                 <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="{{ url('topic/detail/'.$aRelatedTopic['topic_id']) }}" style="text-decoration: none;">{{ $aRelatedTopic['title'] }}</a> </div>
                                 <div style="font-size: 15px;margin-bottom: 5px"><b>{{ $aRelatedTopic['price'] }}</b> {{ $aRelatedTopic['currency_title'] }}</div>
-                                <div style="font-size: 15px;margin-bottom: 5px">Danh mục: <b>{{ $aRelatedTopic['category_title'] }}</b></div>
-                                <div style="font-size: 15px; margin-bottom: 5px;">Đăng lúc <b>{{ $aRelatedTopic['time_stamp'] }}</b></div>
+                                <div style="font-size: 15px;margin-bottom: 5px">@lang('phrases.category'): <b>{{ $aRelatedTopic['category_title'] }}</b></div>
+                                <div style="font-size: 15px; margin-bottom: 5px;">@lang('phrases.posted_at') <b>{{ $aRelatedTopic['time_stamp'] }}</b></div>
                             </div>
                             <div class="user col-md-3 col-sm-3" >
-                                Đăng bởi <a href="{{ asset('profile/'.$aRelatedTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aRelatedTopic['full_name'] }}</b></a>
+                                @lang('phrases.by') <a href="{{ asset('profile/'.$aRelatedTopic['user_id']) }}" style="text-decoration: none;"><b>{{ $aRelatedTopic['full_name'] }}</b></a>
                                 @if((int)$aRelatedTopic['user_group'] === 1)
                                     <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>
                                 @elseif((int)$aRelatedTopic['user_group'] === 2)
