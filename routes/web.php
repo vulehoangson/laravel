@@ -33,6 +33,7 @@ Route::get('/suggestion','Ajax\AjaxController@searchSuggestion');
 Route::get('/topic/detail/{id}','Topic\DetailController@process');
 Route::get('/topic/edit/{id}','Topic\EditController@process');
 Route::post('/changelanguage','Ajax\AjaxController@changeLanguage');
+Route::get('paging','Ajax\AjaxController@loadMore');
 
 //using it when method post with params
 Route::post('/topic/edit/{id}',[

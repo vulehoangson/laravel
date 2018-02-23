@@ -101,7 +101,7 @@
                                 <h5 style="font-weight:400 ">@lang('phrases.datefrom'): </h5>
                             </div>
                             <div style="width: 65%; display: inline-block">
-                                <input type="text" id="datefrom" name="datefrom" value="01/01/{{ (int)date('Y') }}" class="form-control">
+                                <input type="text" id="datefrom" name="datefrom" value="01-01-{{ (int)date('Y') }}" class="form-control">
                             </div>
 
                         </div>
@@ -110,7 +110,7 @@
                                 <h5 style="font-weight:400 ">@lang('phrases.dateto'): </h5>
                             </div>
                             <div style="width: 65%; display: inline-block">
-                                <input type="text" id="dateto" name="dateto" value="{{ date('d/m/Y') }}" class="form-control">
+                                <input type="text" id="dateto" name="dateto" value="{{ date('d-m-Y') }}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
             dayNamesShort: ["CN", "Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy"],
             dayNamesMin: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
             weekHeader: "Tuần",
-            dateFormat: "dd/mm/yy",
+            dateFormat: "dd-mm-yy",
             firstDay: 1,
             isRTL: false,
             showMonthAfterYear: false,
@@ -189,8 +189,8 @@
         $.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
         /*$('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
         $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});*/
-        $('#datefrom').datepicker({format: 'dd/mm/yyyy'});
-        $('#dateto').datepicker({format: 'dd/mm/yyyy'});
+        $('#datefrom').datepicker();
+        $('#dateto').datepicker();
         $('#dropdown').on('touchstart click',function (e) {
             e.preventDefault();
             $('#menu').toggle();

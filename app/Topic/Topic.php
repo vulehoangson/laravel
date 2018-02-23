@@ -208,7 +208,7 @@ class TopicModel
             ->get();
         return $this->oHelper->convertDataFromObjectToArray($aRows);
     }
-    public function search($aVals = [])
+    public function search($aVals = [], $iPage = 0)
     {
         $sSearch = '';
         if(!empty($aVals['search']))
@@ -236,7 +236,7 @@ class TopicModel
               INNER JOIN topic_category tc ON tc.category_id = tcd.category_id
               INNER JOIN currency c ON c.currency_id = t.currency
               WHERE (t.status = 2) '.(!empty($sSearch) ? $sSearch : '').(!empty($aVals['cat']) ? 'AND (tcd.category_id = '.$aVals['cat'].' ) ': '').( !empty($aVals['date']) && (int)$aVals['date']['datefrom'] <= (int)$aVals['date']['dateto'] ? 'AND (t.time_stamp BETWEEN '.strtotime($aVals['date']['datefrom'].' 00:00:00').' AND '.strtotime($aVals['date']['dateto'].' 23:59:59').') ' : '')
-            .'ORDER BY t.time_stamp DESC LIMIT 10');
+            .'ORDER BY t.time_stamp DESC LIMIT 10 OFFSET '.((int)$iPage * 10 ));
        return $this->oHelper->convertDataFromRawObjectToArray($aRows,true);
     }
 }

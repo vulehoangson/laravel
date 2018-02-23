@@ -13,7 +13,7 @@
         .search-result
         {
             background-color: #fff;
-            padding: 15px 20px 35px 20px;
+            padding: 15px 20px 100px 20px;
             margin-right: auto;
             margin-left: auto;
 
@@ -77,7 +77,7 @@
             <form id="form_search" method="POST" action="{{ action('Topic\SearchController@process') }}">
                 {!! csrf_field() !!}
                 <div class="box-search" style="position: relative;">
-                    <input type="text" class="form-control" id="search" name="search" placeholder="@lang('phrases.search_product_placeholder')" style="height: 50px;display: inline-block;width: 90%">
+                    <input type="text" class="form-control" id="search" name="search" placeholder="@lang('phrases.search_product_placeholder')" style="height: 50px;display: inline-block;width: 90%" value="@if(!empty($aFrontend['QueryDatas']['search'])){{ $aFrontend['QueryDatas']['search'] }}@endif">
 
                     <button class="btn btn-success " type="button" id="dropdown"  style="display: inline-block;width: 5%;height: 50px;border-radius: 0;margin-top: -2px;margin-left: -4px;">
                         <span class="caret"></span>
@@ -98,7 +98,7 @@
                                     <option value="0">@lang('phrases.all')</option>
                                     @if(!empty($aFrontend['aCategories']))
                                         @foreach($aFrontend['aCategories'] as $aCategory)
-                                            <option value="{{ $aCategory['category_id'] }}">{{ $aCategory['title'] }}</option>
+                                            <option value="{{ $aCategory['category_id'] }}" @if(!empty($aFrontend['QueryDatas']['cat']) && (int)$aCategory['category_id'] == (int)$aFrontend['QueryDatas']['cat']) selected @endif>{{ $aCategory['title'] }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -111,7 +111,7 @@
                                     <h5 style="font-weight:400 ">@lang('phrases.datefrom'): </h5>
                                 </div>
                                 <div style="width: 65%; display: inline-block">
-                                    <input type="text" id="datefrom" name="datefrom" value="01/01/{{ (int)date('Y') }}" class="form-control">
+                                    <input type="text" id="datefrom" name="datefrom" value="@if(!empty($aFrontend['QueryDatas']['date']['datefrom'])) {{ $aFrontend['QueryDatas']['date']['datefrom'] }} @else 01-01-{{ (int)date('Y') }} @endif" class="form-control">
                                 </div>
 
                             </div>
@@ -120,7 +120,7 @@
                                     <h5 style="font-weight:400 ">@lang('phrases.dateto'): </h5>
                                 </div>
                                 <div style="width: 65%; display: inline-block">
-                                    <input type="text" id="dateto" name="dateto" value="{{ date('m/d/Y') }}" class="form-control">
+                                    <input type="text" id="dateto" name="dateto" value="@if(!empty($aFrontend['QueryDatas']['date']['dateto'])) {{ $aFrontend['QueryDatas']['date']['dateto'] }} @else {{ date('d-m-Y') }} @endif" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
 
            {{-- <h3 style="margin-bottom: 35px;">Có <b>20</b> sản phẩm thỏa điều kiện tìm kiếm</h3>--}}
 
-            <div class="list" >
+            <div class="list" data-paging="0" >
                 @if(!empty($aFrontend['aTopics']))
                     @foreach($aFrontend['aTopics'] as $iKey => $aTopic)
 
@@ -156,25 +156,57 @@
                                     <div style="background-image: url('{{ asset('images/superadmin.png') }}'); background-position: 0 -17px;height: 12px;width: 12px;display: inline-block;"></div>
                                 @endif
                             </div>
-                            <div class="col-md-12 col-sm-2" style="padding: 0 120px 0 15px;;margin-top: 20px;">
-                                <div class="col-md-12 col-sm-2" style="@if((int)$iKey < (int)(count($aFrontend['aTopics']) - 1) ) border-bottom: 1px solid #dddddd; @endif">
-                                </div>
-                            </div>
                         </div>
 
                     @endforeach
                 @endif
+
             </div>
+
         </div>
 
     </div>
     <script type="text/javascript">
         var detail_url = "{{ asset('topic/detail') }}";
         var suggestion_url = "{{ asset('suggestion') }}";
+        var ajax_loader_image = "{{ asset('images/load-more.gif') }}";
+        var load_more_url = "{{ asset('paging') }}";
+        var aParams = "{{ json_encode($aFrontend['QueryDatas']) }}";
     </script>
     <script type="text/javascript">
 
         $(document).ready(function(){
+            var bLoadMore = false;
+            $(window).scroll(function() {
+               var scrollTop = parseInt($(window).scrollTop()) + parseInt($(window).height());
+                var list = parseInt($('.search-result .result .list').height()) + parseInt($('.search-result .result .list').offset().top);
+                if( (scrollTop  > list + 100) && !bLoadMore)
+                {
+                    bLoadMore = true;
+                    var oImg = $('<img/>').attr('src',ajax_loader_image).attr('style','width: 30px; height: 30px; margin-left: 50%');
+                    $('.search-result .result .list').append(oImg);
+
+                    $.ajax({
+                        type: "GET",
+                        url: load_more_url,
+                        data: {
+                            paging: parseInt($('.search-result .result .list').data('paging')) + 1,
+                            params: aParams
+                        },
+                        success: function(response){
+                            var oOutput = $.parseJSON(response);
+                            if(oOutput.status)
+                            {
+                                $('.search-result .result .list').append(oOutput.data);
+                                $('.search-result .result .list').data('paging',parseInt($('.search-result .result .list').data('paging')) + 1)
+                                bLoadMore = false;
+                            }
+
+                            oImg.remove();
+                        }
+                    });
+                }
+            });
             $.datepicker.regional["vi-VN"] =
             {
                 closeText: "Đóng",
@@ -187,7 +219,7 @@
                 dayNamesShort: ["CN", "Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy"],
                 dayNamesMin: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
                 weekHeader: "Tuần",
-                dateFormat: "dd/mm/yy",
+                dateFormat: "dd-mm-yy",
                 firstDay: 1,
                 isRTL: false,
                 showMonthAfterYear: false,
@@ -196,8 +228,8 @@
             $.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
             /*$('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
             $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});*/
-            $('#datefrom').datepicker({format: 'dd/mm/yyyy'});
-            $('#dateto').datepicker({format: 'dd/mm/yyyy'});
+            $('#datefrom').datepicker();
+            $('#dateto').datepicker();
 
             $('#dropdown').on('touchstart click',function (e) {
                 e.preventDefault();

@@ -54,9 +54,10 @@ class SearchController extends Controller
         {
             $aIds = [];
             $aResultConvert = [];
-            foreach ($aResult as $value)
+            foreach ($aResult as $key => $value)
             {
                 $aIds[] = $value['topic_id'];
+                $value['stt'] = (int)$key;
                 $aResultConvert[$value['topic_id']] = $value;
             }
             $aTempList = $this->oTopic->getListTopicHasAvatar($aIds);
@@ -69,6 +70,10 @@ class SearchController extends Controller
         if(!empty($aCategories))
         {
             $aFrontend['aCategories'] = $aCategories;
+        }
+        if(!empty($aVals))
+        {
+            $aFrontend['QueryDatas'] =$aVals;
         }
         return view('Search',['bLogin' => $bLogin,'iUserGroup' => $iUserGroup,'aFrontend' => $aFrontend]);
 

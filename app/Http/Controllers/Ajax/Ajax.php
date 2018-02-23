@@ -103,4 +103,66 @@ class AjaxController extends Controller
         $sLanguage = $request->language;
         CookieController::setCookie('language',$sLanguage);
     }
+
+    public function loadMore(Request $request)
+    {
+        $iPage = $request->paging;
+        $aParams = json_decode($request->params,true);
+        $oTopicModel = new TopicModel();
+        $aRows = $oTopicModel->search($aParams, $iPage);
+        $aResult = array(
+            'status' => false
+        );
+        if(!empty($aRows))
+        {
+            $aResult['status'] = true;
+            $aResult['data'] = '';
+            $aIds = [];
+            $aResultConvert = [];
+            foreach ($aRows as $key => $value)
+            {
+                $aIds[] = $value['topic_id'];
+                $value['stt'] = $key;
+                $value['attachment_path'] = '';
+                $aResultConvert[$value['topic_id']] = $value;
+            }
+            $aTempList = $oTopicModel->getListTopicHasAvatar($aIds);
+            foreach($aTempList as $aTemp)
+            {
+                $aResultConvert[$aTemp['topic_id']]['attachment_path'] = $aTemp['attachment_path'];
+            }
+
+
+            foreach($aResultConvert as $aTopic)
+            {
+                $aResult['data'] .= '<div class="col-md-12 col-sm-12 item" style="padding: 20px 0;cursor: pointer;" data-id="'.$aTopic['topic_id'].'">
+                            <div class="col-md-2 col-sm-2 image">
+                                <img src="'.(!empty($aTopic['attachment_path']) ?  asset($aTopic['attachment_path']) : asset('images/default_product.jpg') ).'" style="border: 1px solid #dddddd; height: 110px; width: 110px">
+                            </div>
+                            <div class="content col-md-7 col-sm-7">
+                                <div style="font-size: 18px;margin-bottom: 15px;color: #196c4b"><a href="'.url('topic/detail/'.$aTopic['topic_id']).'" style="text-decoration: none;">'.$aTopic['title'].'</a> </div>
+                                <div style="font-size: 15px;margin-bottom: 5px"><b>'.$aTopic['price'].'</b> '.$aTopic['currency_title'].'</div>
+                                <div style="font-size: 15px;margin-bottom: 5px">'.__('phrases.category').': <b>'.$aTopic['category_title'].'</b></div>
+                                <div style="font-size: 15px; margin-bottom: 5px;">'.__('phrases.posted_at').' <b>'.$aTopic['time_stamp'].'</b></div>
+                            </div>
+                            <div class="user col-md-3 col-sm-3" >
+                                '.__('phrases.by').' <a style="text-decoration: none;" href="'.asset('profile/'.$aTopic['user_id']).'"><b>'.$aTopic['full_name'].'</b></a>';
+
+
+                            if((int)$aTopic['user_group'] === 1)
+                            {
+                                $aResult['data'] .= '<div style="background-image: url(\''.asset('images/superadmin.png').'\'); background-position: 0 0;height: 12px;width: 17px;display: inline-block;"></div>';
+                            }
+                            elseif((int)$aTopic['user_group'] === 2)
+                            {
+                                $aResult['data'] .= '<div style="background-image: url(\''.asset('images/superadmin.png').'\'); background-position: 0 -17px;height: 12px;width: 12px;display: inline-block;"></div>';
+                            }
+
+                $aResult['data'] .='</div>                 
+                        </div>';
+            }
+
+        }
+        echo json_encode($aResult);
+    }
 }
