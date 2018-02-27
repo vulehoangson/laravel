@@ -187,7 +187,7 @@ class Helper
     {
 
         $sUrl = 'http://developers.vietbando.com/V2/Service/PartnerPortalService.svc/rest/SearchAll';
-        $sRegisterKey = '6f8a969e-76cc-4956-934f-370d6d5456f5';
+        $sRegisterKey = '7fd671e2-1d6c-4183-8ca7-457c249043c4';
 
         $aVals=array(
             "IsOrder" => true,
