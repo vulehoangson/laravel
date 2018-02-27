@@ -13,6 +13,10 @@
     <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet" >
     <link rel="icon" href="{{ asset('images/forever.jpg') }}" type="image/x-icon"/>
     <link href="{{ asset('css/customize.css') }}" rel="stylesheet" >
+    <script  src="{{ asset('js/jquery.min.js') }}"></script>
+    <script  src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script  src="{{ asset('js/jquery-ui.js') }}"></script>
+    <script  src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
 </head>
 <body>
     <div class="header">
@@ -26,10 +30,6 @@
     <div class="footer">
         @include('footer')
     </div>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    {{--<script src="{{asset('js/vue.min.js')}}"></script>--}}
-    <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
-    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+
 </body>
 </html>
