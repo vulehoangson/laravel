@@ -2,43 +2,11 @@
 
 @section('title',trans('phrases.edit_title'))
 
-@section('content')
-    <style rel="stylesheet">
-        .image-preview-input {
-            position: relative;
-            overflow: hidden;
-            margin: 0px;
-            color: #333;
-            background-color: #fff;
-            border-color: #ccc;
-        }
-        .image-preview-input input[type=file] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin: 0;
-            padding: 0;
-            font-size: 20px;
-            cursor: pointer;
-            opacity: 0;
-            filter: alpha(opacity=0);
-        }
-        .image-preview-input-title {
-            margin-left:2px;
-        }
-        video::-internal-media-controls-download-button {
-            display:none;
-        }
-        .popover.bottom
-        {
-            margin-top: 0 !important;
-        }
-        .popover
-        {
-            left: 200px !important;
+@section('css')
+<link href="{{ asset('css/views/edit.css') }}" rel="stylesheet" >
+@endsection
 
-        }
-    </style>
+@section('content')
     <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
         <h2>@lang('phrases.create_topic')</h2>
     </div>
@@ -57,6 +25,8 @@
         </div>
     @endif
     <div class="upload" style="padding-left: 15px;">
+        <input type="hidden" id="error" value="{{ !empty($aError) ? 1 : 0 }}">
+        <input type="hidden" id="success" value="{{ !empty($sSuccess) ? 1 : 0 }}">
         {{-- using route(route_name,params) when method post with params  --}}
         <form id="frm_edit" method="POST" action="{{ route('edit.route',$aFrontend['aTopic']['topic_id']) }}" enctype="multipart/form-data">
             {!! csrf_field() !!}
@@ -179,223 +149,10 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript">
-        var bError="{{ !empty($aError) ? true : false }}";
-        var bSuccess="{{ !empty($sSuccess) ? true : false}}";
-    </script>
+@endsection
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            if(bError)
-            {
-                $( "div.error" ).fadeIn( 500 );
-            }
-            if(bSuccess)
-            {
-                $( "div.success" ).fadeIn( 500 ).delay( 1500 ).fadeOut( 500 );
-            }
-
-            $('.add-attachment-button').click(function(){
-                if($('.attachments .attachment-list .item').length + 1  <= 4)
-                {
-                    /* var oAttachment = $('.attachments .attachment-list .item:first').clone(true,true);
-                     oAttachment.children().find('.remove-attachment').css('display','block');
-                     oAttachment.attr('data-id',$('.attachments .attachment-list .item').length + 1);
-
-
-                     oAttachment.children().children('.image-preview-filename').val("");
-                     oAttachment.attr('data-content','');
-                     oAttachment.children().children('.input-group-btn').children('.image-preview-input input:file').val("");
-                     oAttachment.children('.image-preview').children('.input-group-btn').children('.image-preview-button').css('display','none');
-                     oAttachment.children().children('.input-group-btn').children().children(".image-preview-input-title").text("Browse");*/
-
-                    var oClone = '<div class="item col-md-12" data-id="'+($(".attachments .attachment-list .item").length + 1)+'" style="padding-left: 0; padding-right: 0; margin-bottom: 15px;" id="item_1"> <div class="input-group image-preview" style="margin-bottom: 15px;position: relative; width: 35%;"> <input type="text" class="form-control image-preview-filename" disabled="disabled"> <span class="input-group-btn"> <button type="button" class="btn btn-default image-preview-button" style="display:none;margin-top: 10px;height: 40px;border-radius: 0"> <span class="glyphicon glyphicon-eye-open" style="top: 2px;"></span> Preview </button> <div class="btn btn-default image-preview-input" style="margin-top: 10px;height: 40px;border-radius: 0"> <span class="glyphicon glyphicon-folder-open" style="padding-top: 5px;"></span> <span class="image-preview-input-title">Browse</span> <input type="file" accept="image/*, video/mp4" name="file[]" style="height: 40px"/> </div> </span> <div class="remove-attachment" style="position: absolute;top: 20px;left: 425px;cursor: pointer;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 22px"></i></div> </div> <div class="col-md-4 preview-file" style="padding-left: 0;height: auto;width: 35%;display: none;padding-top: 10px;padding-right: 0;"> </div> </div>';
-                    $('.attachments .attachment-list').append(oClone);
-                }
-
-            });
-            $('.attachments').on('click','.image-preview-button',function(){
-                $(this).parent().parent().parent().popover('show');
-            });
-            $('.attachments').on('click','.remove-attachment',function(){
-
-                $(this).parent().parent().remove();
-            });
-
-            //*************************** preview with div ******************************
-
-            /* $(".attachments .attachment-list .item .image-preview ").on('change','input:file',function (){
-             var url = (URL || webkit).createObjectURL(this.files[0]);
-             var file = this.files[0];
-             var file_type = file.type;
-             var attachment = '';
-             if(file_type.indexOf('video/mp4') != -1)
-             {
-             attachment = $('<video/>', {
-             id: 'dynamic-attachment',
-             height: '100%',
-             width: '100%',
-             controls: true,
-             controlsList: "nodownload"
-             });
-             }
-             else if(file_type.indexOf('image/') != -1)
-             {
-             attachment = $('<img/>', {
-             id: 'dynamic-attachment',
-             height: 300,
-             width: '100%'
-             });
-             }
-             if(attachment)
-             {
-             var oObject = $(this);
-             oObject.parent().children('.image-preview-input-title').text("Change");
-             oObject.parent().parent().parent().children(".image-preview-filename").val(file.name);
-             attachment.attr('src', url);
-
-             oObject.parents('.item').children('.preview-file').html($(attachment)[0].outerHTML);
-             oObject.parents('.item').children('.preview-file').fadeIn(2000);
-             }
-
-             });*/
-
-            //***********************************************************
-
-            $('.check-special-characters').each(function() {
-                $mainElement = $(this);
-                // return a function that executes instead of type code directly to function (can't work)
-                $mainElement.on('input',function($mainElement) {
-                    return function() {
-                        console.log($mainElement.val());
-                        var checkSpecialCharacter = /[~`!#$%\^&*+=\\[\]\\';{}|?_@":<>]/g.test($mainElement.val());
-                        if(checkSpecialCharacter)
-                        {
-                            console.log($mainElement);
-                            console.log('true');
-                            $mainElement.parent().children('.warning').show();
-                        }
-                        else
-                        {
-                            $mainElement.parent().children('.warning').hide();
-                            console.log('false');
-                        }
-
-                    }
-                }($mainElement));
-            });
-
-
-            /*$('form').one('submit',function (e) {
-                e.preventDefault();
-                var count = 0 ;
-                $('.check-special-characters').each(function() {
-                    $mainElement = $(this);
-                    var checkSpecialCharacter = /[~`!#$%\^&*+=\\[\]\\';.,{}|?_":<>]/g.test($mainElement.val());
-                    if(checkSpecialCharacter)
-                    {
-                        console.log($(this));
-                        count++;
-                    }
-                });
-                console.log(count);
-                if(count === 0)
-                {
-                    console.log('yes');
-                    $(this).submit();
-                }
-            });*/
-
-
-
-
-        });
-
-
-        //*************************** preview with popup ******************************
-
-        $(document).on('click', '#close-preview', function(){
-            var oAttachmentFile = $('.item:nth-child('+$(this).data('id')+')');
-            oAttachmentFile.popover('hide');
-            // Hover befor close the preview
-            /*oAttachmentFile.hover(
-             function () {
-             oAttachmentFile.popover('show');
-             },
-             function () {
-             oAttachmentFile.popover('hide');
-             }
-             );*/
-        });
-
-
-        // Create the close button
-
-
-        // Create the preview image
-        $(document).on('change','input:file',function (){
-            $(this).parents('.item').children('.preview-file').hide();
-            $(this).parents('.image-preview').children('#attachment').val('');
-            var closebtn = $('<button/>', {
-                type:"button",
-                text: 'x',
-                id: 'close-preview',
-                style: 'font-size: initial;'
-
-            });
-            closebtn.attr("class","close pull-right");
-            closebtn.attr("data-id",$(this).parent().parent().parent().parent().attr('data-id'));
-            $(this).parent().parent().children('.image-preview-button').show();
-            $(this).parent().parent().parent().parent().popover({
-                trigger:'manual',
-                html:true,
-                title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
-                content: "There's no image/video",
-                placement:'bottom'
-            });
-
-
-            var url = (URL || webkit).createObjectURL(this.files[0]);
-            var file = this.files[0];
-            var file_type = file.type;
-            var attachment = '';
-            if(file_type.indexOf('video/mp4') != -1)
-            {
-                attachment = $('<video/>', {
-                    id: 'dynamic-attachment',
-                    height: '100%',
-                    width: '100%',
-                    controls: true,
-                    controlsList: "nodownload"
-                });
-            }
-            else if(file_type.indexOf('image/') != -1)
-            {
-                attachment = $('<img/>', {
-                    id: 'dynamic-attachment',
-                    height: '100%',
-                    width: '100%'
-                });
-            }
-            if(attachment)
-            {
-                var oObject = $(this);
-                oObject.parent().children('.image-preview-input-title').text("Change");
-                oObject.parent().parent().parent().children(".image-preview-filename").val(file.name);
-                attachment.attr('src', url);
-
-                /*oObject.parents('.item').children('.preview-file').html($(attachment)[0].outerHTML);
-                 oObject.parents('.item').children('.preview-file').fadeIn(2000);*/
-                console.log(oObject.parent().parent().parent().parent().data('id'));
-                oObject.parent().parent().parent().parent().attr("data-content",$(attachment)[0].outerHTML).popover("show");
-
-            }
-
-        });
-
-
-
-    </script>
+@section('js')
+<script src="{{ asset('js/views/edit.js') }}"></script>
 @endsection
 
 {{--https://bootsnipp.com/snippets/featured/input-file-popover-preview-image--}}

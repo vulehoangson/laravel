@@ -1,50 +1,8 @@
-<style rel="stylesheet">
-    .hide
-    {
-        display: none;
-    }
-    .show
-    {
-        display: block;
-    }
-    .header-info .setting ul.setting-option
-    {
-        background-color: white;
-        color: #ce1126;
-        list-style: none;
-        padding: 10px 30px 10px 10px;
-        right: 30px;
-        top: 38px;
-        position: absolute;
-        z-index: 1;
-        border-radius: 5px;
-        border: 1px solid #dddddd;
-    }
-    .header-info .setting ul.setting-option li
-    {
-        border-bottom: 1px solid #dddddd;
-        font-size: 17px;
-        padding: 10px 30px 10px 5px;
-        cursor: pointer;
-
-    }
-
-    .header-info .setting ul.setting-option li a
-    {
-        text-decoration: none;
-    }
-    @media (min-width: 992px) and (max-width: 1024px)
-    {
-        .col-md-offset-3 {
-            margin-left: 15%;
-        }
-        .col-md-3 {
-            width: 35%;
-        }
-    }
-</style>
 <div class="header-info" style="height: 40px;background-color: #354c5c;padding: 3px 30px;">
-    
+    <input type="hidden" id="login_url" value="{{ asset('login') }}">
+    <input type="hidden" id="signup_url" value="{{ asset('signup') }}">
+    <input type="hidden" id="changelanguage_url" value="{{ asset('changelanguage') }}">
+    <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
     @if( empty($bLogin) )
         <div class="signup" style="float: right;color: white">
             <button id="signup" type="button" class="btn btn-warning">@lang('phrases.signup')</button>
@@ -124,40 +82,3 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-   var login = "{{ asset('login') }}";
-    var signup= "{{ asset('signup') }}";
-    var change_language_url = "{{ asset('changelanguage') }}";
-   var token_check = "{{ csrf_token() }}";
-</script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#login').click(function(){
-
-            window.location.href=login;
-        });
-        $('#signup').click(function(){
-
-            window.location.href=signup;
-
-        });
-        $('.setting-button').click(function(){
-            $('.setting-option').toggleClass('hide');
-        });
-        $('.change-language').click(function () {
-            var sLanguage = $(this).data('language');
-            console.log(sLanguage);
-            $.ajax({
-                type: "POST",
-                url: change_language_url,
-                data: {
-                    language: sLanguage,
-                    _token : token_check
-                },
-                success: function(){
-                    window.location.reload();
-                }
-            });
-        });
-    });
-</script>

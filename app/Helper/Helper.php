@@ -207,9 +207,9 @@ class Helper
         $oOutput = json_decode($server_output,true);
         if($oOutput['IsSuccess'])
         {
-            return array($oOutput['List'][0]['Latitude'],$oOutput['List'][0]['Longitude']);
+            return ( !empty($oOutput['List'][0]['Latitude']) && !empty($oOutput['List'][0]['Longitude']) ? [$oOutput['List'][0]['Latitude'],$oOutput['List'][0]['Longitude']] : [0,0]);
         }
-        return array();
+        return [];
     }
     public function deleteFiles($aFiles = [])
     {

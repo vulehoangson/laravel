@@ -1,0 +1,54 @@
+.container
+{
+    padding: 0 !important;
+    margin-left: unset !important;
+    width: 100% ;
+    background-color: #f4f4f4;
+}
+.homepage
+{
+    background-color: #fff;
+    padding: 15px 0 35px 0;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+.homepage .categories .list .category:after
+{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+
+
+@media (min-width: 768px)
+{
+    .homepage {
+        width: 750px;
+    }
+}
+@media (min-width: 992px)
+{
+    .homepage {
+        width: 970px;
+    }
+}
+@media (min-width: 1200px)
+{
+    .homepage {
+        width: 1170px;
+    }
+}
+.homepage:after
+{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}

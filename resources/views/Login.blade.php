@@ -1,9 +1,6 @@
 @extends('layout')
-
 @section('title',trans('phrases.signin'))
-
 @section('content')
-
     <div class="title" style="padding-bottom: 15px;border-bottom: 1px solid #dddddd;margin-bottom: 20px;">
         <h2>@lang('phrases.signin')</h2>
     </div>
@@ -34,6 +31,5 @@
             </div>
         </form>
     </div>
-
 @endsection
 

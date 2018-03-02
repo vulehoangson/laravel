@@ -98,3 +98,61 @@
     color: #297fc7 !important;
 
 }
+
+/*-------------header.blade.php----------------*/
+.hide
+{
+    display: none;
+}
+.show
+{
+    display: block;
+}
+.header-info .setting ul.setting-option
+{
+    background-color: white;
+    color: #ce1126;
+    list-style: none;
+    padding: 10px 30px 10px 10px;
+    right: 30px;
+    top: 38px;
+    position: absolute;
+    z-index: 1;
+    border-radius: 5px;
+    border: 1px solid #dddddd;
+}
+.header-info .setting ul.setting-option li
+{
+    border-bottom: 1px solid #dddddd;
+    font-size: 17px;
+    padding: 10px 30px 10px 5px;
+    cursor: pointer;
+
+}
+
+.header-info .setting ul.setting-option li a
+{
+    text-decoration: none;
+}
+@media (min-width: 992px) and (max-width: 1024px)
+{
+    .col-md-offset-3 {
+        margin-left: 15%;
+    }
+    .col-md-3 {
+        width: 35%;
+    }
+}
+/*----------------------Footer.blade.php--------------*/
+@media (max-width: 992px)
+{
+
+    .footer-info .contact-us .address .info
+    {
+        padding-top: 0 !important;
+    }
+    .footer-info  .about-us div:first-child
+    {
+        margin-bottom: 5px !important;
+    }
+}

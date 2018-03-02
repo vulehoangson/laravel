@@ -1,192 +1,15 @@
 @extends('layout')
-
 @section('title',$aFrontend['aTopic']['title'])
-
+@section('css')
+<link href="{{ asset('css/views/detail.css') }}" rel="stylesheet" >
+@endsection
 @section('content')
-    <style rel="stylesheet">
-        .container
-        {
-            padding: 0 !important;
-            margin-left: unset !important;
-            width: 100% ;
-            background-color: #f4f4f4;
-        }
-        .topic-detail
-        {
-            background-color: #fff;
-            padding: 15px 0 35px 0;
-            margin-right: auto;
-            margin-left: auto;
-            margin-bottom: 30px;
-
-        }
-        .related-topic
-        {
-            background-color: #fff;
-            padding: 15px 0 35px 0;
-            margin-right: auto;
-            margin-left: auto;
-            margin-bottom: 30px;
-        }
-
-        @media (min-width: 768px)
-        {
-            .topic-detail,
-            .related-topic
-            {
-                width: 750px;
-            }
-            .carousel-indicators {
-                bottom: 0px;
-            }
-        }
-        @media (min-width: 992px)
-        {
-            .topic-detail,
-            .related-topic
-            {
-                width: 970px;
-            }
-        }
-        @media (min-width: 1200px)
-        {
-            .topic-detail,
-            .related-topic
-            {
-                width: 1170px;
-            }
-        }
-        .topic-detail:after
-        {
-            visibility: hidden;
-            display: block;
-            font-size: 0;
-            content: " ";
-            clear: both;
-            height: 0;
-        }
-        .related-topic:after
-        {
-            visibility: hidden;
-            display: block;
-            font-size: 0;
-            content: " ";
-            clear: both;
-            height: 0;
-        }
-        .topic-detail #myCarousel .carousel-inner .item video
-        {
-            width:100%;
-            margin-top: 9%;
-        }
-
-        @media (max-width: 1024px)
-        {
-            .topic-detail #myCarousel .carousel-inner .item video
-            {
-                margin-top: 19%;
-            }
-        }
-        @media (max-width: 992px)
-        {
-            .topic-detail #myCarousel .carousel-inner
-            {
-                height: 350px !important;
-                padding: 0 50px !important;
-            }
-            .topic-detail #myCarousel .carousel-inner .item video
-            {
-                margin-top: 9%;
-            }
-        }
-        .MiniPopup
-        {
-            color: #333333;
-            float: left;
-            line-height: 18px;
-            width: 300px;
-        }
-        .MiniPopup .Title {
-            float: left;
-            font-size: 15px;
-            font-weight: bold;
-            margin-left: 18px;
-        }
-        .MiniPopup p {
-            float: left;
-            font-size: 13px;
-            line-height: 15px;
-            margin: 7px 0 0;
-            padding: 0 0 5px;
-        }
-        .MiniPopup .Content .address {
-            display: block;
-            margin-bottom: 8px;
-            padding-left: 18px;
-        }
-        .MiniPopup .Content .phone {
-            display: inline-block;
-            margin-bottom: 10px;
-            padding-left: 18px;
-        }
-        .MiniPopup a:hover
-        {
-            color: #297fc7 !important;
-
-        }
-        .topic-detail .title
-        {
-            padding-bottom: 5px;
-            border-bottom: 1px solid #dddddd;
-            margin-bottom: 30px;
-            padding-left: 15px;
-        }
-        .topic-detail .title h2
-        {
-            margin-top: 0;
-        }
-
-        .related-topic .title
-        {
-            padding-bottom: 5px;
-            border-bottom: 1px solid #dddddd;
-            margin-bottom: 30px;
-            padding-left: 15px;
-        }
-        .related-topic .title h2
-        {
-            margin-top: 0;
-        }
-        .carousel-control
-        {
-            width: 10%;
-        }
-        .topic-detail .detail .time .edit-button
-        {
-            width: 45px;
-            height: 40px;
-            background: #e6e6e6;
-            cursor: pointer;
-        }
-        .topic-detail .detail .time .edit-button:before
-        {
-            transform: translate(0, 0);
-            text-indent: 0 !important;
-            content: '\f044';
-            font-size: 20px;
-            color: #626262;
-            position: absolute;
-            padding: 0;
-            line-height: 40px;
-            text-align: center;
-            font-family: "FontAwesome";
-            font-style: normal;
-            font-weight: normal;
-            text-rendering: auto;
-        }
-    </style>
-
     <div class="topic-detail">
+        <input type="hidden" id="lat" value="{{ $aFrontend['Coordinate'][0] }}">
+        <input type="hidden" id="lng" value="{{ $aFrontend['Coordinate'][1] }}">
+        <input type="hidden" id="address" value="{{ $aFrontend['aTopic']['address'] }}">
+        <input type="hidden" id="phone" value="{{ $aFrontend['aTopic']['phone'] }}">
+        <input type="hidden" id="detail_url" value="{{ asset('topic/detail') }}">
         <div class="title">
             <h2>@lang('phrases.product_detail')</h2>
         </div>
@@ -202,23 +25,18 @@
                 @foreach($aFrontend['aTopic']['attachment'] as $iKey => $value)
                     @if(file_exists(public_path().'/'.$value['path']))
                         @if($value['type'] != 'mp4')
-                            <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset($value['path']) }}')">
-
-                            </div>
+                            <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" style="height: 100%;background-position: center center;background-repeat: no-repeat;padding: 5px 0;background-image: url('{{ asset($value['path']) }}')"></div>
                         @else
-
-                                <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" >
-                                    <video id="video" controls="controls" autoplay >
-                                        <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
-                                        <source src="{{ asset($value['path']) }}" type="video/mp4">
-                                    </video>
-                                </div>
-
+                            <div class="item @if( (int)$iKey == 0 ) active @endif col-sm-12 col-sm-12" >
+                                <video id="video" controls="controls" autoplay >
+                                    <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+                                    <source src="{{ asset($value['path']) }}" type="video/mp4">
+                                </video>
+                            </div>
                         @endif
                     @endif
                 @endforeach
             </div>
-
             <!-- Left and right controls -->
             <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                 <span class="glyphicon glyphicon-chevron-left"></span>
@@ -244,9 +62,7 @@
                     @endif
                 </div>
                 @if( $bLogin && (int)$iCurrentUserId === (int)$aFrontend['aTopic']['user_id'])
-                    <a class="col-md-2 col-sm-2 edit-button" href="{{ url('topic/edit/'.$aFrontend['aTopic']['topic_id']) }}">
-
-                    </a>
+                    <a class="col-md-2 col-sm-2 edit-button" href="{{ url('topic/edit/'.$aFrontend['aTopic']['topic_id']) }}"></a>
                 @endif
             </div>
             <div class="contact col-md-12 col-sm-12" style="margin-bottom: 15px;padding-left: 0; padding-right: 0; font-size: 16px;color: darkslategrey;">
@@ -262,14 +78,13 @@
             <div class="description col-md-12 col-sm-12" style="margin-bottom: 15px;padding-left: 0; padding-right: 0; font-size: 24px;color: darkslategrey;word-wrap: break-word; word-break: keep-all">
                 {{ $aFrontend['aTopic']['description'] }}
             </div>
-
             <div class="address col-md-12 col-sm-12" style="margin-bottom: 15px; padding-left: 0; padding-right: 0; font-size: 18px;color: darkslategrey;">
                 <i class="fa fa-map-marker" aria-hidden="true" style="font-weight: bold;"></i>
                 <span style="margin-left: 10px">{{ $aFrontend['aTopic']['address'] }}</span>
             </div>
-
+            @if(!empty($aFrontend['Coordinate'][0]) && !empty($aFrontend['Coordinate'][1]))
             <div class="map col-md-12 col-sm-12" style="height: 400px;" id="vietbando">
-
+            @endif
             </div>
         </div>
     </div>
@@ -309,55 +124,8 @@
             </div>
         </div>
     @endif
-<script type="text/javascript" src="https://developers.vietbando.com/V2/Scripts/VietbandoMapsAPI.js?key=a4421f51-dabb-45b5-aa92-d361989037fc"></script>
-<script type="text/javascript">
-    var lat = parseFloat("{{ $aFrontend['Coordinate'][0] }}");
-    var lng = parseFloat("{{ $aFrontend['Coordinate'][1] }}");
-    var find_address = "{{ $aFrontend['aTopic']['address'] }}";
-    var find_phone = "{{ $aFrontend['aTopic']['phone'] }}";
-    var detail_url = "{{ asset('topic/detail') }}";
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var mapProp = {
-            center: new vbd.LatLng(lat, lng),
-            zoom: 15,
-            /*Nếu layer == null là lấy layer mặc định. Nếu layer là [layer1,layer2,.....] khởi động map với nhiều layer*/
-            layer:null
-        };
-
-        /*Tạo map*/
-        var map = new vbd.Map(document.getElementById("vietbando"), mapProp);
-        /*var icon=new vbd.Icon();
-        icon.url='/images/marker.png';
-        icon.size=new vbd.Size(30,40);*/
-        var options=new vbd.MarkerOptions();
-        options.position = new vbd.LatLng(lat, lng);
-        /*options.icon = icon;*/
-        var marker=new vbd.Marker(options);
-        marker.setMap(map);
-        var content = '<div class="MiniPopup"><p class="Content"> <span class="address"><i class="fa fa-home" style="font-size:14px;margin-right: 5px;"></i>' + find_address + '</span> <span class="phone"><i class="fa fa-phone" style="font-size:13px;margin-right: 7px;"></i>' + find_phone + '</span></p> </div>'
-        var infowindow = new vbd.InfoWindow();
-        infowindow.setContent(content);
-        infowindow.open(map, marker);
-        vbd.event.addListener(marker, 'click', function (param) {
-            infowindow.open(map, marker);
-        });
-
-        // stop video playing when click next or pre slide
-        $('#myCarousel').on('slide.bs.carousel', function () {
-            if(document.getElementById('video'))
-            {
-                document.getElementById('video').pause();
-            }
-
-        });
-        $('.related-topic .item').click(function () {
-            var id = $(this).data('id');
-            window.location.href = detail_url+'/'+id;
-        });
-    });
-</script>
 @endsection
-
-{{--https://bootsnipp.com/snippets/featured/input-file-popover-preview-image--}}
+@section('js')
+<script type="text/javascript" src="https://developers.vietbando.com/V2/Scripts/VietbandoMapsAPI.js?key=a4421f51-dabb-45b5-aa92-d361989037fc"></script>
+<script src="{{ asset('js/views/detail.js') }}"></script>
+@endsection

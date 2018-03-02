@@ -1,0 +1,89 @@
+.option
+{
+    height: 1000px;
+}
+.admincp-index .option ul
+{
+    padding: 15px 5px;
+    list-style: none;
+}
+.admincp-index .option ul li
+{
+    margin-bottom: 5px;
+    padding: 10px 0;
+    cursor: pointer;
+    color: white;
+}
+.admincp-index .option ul li h5
+{
+    display: inline-block;
+}
+.admincp-index .option ul li i
+{
+    color: greenyellow;
+    margin-right: 5px;
+}
+.container
+{
+    padding: 0 !important;
+    margin-left: unset !important;
+    width: 100% ;
+    min-height: 1000px;
+}
+.active
+{
+    display: block;
+}
+.hide
+{
+    display: none;
+}
+.tab-content
+{
+    background-color: #fafafa;
+    padding: 15px 15px 15px 100px;
+    height: 1000px;
+    overflow: auto;
+}
+.content
+{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.item a
+{
+    text-decoration: none;
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+.white-popup {
+    position: relative;
+    background: #FFF;
+    padding: 20px;
+    width:auto;
+    max-width: 500px;
+    margin: 20px auto;
+}
+.selected
+{
+    background-color: #f4645f;
+    padding: 10px 15px !important;
+}
+@media (max-width: 1024px)
+{
+    .admincp-index .content #tab-3 .list .item
+    {
+        width: 100% !important;
+    }
+}
+@media (min-width: 992px)
+{
+    .admincp-index .option
+    {
+        width: 25% !important;
+    }
+    .admincp-index .content
+    {
+        width: 75% !important;
+    }
+}

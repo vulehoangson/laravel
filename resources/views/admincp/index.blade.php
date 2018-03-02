@@ -1,102 +1,12 @@
 @extends('layout')
-
 @section('title','AdminCP')
-
+@section('css')
+<link href="{{ asset('css/views/admincp/index.css') }}" rel="stylesheet" >
+@endsection
 @section('content')
-    <style rel="stylesheet">
-        .option
-        {
-            height: 1000px;
-        }
-        .admincp-index .option ul
-        {
-            padding: 15px 5px;
-            list-style: none;
-        }
-
-        .admincp-index .option ul li
-        {
-            margin-bottom: 5px;
-            padding: 10px 0;
-            cursor: pointer;
-            color: white;
-        }
-        .admincp-index .option ul li h5
-        {
-            display: inline-block;
-        }
-        .admincp-index .option ul li i
-        {
-            color: greenyellow;
-            margin-right: 5px;
-        }
-        .container
-        {
-            padding: 0 !important;
-            margin-left: unset !important;
-            width: 100% ;
-            min-height: 1000px;
-        }
-        .active
-        {
-            display: block;
-        }
-        .hide
-        {
-            display: none;
-        }
-        .tab-content
-        {
-            background-color: #fafafa;
-            padding: 15px 15px 15px 100px;
-            height: 1000px;
-            overflow: auto;
-        }
-        .content
-        {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-        .item a
-        {
-            text-decoration: none;
-            word-break: keep-all;
-            word-wrap: break-word;
-        }
-        .white-popup {
-            position: relative;
-            background: #FFF;
-            padding: 20px;
-            width:auto;
-            max-width: 500px;
-            margin: 20px auto;
-        }
-        .selected
-        {
-            background-color: #f4645f;
-            padding: 10px 15px !important;
-        }
-        @media (max-width: 1024px)
-        {
-            .admincp-index .content #tab-3 .list .item
-            {
-                width: 100% !important;
-            }
-        }
-        @media (min-width: 992px)
-        {
-            .admincp-index .option
-            {
-                width: 25% !important;
-            }
-            .admincp-index .content
-            {
-                width: 75% !important;
-            }
-
-        }
-    </style>
     <div class="admincp-index">
+        <input type="hidden" id="approve_url" value="{{ asset('topic/approve') }}">
+        <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
         <div class="option col-md-2 col-sm-3" style="background: #0c0c0c;text-align: left;">
             <div class="back-home" style="border-bottom: 1px solid #dddddd; padding: 20px 10px">
                 <i class="fa fa-home" aria-hidden="true" style="color: greenyellow;margin-right: 5px;"></i>
@@ -120,9 +30,7 @@
             </ul>
         </div>
         <div class="content col-md-10 col-sm-9">
-            <div id="tab-1" style="width: 100%" class="tab-content">
-
-            </div>
+            <div id="tab-1" style="width: 100%" class="tab-content"></div>
             <div id="tab-2" style="width: 100%;" class="tab-content hide">
                 <h1 style="text-align: center">Danh sách Topic chờ duyệt</h1>
                 <div class="list col-md-12" style="padding: 0  30px">
@@ -154,100 +62,18 @@
                                     <a href=""><h3>{{ $aCategory['title'] }}</h3></a>
                                 </div>
                                 <div class="optional-button" style="padding: 0 30px;">
-                                    <button class="btn btn-success see" style="margin-right: 20px;width: 90px" data-id="{{ $aCategory['category_id'] }}">Xem</button>
-                                    <button class="btn btn-warning update" data-id="{{ $aCategory['category_id'] }}" style="margin-right: 20px;width: 90px">Cập nhật</button>
-                                    <button class="btn btn-danger delete" data-id="{{ $aCategory['category_id'] }}" style="margin-right: 20px;width: 90px">Xóa</button>
+                                    <button class="btn btn-success see" style="margin-right: 20px;width: auto;" data-id="{{ $aCategory['category_id'] }}">Xem</button>
+                                    <button class="btn btn-warning update" data-id="{{ $aCategory['category_id'] }}" style="margin-right: 20px;width: auto;">Cập nhật</button>
+                                    <button class="btn btn-danger delete" data-id="{{ $aCategory['category_id'] }}" style="margin-right: 20px;width: auto;">Xóa</button>
                                 </div>
                             </div>
                         @endforeach
                     @endif
-
                 </div>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        var approve_url= "{{ asset('topic/approve') }}";
-        var token_check = "{{ csrf_token() }}";
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('.header-introduction').hide();
-            $('.option ul li').click(function(){
-                var tab=$(this).data('tab');
-                $('.tab-content').addClass('hide');
-                $('.option ul li').removeClass('selected');
-                $('#'+ tab).removeClass('hide');
-                $(this).addClass('selected');
-            });
-
-            $('.admincp-index').on('click','.approve',function(){
-                var iId = $(this).data('id');
-                $.ajax({
-                    type: "POST",
-                    url: '/topic/approve',
-                    data: {
-                        id : iId,
-                        _token : token_check
-                    },
-                    success: function(e) {
-                        var oOutput = $.parseJSON(e);
-                        if(oOutput.status)
-                        {
-                            $.magnificPopup.open({
-                                items: {
-                                    src: '<div class="white-popup">Topic đã được duyệt</div>',
-                                    type: 'inline'
-                                },
-                                closeBtnInside: true
-                            });
-
-                            $('.admincp-index .content #tab-2 .list').html(oOutput.sHtml);
-
-                            setTimeout(function () {
-                                $.magnificPopup.close();
-
-                            },1000);
-                        }
-                    }
-                });
-            });
-
-            $('.admincp-index').on('click','.remove',function(){
-                var iId = $(this).data('id');
-                $.ajax({
-                    type: "POST",
-                    url: '/topic/remove',
-                    data: {
-                        id : iId,
-                        _token : token_check
-                    },
-                    success: function(e) {
-                        var oOutput = $.parseJSON(e);
-                        if(oOutput.status)
-                        {
-                            $.magnificPopup.open({
-                                items: {
-                                    src: '<div class="white-popup">Topic đã được bỏ qua</div>',
-                                    type: 'inline'
-                                },
-                                closeBtnInside: true
-                            });
-
-                            if(oOutput.sHtml)
-                            {
-                                $('.content #tab-2 .list').html(oOutput.sHtml);
-                            }
-
-                            setTimeout(function () {
-                                $.magnificPopup.close();
-                            },1000);
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-
-
+@endsection
+@section('js')
+<script src="{{ asset('js/views/admincp/index.js') }}"></script>
 @endsection

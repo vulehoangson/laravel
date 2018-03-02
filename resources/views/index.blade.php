@@ -1,68 +1,13 @@
 @extends('layout')
-
 @section('title',trans('phrases.homepage'))
-
+@section('css')
+<link href="{{ asset('css/views/index.css') }}" rel="stylesheet" >
+@endsection
 @section('content')
-<style rel="stylesheet">
-    .container
-    {
-        padding: 0 !important;
-        margin-left: unset !important;
-        width: 100% ;
-        background-color: #f4f4f4;
-    }
-    .homepage
-    {
-        background-color: #fff;
-        padding: 15px 0 35px 0;
-        margin-right: auto;
-        margin-left: auto;
-
-    }
-    .homepage .categories .list .category:after
-    {
-        visibility: hidden;
-        display: block;
-        font-size: 0;
-        content: " ";
-        clear: both;
-        height: 0;
-    }
-
-
-
-    @media (min-width: 768px)
-    {
-        .homepage {
-            width: 750px;
-        }
-    }
-    @media (min-width: 992px)
-    {
-        .homepage {
-            width: 970px;
-        }
-    }
-    @media (min-width: 1200px)
-    {
-        .homepage {
-            width: 1170px;
-        }
-    }
-    .homepage:after
-    {
-        visibility: hidden;
-        display: block;
-        font-size: 0;
-        content: " ";
-        clear: both;
-        height: 0;
-    }
-
-</style>
 <div class="homepage" style="">
     <div class="search col-md-10 col-md-offset-1" style="padding-right: 10px;">
-
+        <input type="hidden" id="detail_url" value="{{ asset('topic/detail') }}">
+        <input type="hidden" id="suggestion_url" value="{{ asset('suggestion') }}">
         <h2 style="text-align: center">@lang('phrases.search_product_title')</h2>
         <form id="form_search" method="POST" action="{{ action('Topic\SearchController@process') }}">
             {!! csrf_field() !!}
@@ -118,8 +63,6 @@
 
             </div>
         </form>
-
-
     </div>
     <div class="col-md-12" style="margin: 40px 0 35px 0; border-bottom: 1px solid #dddddd"></div>
     <div class="categories col-md-12" style="margin-top: 20px;padding: 0 15px;">
@@ -161,138 +104,8 @@
 
     </div>
 </div>
-<script type="text/javascript">
-    var detail_url = "{{ asset('topic/detail') }}";
-    var suggestion_url = "{{ asset('suggestion') }}";
-</script>
-<script type="text/javascript">
 
-    $(document).ready(function(){
-        $.datepicker.regional["vi-VN"] =
-        {
-            closeText: "Đóng",
-            prevText: "Trước",
-            nextText: "Sau",
-            currentText: "Hôm nay",
-            monthNames: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
-            monthNamesShort: ["Một", "Hai", "Ba", "Bốn", "Năm", "Sáu", "Bảy", "Tám", "Chín", "Mười", "Mười một", "Mười hai"],
-            dayNames: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"],
-            dayNamesShort: ["CN", "Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy"],
-            dayNamesMin: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
-            weekHeader: "Tuần",
-            dateFormat: "dd-mm-yy",
-            firstDay: 1,
-            isRTL: false,
-            showMonthAfterYear: false,
-            yearSuffix: ""
-        };
-        $.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
-        /*$('#datefrom').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});
-        $('#dateto').datepicker({format: 'dd/mm/yyyy',showButtonPanel: true});*/
-        $('#datefrom').datepicker();
-        $('#dateto').datepicker();
-        $('#dropdown').on('touchstart click',function (e) {
-            e.preventDefault();
-            $('#menu').toggle();
-        });
-
-        $('#search').on('input',function()
-        {
-            if($(this).val() !='')
-            {
-                $(this).css('border','1px solid #dddddd');
-            }
-
-        });
-        $('#submit_header').click(function(event){
-            var sString=$('#search').val();
-            var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(sString);
-            if(sString=='') {
-                event.preventDefault();
-                $('#search').css("border", "5px solid orange");
-            } else if(checkSpecialCharacter === true ) {
-                event.preventDefault();
-                $('#search').css("border", "5px solid orange");
-            }
-        });
-        $('#search').keypress(function(e)
-        {
-            var sString=$(this).val();
-            var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(sString);
-            if(e.which == 13) {
-                if(sString=='') {
-                    e.preventDefault();
-                    $(this).css("border", "5px solid orange");
-                } else if(checkSpecialCharacter === true) {
-                    e.preventDefault();
-                    $(this).css("border", "5px solid orange");
-                }
-            }
-        });
-
-        $('#search').autocomplete({
-            minLength: 0,
-            source: function(request,response){
-                var key=$('#search').val();
-                var cat = $('#cat').val();
-                var datefrom = $('#datefrom').val();
-                var dateto = $('#dateto').val();
-                var checkSpecialCharacter = /[~`!#$%\^&*+=\-\[\]\\';.,/{}|?_":<>]/g.test(key);
-                if(checkSpecialCharacter === true)
-                {
-                    response(null)
-                    return false;
-                }
-                $.ajax({
-                    type: "GET",
-                    url: suggestion_url,
-                    data: {
-                        search : key,
-                        cat : cat,
-                        datefrom : datefrom,
-                        dateto : dateto
-                    },
-                    success: function(e) {
-                        var oOutput = $.parseJSON(e);
-                        if(oOutput.status)
-                        {
-                            response(oOutput.data);
-                        }
-                        else
-                        {
-                            response(null);
-                        }
-
-                    }
-                });
-            },
-            open: function() {},
-            close: function() {},
-            focus: function(event,ui) {
-            },
-            select: function(event, ui) {
-                window.location.href = ui.item.url;
-            }
-        }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li class='ui-menu-item'></li>" )
-                    .data( "item.autocomplete", item )
-                    .append('<div class="ui-menu-item-wrapper">'+item.label+'</div>')
-                    .appendTo( ul );
-        };
-
-        $('.item').click(function () {
-           var id = $(this).data('id');
-            window.location.href = detail_url+'/'+id;
-        });
-    });
-    /*// hide menu when clicking outsite the menu. except the dropdown button
-    $(document).click(function(e){
-        if(e.target.id !='menu' && !$('#menu').find(e.target).length && e.target.id !='dropdown' )
-        {
-            $('#menu').hide();
-        }
-    });*/
-
-
-</script>
+@endsection
+@section('js')
+<script src="{{ asset('js/views/index.js') }}"></script>
 @endsection
